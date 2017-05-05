@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import render_template
+from sqlalchemy.orm import joinedload
 
 from .models import Parlementaire
 
@@ -37,7 +38,8 @@ def setup_routes(app):
 
     @app.route('/parlementaires', endpoint='parlementaires')
     def parlementaires():
+        qs = Parlementaire.query.options(joinedload('groupe')).all()
         return render_template(
             'list.html.j2',
-            parlementaires=Parlementaire.query.all()
+            parlementaires=qs
         )

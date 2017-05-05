@@ -28,10 +28,10 @@
           <tr>
             <td>
               <img class="chamber-icon" src="{{ url_for('static', filename=parl.chambre|lower+'.png') }}">
-              <span class="search-vector">{{ parl.nom }} {{ parl.prenom }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe_sigle }} {{ parl.groupe }}</span>
+              <span class="search-vector">{{ parl.nom }} {{ parl.prenom }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }}</span>
             </td>
             <td data-value="{{ parl.nom }} {{ parl.prenom }}">{{ parl.prenom }} {{ parl.nom }}</td>
-            <td>{{ parl.groupe_sigle }}</td>
+            <td><span title="{{ parl.groupe.nom }}" class="label" style="background-color: {{ parl.groupe.couleur }};">{{ parl.groupe.sigle }}</span></td>
             <td data-value="{{ parl.num_deptmt }} {{ parl.num_circo }}">{{ parl.nom_circo }} n°{{ parl.num_circo }}</td>
             <td>{{ parl.etape }}</td>
           </tr>

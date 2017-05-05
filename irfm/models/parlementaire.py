@@ -6,6 +6,16 @@ from .constants import CHAMBRES, ETAPES, SEXES
 from .database import db
 
 
+class Groupe(db.Model):
+    __tablename__ = 'groupes'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    sigle = db.Column(db.Unicode)
+    nom = db.Column(db.Unicode)
+    chambre = db.Column(db.Enum(*CHAMBRES.keys(), name='chambres'))
+    couleur = db.Column(db.Unicode)
+
 
 class Parlementaire(db.Model):
     __tablename__ = 'parlementaires'
@@ -24,8 +34,9 @@ class Parlementaire(db.Model):
     num_deptmt = db.Column(db.Unicode)
     nom_circo = db.Column(db.Unicode)
     num_circo = db.Column(db.Integer)
-    groupe = db.Column(db.Unicode)
-    groupe_sigle = db.Column(db.Unicode)
+
+    groupe_id = db.Column(db.Integer, db.ForeignKey('groupes.id'))
+    groupe = db.relationship('Groupe')
 
     url_photo = db.Column(db.Unicode)
     url_rc = db.Column(db.Unicode)

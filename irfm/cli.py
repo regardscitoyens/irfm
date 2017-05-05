@@ -24,4 +24,5 @@ def runserver():
 @manager.command
 def import_nd():
     """Importe les députés depuis NosDéputés.fr"""
+    app.config.update(SQLALCHEMY_ECHO=False)
     NosDeputesImporter(app).run()

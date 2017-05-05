@@ -12,8 +12,8 @@
   {% endblock %}
 </head>
 <body>
-  <section class="container-fluid">
-    <header class="col-md-12 page-header">
+  <header class="jumbotron">
+    <div class="container-fluid">
       <h1>
         Transparence IRFM
       </h1>
@@ -23,8 +23,10 @@
           <li role="presentation" {% if request.endpoint == item.endpoint %}class="active"{% endif %}><a href="{{ item.url }}">{{ item.label }}</a></li>
         {% endfor %}
       </ul>
-    </header>
+    </div>
+  </header>
 
+  <section class="container-fluid">
     <div class="col-md-12">
       {% block content %}
       {% endblock %}
