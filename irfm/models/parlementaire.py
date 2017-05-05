@@ -21,7 +21,7 @@ class Parlementaire(db.Model):
 
     mandat_debut = db.Column(db.DateTime)
     mandat_fin = db.Column(db.DateTime)
-    num_deptmt = db.Column(db.Integer)
+    num_deptmt = db.Column(db.Unicode)
     nom_circo = db.Column(db.Unicode)
     num_circo = db.Column(db.Integer)
     groupe = db.Column(db.Unicode)
@@ -31,4 +31,4 @@ class Parlementaire(db.Model):
     url_rc = db.Column(db.Unicode)
     url_off = db.Column(db.Unicode)
 
-    etat = db.Column(db.Enum(*ETAPES.keys(), name='etapes'))
+    etape = db.Column(db.Enum(*ETAPES.keys(), name='etapes'))

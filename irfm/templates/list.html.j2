@@ -3,32 +3,51 @@
 {% block content %}
   <section class="panel panel-default">
     <header class="panel-heading">
-      <b>Liste des parlementaires</b>
+      <b>Liste des {{ parlementaires|length }} parlementaires</b>
     </header>
-    <table class="table table-striped">
-      {% for parl in parlementaires %}
 
-        {% if loop.first %}
+    <table class="table table-condensed table-striped sortable">
+      <thead>
+        <tr>
+          <th colspan="2" data-defaultsort="asc" data-mainsort="1">Parlementaire</th>
+          <th>Groupe</th>
+          <th>Circonscription</th>
+          <th>Etape</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for parl in parlementaires %}
+
           <tr>
-            <th>Parlementaire</th>
-            <th>Etape</th>
+            <td>
+              <img class="chamber-icon" src="{{ url_for('static', filename=parl.chambre|lower+'.png') }}">
+            </td>
+            <td data-value="{{ parl.nom }} {{ parl.prenom }}">{{ parl.prenom }} {{ parl.nom }}</td>
+            <td>{{ parl.groupe_sigle }}</td>
+            <td data-value="{{ parl.num_deptmt }} {{ parl.num_circo }}">{{ parl.nom_circo }} n°{{ parl.num_circo }}</td>
+            <td>{{ parl.etape }}</td>
           </tr>
-        {% endif %}
 
-        <tr>
-          <th>{{ parl.nom }}</th>
-          <th>{{ parl.etat }}</th>
-        </tr>
+        {% else %}
 
-      {% else %}
+          <tr>
+            <td class="warning" colspan="5">
+              <em>Aucun parlementaire trouvé :(</em>
+            </td>
+          </tr>
 
-        <tr>
-          <td class="warning" colspan="2">
-            <em>Aucun parlementaire trouvé :(</em>
-          </td>
-        </tr>
-
-      {% endfor %}
+        {% endfor %}
+      </tbody>
     </table>
   </section>
+{% endblock %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-sortable.css') }}">
+{% endblock %}
+
+{% block scripts %}
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='moment.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap-sortable.js') }}"></script>
 {% endblock %}

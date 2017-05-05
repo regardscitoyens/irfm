@@ -1,8 +1,8 @@
 """Initialisation
 
-Revision ID: eef599a4fb63
+Revision ID: 8d32ba048444
 Revises: 
-Create Date: 2017-05-05 21:23:01.220831
+Create Date: 2017-05-05 23:06:35.469060
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'eef599a4fb63'
+revision = '8d32ba048444'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,7 +27,7 @@ def upgrade():
     sa.Column('chambre', sa.Enum('SEN', 'AN', name='chambres'), nullable=True),
     sa.Column('mandat_debut', sa.DateTime(), nullable=True),
     sa.Column('mandat_fin', sa.DateTime(), nullable=True),
-    sa.Column('num_deptmt', sa.Integer(), nullable=True),
+    sa.Column('num_deptmt', sa.Unicode(), nullable=True),
     sa.Column('nom_circo', sa.Unicode(), nullable=True),
     sa.Column('num_circo', sa.Integer(), nullable=True),
     sa.Column('groupe', sa.Unicode(), nullable=True),
@@ -35,7 +35,7 @@ def upgrade():
     sa.Column('url_photo', sa.Unicode(), nullable=True),
     sa.Column('url_rc', sa.Unicode(), nullable=True),
     sa.Column('url_off', sa.Unicode(), nullable=True),
-    sa.Column('etat', sa.Enum('NOUVEAU', name='etapes'), nullable=True),
+    sa.Column('etape', sa.Enum('NOUVEAU', name='etapes'), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

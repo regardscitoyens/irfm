@@ -1,7 +1,7 @@
 
 ## Prérequis
 
-* Python 3
+* Python 3 + headers (ie. python3-dev)
 * virtualenvwrapper
 * PostgreSQL
 
