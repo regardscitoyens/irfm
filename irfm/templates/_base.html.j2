@@ -1,0 +1,74 @@
+<!doctype html>
+<head>
+  <title>Transparence IRFM</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+  <!-- <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" /> -->
+</head>
+<body>
+  <section class="container-fluid">
+    <header class="col-md-12 page-header">
+      <h1>
+        Transparence IRFM
+      </h1>
+
+      <ul class="nav nav-pills">
+        {% for item in menu %}
+          <li role="presentation" {% if request.endpoint == item.endpoint %}class="active"{% endif %}><a href="{{ item.url }}">{{ item.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </header>
+
+    <div class="col-md-12">
+      {% block content %}
+      {% endblock %}
+    </div>
+
+    <div class="col-md-12">
+    </div>
+  </section>
+
+  <footer class="well text-center">
+    <small>
+      <p>
+        Ce site est un <a href="https://git.regardscitoyens.org/regardscitoyens/irfm" target="_blank">logiciel libre</a>,
+        distribué sous <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank">
+          license <img src="https://www.gnu.org/graphics/agplv3-155x51.png" alt="AGPLv3" style="height: 1.5em;"></a>
+
+        &mdash;
+
+        Les données sont réutilisables sous license
+        <a href="http://creativecommons.org/licenses/by-sa/2.0/fr/" target="_blank">
+          <img src="https://i.creativecommons.org/l/by-sa/2.0/fr/80x15.png" alt="CC-BY-SA"></a>
+        et <a href="http://opendatacommons.org/licenses/odbl/">ODbL</a>
+
+        &mdash;
+
+        <a href="https://www.regardscitoyens.org/" target="_blank">
+          <img src="{{ url_for('static', filename='rc.png') }}" style="height: 1.5em; vertical-align: top;">
+          Regards Citoyens</a>
+      </p>
+
+      <p>
+        <i>Vous êtes libre de réutiliser, modifier et recouper les données dans la mesure où vous indiquez leur source et que vous republiez les données modifiées ayant servi lors d'une réutilisation publiée.</i>
+      </p>
+    </small>
+  </footer>
+
+  {% if piwik %}
+    <!-- Piwik -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//{{ piwik.host }}/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', {{ piwik.id }}]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//{{ piwik.host }}/piwik.php?idsite={{ piwik.id }}" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
+  {% endif %}
+</body>

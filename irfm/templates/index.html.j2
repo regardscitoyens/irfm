@@ -1,0 +1,14 @@
+{% extends "_base.html.j2" %}
+
+{% block content %}
+  <section class="panel panel-default">
+    <header class="panel-heading">
+      <b>Introduction</b>
+    </header>
+    <article class="panel-body">
+      {% filter markdown -%}
+        {% include "text/intro.md" %}
+      {% endfilter %}
+    </article>
+  </section>
+{% endblock %}
