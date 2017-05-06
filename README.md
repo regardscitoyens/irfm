@@ -26,7 +26,7 @@ $ irfm import_etapes
 $ irfm import_nd
 ```
 
-## Mise à jour
+## Mise à jour
 
 ```sh
 $ cd /path/to/irfm
@@ -36,6 +36,18 @@ $ irfm db upgrade
 ```
 
 ## Développement
+
+### Exécution locale
+
+```bash
+$ cd /path/to/irfm
+$ workon irfm
+$ export IRFM_CONFIG=irfm.config.EnvironmentConfig
+$ export IRFM_DEBUG=True
+$ export IRFM_DEBUG_SQL=True
+$ export IRFM_DB_URL=postgresql://irfm:irfm@localhost:5432/irfm
+$ irfm runserver
+```
 
 ### Génération de migrations
 
