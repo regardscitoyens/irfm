@@ -17,6 +17,15 @@ $ psql -c "create database irfm with owner irfm;"
 $ irfm db upgrade
 ```
 
+## Import des données
+
+```sh
+$ cd /path/to/irfm
+$ workon irfm
+$ irfm import_etapes
+$ irfm import_nd
+```
+
 ## Mise à jour
 
 ```sh

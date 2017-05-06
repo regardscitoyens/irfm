@@ -6,7 +6,8 @@ import dateparser
 import requests
 from sqlalchemy.inspection import inspect
 
-from ..models import db, Groupe, Parlementaire
+from .base import BaseImporter
+from ..models import db, Etape, Groupe, Parlementaire
 
 
 def parse_date(date):
@@ -34,23 +35,15 @@ def parse_couleur(couleur):
         return '#' + ''.join(map(dechex, couleur.split(',')))
 
 
-class NosDeputesImporter(object):
+class NosDeputesImporter(BaseImporter):
 
     URL_GROUPES = 'https://www.nosdeputes.fr/organismes/groupe/json'
     URL_DEPUTES = 'https://www.nosdeputes.fr/deputes/json'
     URL_PHOTO = '//www.nosdeputes.fr/depute/photo/%(slug)s'
+    DATE_DEBUT = parse_date('2017-01-01')
 
     columns = None
     groupes = {}
-
-    def __init__(self, app):
-        self.app = app
-
-    def info(self, msg):
-        self.app.logger.info(u'<%s> %s' % (self.__class__.__name__, msg))
-
-    def error(self, msg):
-        self.app.logger.error(u'<%s> %s' % (self.__class__.__name__, msg))
 
     def import_depute(self, data):
         if not self.columns:
@@ -70,7 +63,7 @@ class NosDeputesImporter(object):
         depute = Parlementaire.query.filter_by(**id_data).first()
 
         if not depute:
-            id_data.update({'etape': 'NOUVEAU'})
+            id_data.update({'etape': self.etape_nv})
             depute = Parlementaire(**id_data)
             db.session.add(depute)
             created = True
@@ -91,6 +84,9 @@ class NosDeputesImporter(object):
             'url_off': data['url_an'],
         }
 
+        if fields['mandat_fin'] and fields['mandat_fin'] < self.DATE_DEBUT:
+            fields['etape'] = self.etape_na
+
         for key, newvalue in fields.items():
             curvalue = getattr(depute, key)
 
@@ -105,6 +101,16 @@ class NosDeputesImporter(object):
         return created, updated
 
     def import_deputes(self):
+        self.etape_na = Etape.query.filter_by(label='N/A').first()
+        if not self.etape_na:
+            self.error('Etape N/A introuvable, exécuter import_etapes ?')
+            return
+
+        self.etape_nv = Etape.query.filter_by(label='À envoyer').first()
+        if not self.etape_nv:
+            self.error('Etape À envoyer introuvable, exécuter import_etapes ?')
+            return
+
         try:
             data = requests.get(self.URL_DEPUTES).json()
         except Exception as e:

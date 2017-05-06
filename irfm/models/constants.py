@@ -10,11 +10,69 @@ CHAMBRES = {
     'SEN': 'Sénat',
 }
 
-ETAPES = {
-    'NOUVEAU': 'Nouveau'
-}
-
 SEXES = {
     'F': 'Femme',
     'H': 'Homme',
 }
+
+#
+# Lors de la modification de cette énumération, relancer l'import des étapes.
+# L'ordre est utilisé comme clé primaire lors de cet import.
+#
+
+ETAPES = [
+    {
+        'ordre': 0,
+        'label': 'N/A',
+        'description': '',
+        'couleur': '',
+    },
+    {
+        'ordre': 10,
+        'label': 'À envoyer',
+        'description': '',
+        'couleur': '#cccccc',
+    },
+    {
+        'ordre': 20,
+        'label': 'Envoyé',
+        'description': '',
+        'couleur': '#88dddd',
+    },
+    {
+        'ordre': 30,
+        'label': 'AR reçu',
+        'description': '',
+        'couleur': '#8888dd',
+    },
+    {
+        'ordre': 40,
+        'label': 'Réponse positive',
+        'description': '',
+        'couleur': '#88dd88',
+    },
+    {
+        'ordre': 50,
+        'label': 'Réponse négative',
+        'description': '',
+        'couleur': '#dd8888',
+    },
+    {
+        'ordre': 60,
+        'label': 'Demande CADA',
+        'description': '',
+        'couleur': '#ddaa88',
+    },
+    {
+        'ordre': 70,
+        'label': 'Accord CADA',
+        'description': '',
+        'couleur': '#44aa44',
+    },
+    {
+        'ordre': 90,
+        'label': 'Refus CADA',
+        'description': '',
+        'couleur': '#aa4444',
+    },
+]

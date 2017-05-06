@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import enum
-
-from .constants import CHAMBRES, ETAPES, SEXES
+from .constants import CHAMBRES, SEXES
 from .database import db
 
 
@@ -42,4 +40,5 @@ class Parlementaire(db.Model):
     url_rc = db.Column(db.Unicode)
     url_off = db.Column(db.Unicode)
 
-    etape = db.Column(db.Enum(*ETAPES.keys(), name='etapes'))
+    etape_id = db.Column(db.Integer, db.ForeignKey('etapes.id'))
+    etape = db.relationship('Etape', back_populates='parlementaires')

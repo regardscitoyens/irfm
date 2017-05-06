@@ -1,14 +1,65 @@
 {% extends "_base.html.j2" %}
 
 {% block content %}
-  <section class="panel panel-default">
-    <header class="panel-heading">
-      <b>Introduction</b>
-    </header>
-    <article class="panel-body">
-      {% filter markdown -%}
-        {% include "text/intro.md" %}
-      {% endfilter %}
-    </article>
-  </section>
+  <div class="col-md-6">
+    <section class="panel panel-default">
+      <article class="panel-body">
+        {% filter markdown -%}
+          {% include "text/explications.md" %}
+        {% endfilter %}
+      </article>
+    </section>
+  </div>
+
+  <div class="col-md-6">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Avancement du projet</b>
+      </header>
+      <article class="panel-body">
+        <canvas id="pie-canvas" height="200"></canvas>
+      </article>
+    </section>
+
+    <section class="panel panel-default">
+      <article class="panel-body">
+        {% filter markdown -%}
+          {% include "text/nousaider.md" %}
+        {% endfilter %}
+      </article>
+    </section>
+
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Un parlementaire au hasard...</b>
+      </header>
+      <article class="panel-body">
+        <img src="{{ parlementaire.url_photo }}/120" align="left">
+        <b>{{ parlementaire.prenom }} {{ parlementaire.nom }}</b>
+      </article>
+    </section>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
+
+  <script>
+    var chart = new Chart($('#pie-canvas'), {
+      type: 'pie',
+      data: {
+        labels: {{ etapes.labels|tojson }},
+        datasets: [
+          {
+            data: {{ etapes.counts|tojson }},
+            backgroundColor: {{ etapes.couleurs|tojson }}
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false
+      }
+    });
+  </script>
 {% endblock %}
