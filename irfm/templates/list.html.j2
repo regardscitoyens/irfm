@@ -33,9 +33,9 @@
           <tr>
             <td class="col-center">
               <img class="chamber-icon" src="{{ url_for('static', filename=parl.chambre|lower+'.png') }}">
-              <span class="search-vector">{{ parl.nom }} {{ parl.prenom }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }}</span>
+              <span class="search-vector">{{ parl.nom_complet }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }}</span>
             </td>
-            <td data-value="{{ parl.nom }} {{ parl.prenom }}">{{ parl.prenom }} {{ parl.nom }}</td>
+            <td data-value="{{ parl.nom }} {{ parl.prenom }}">{{ parl.nom_complet }}</td>
             <td class="col-center">{{ parl.groupe|label_groupe }}</td>
             <td data-value="{{ parl.num_deptmt }} {{ parl.num_circo }}">{{ parl.nom_circo }} n°{{ parl.num_circo }}</td>
             <td class="col-center">

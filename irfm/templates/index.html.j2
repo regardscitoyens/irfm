@@ -46,7 +46,7 @@
       <article class="panel-body parl-card">
         <img class="parl-photo" src="{{ parlementaire.url_photo }}/120" align="left">
         <div class="parl-detail">
-          <b>{{ parlementaire.prenom }} {{ parlementaire.nom }}</b> {{ parlementaire.groupe|label_groupe }}<br>
+          <b>{{ parlementaire.nom_complet }}</b> {{ parlementaire.groupe|label_groupe }}<br>
           {{ parlementaire|fonc_parlementaire }} &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}<br><br>
 
           <a class="btn btn-primary btn-sm" href="{{ url_for('parlementaire', id=parlementaire.id) }}" role="button">Envoyer la demande</a>

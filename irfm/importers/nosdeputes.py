@@ -70,6 +70,7 @@ class NosDeputesImporter(BaseImporter):
 
         fields = {
             'sexe': data['sexe'],
+            'nom_complet': data['nom'],
 
             'mandat_debut': parse_date(data['mandat_debut']),
             'mandat_fin': parse_date(data.get('mandat_fin', None)),

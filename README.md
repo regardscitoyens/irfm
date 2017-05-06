@@ -1,11 +1,12 @@
+## Installation
 
-## Prérequis
+### Prérequis
 
 * Python 3 + headers (ie. python3-dev)
 * virtualenvwrapper
 * PostgreSQL
 
-## Installation
+### Nouvelle Installation
 
 ```sh
 $ git clone https://git.regardscitoyens.org/regardscitoyens/irfm.git
@@ -15,25 +16,22 @@ $ pip install -e .
 $ psql -c "create user irfm with password 'irfm';"
 $ psql -c "create database irfm with owner irfm;"
 $ irfm db upgrade
-```
-
-## Import des données
-
-```sh
-$ cd /path/to/irfm
-$ workon irfm
 $ irfm import_etapes
 $ irfm import_nd
 $ irfm import_adresses
 ```
 
-## Mise à jour
+### Mise à jour
 
 ```sh
 $ cd /path/to/irfm
 $ workon irfm
 $ git pull
+$ pip install -e .
 $ irfm db upgrade
+$ irfm import_etapes
+$ irfm import_nd
+$ irfm import_adresses
 ```
 
 ## Développement

@@ -22,6 +22,7 @@ class Parlementaire(db.Model):
 
     nom = db.Column(db.Unicode)
     prenom = db.Column(db.Unicode)
+    nom_complet = db.Column(db.Unicode)
     sexe = db.Column(db.Enum(*SEXES.keys(), name='sexes'))
     adresse = db.Column(db.Unicode)
 
