@@ -51,3 +51,15 @@ th.col-right {
 #pie-container > :last-child {
   flex-basis: 30%;
 }
+
+.jumbotron {
+  background-image: url(hemicycle.jpg);
+  background-size: cover;
+  background-position: center;
+
+}
+
+.jumbotron h1 {
+  font-size: 40px;
+  font-weight: bold;
+}
