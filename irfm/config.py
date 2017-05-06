@@ -1,9 +1,27 @@
 # -*- coding: utf-8 -*-
 
 import os
+from random import SystemRandom
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def get_secret_key(data_dir):
+    secret_file = os.path.join(data_dir, 'secret.txt')
+
+    if not os.path.exists(secret_file):
+        chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+
+        rnd = SystemRandom()
+        key = ''.join([chars[rnd.randint(1, len(chars))-1]
+                       for i in range(1, 50)])
+
+        with open(secret_file, 'w+') as f:
+            f.write(key)
+
+    with open(secret_file, 'r') as f:
+        return f.read()
 
 
 class DefaultConfig(object):
@@ -17,7 +35,6 @@ class DefaultConfig(object):
     SQLALCHEMY_ECHO = False
     DATA_DIR = os.path.join(BASE_DIR, 'data')
     API_PAGE_SIZE = 10
-    SECRET_KEY = 'no-secret-key'
     PIWIK_HOST = None
     PIWIK_ID = None
 
@@ -30,35 +47,7 @@ class DebugConfig(DefaultConfig):
     SQLALCHEMY_ECHO = True
 
 
-class AutoSecretKeyConfig(DefaultConfig):
-    """
-    Default config that automatically generates a secret key in DATA_DIR
-    """
-    _secret_key = None
-
-    @property
-    def SECRET_KEY(self):
-        if not self._secret_key:
-            secret_file = os.path.join(self.DATA_DIR, 'secret.txt')
-
-            if not os.path.exists(secret_file):
-                chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-
-                from random import SystemRandom
-                rnd = SystemRandom()
-                key = ''.join([chars[rnd.randint(1, len(chars))-1]
-                               for i in range(1, 50)])
-
-                with open(secret_file, 'w+') as f:
-                    f.write(key)
-
-            with open(secret_file, 'r') as f:
-                self._secret_key = f.read()
-
-        return self._secret_key
-
-
-class EnvironmentConfig(AutoSecretKeyConfig):
+class EnvironmentConfig(DefaultConfig):
     """
     Config for environment-based setup.
     - IRFM_DEBUG: 'True' to enable

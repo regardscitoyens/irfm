@@ -22,13 +22,47 @@
         {% for item in menu %}
           <li role="presentation" {% if request.endpoint == item.endpoint %}class="active"{% endif %}><a href="{{ item.url }}">{{ item.label }}</a></li>
         {% endfor %}
+
         {% block menuitem %}
         {% endblock %}
+
+        <li role="presentation" class="login">
+
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% if session.user %}
+                  {{ session.user.nick }}
+                {% else %}
+                  S'identifier
+                {% endif %}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                  {% if session.user %}
+                    <a href="{{ url_for('logout') }}">Se déconnecter</a>
+                  {% else %}
+                    <form class="form-horizontal login-form" method="POST" action="{{ url_for('login') }}">
+                      <input name="nick" type="text" class="form-control" placeholder="Pseudo">
+                      <input name="email" type="email" class="form-control" placeholder="Adresse e-mail">
+                      <br>
+                      <input type="submit" class="btn btn-primary" value="Valider">
+                    </form>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
+
+        </li>
       </ul>
     </div>
   </header>
 
   <section class="container-fluid">
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% endfor %}
+
     {% block content %}
     {% endblock %}
 
@@ -62,6 +96,14 @@
       </p>
     </small>
   </footer>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <script>
+    $('.dropdown-toggle').dropdown();
+  </script>
 
   {% block scripts %}
   {% endblock %}

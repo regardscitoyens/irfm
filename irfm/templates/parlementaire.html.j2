@@ -34,12 +34,29 @@
       </article>
     </section>
   </div>
+
   {% if parlementaire.etape.ordre == 10 %}
-    <div class="col-md-12" id="letter-container">
-      <iframe name="demande" id="demande" src="{{ url_for('demande_pdf', id=parlementaire.id) }}">
-      </iframe>
-    </div>
+    {% if session.user %}
+      <div class="col-md-12" id="letter-container">
+        <iframe name="demande" id="demande" src="{{ url_for('demande_pdf', id=parlementaire.id) }}">
+        </iframe>
+      </div>
+    {% else %}
+      <div class="col-md-12">
+        <div class="alert alert-warning" role="alert">
+          Pour envoyer une demande et assurer son suivi, il faut au préalable <a href="#" id="identify-link">vous identifier</a>.
+        </div>
+      </div>
+    {% endif %}
   {% else %}
     ...
   {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $('#identify-link').click(function() {
+      $('.login .dropdown-toggle').dropdown('toggle');
+    });
+  </script>
 {% endblock %}

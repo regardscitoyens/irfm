@@ -4,7 +4,7 @@ from flask import abort, make_response, render_template
 from xhtml2pdf import pisa
 from io import BytesIO
 
-from ..models import  Parlementaire
+from ..models import Parlementaire
 
 
 def setup_routes(app):

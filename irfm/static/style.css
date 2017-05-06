@@ -62,3 +62,15 @@ th.col-right {
   font-size: 40px;
   font-weight: bold;
 }
+
+.nav li.login {
+  float: right;
+}
+
+.login-form {
+  padding: 1em;
+}
+
+.login-form input {
+  width: 20em;
+}
