@@ -85,7 +85,7 @@ ETAPES = [
         'label': 'Demande CADA',
         'description': """
             Suite au refus du parlementaire, nous avons transmis la demande à
-            la Comission d'Accès aux Documents Administratifs.
+            la Commission d'Accès aux Documents Administratifs.
         """,
         'couleur': '#ddaa88',
     },
@@ -93,9 +93,9 @@ ETAPES = [
         'ordre': 70,
         'label': 'Accord CADA',
         'description': """
-            Suite au refus du parlementaire, la Comission d'Accès aux Documents
-            Administratifs a répondu favorablement à la transmission des
-            relevés demandés.
+            Suite au refus du parlementaire, la Commission d'Accès aux
+            Documents Administratifs a répondu favorablement à la transmission
+            des relevés demandés.
         """,
         'couleur': '#44aa44',
     },
@@ -103,8 +103,9 @@ ETAPES = [
         'ordre': 90,
         'label': 'Refus CADA',
         'description': """
-            Suite au refus du parlementaire, la Comission d'Accès aux Documents
-            Administratifs a refusé la transmission des relevés demandés.
+            Suite au refus du parlementaire, la Commission d'Accès aux
+            Documents Administratifs a refusé la transmission des relevés
+            demandés.
         """,
         'couleur': '#aa4444',
     },
