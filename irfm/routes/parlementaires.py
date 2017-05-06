@@ -35,15 +35,3 @@ def setup_routes(app):
             'parlementaire.html.j2',
             parlementaire=parl
         )
-
-    @app.route('/parlementaires/<id>/demande', endpoint='demande')
-    def demande(id):
-        parl = Parlementaire.query.filter_by(id=id).first()
-
-        if not parl:
-            abort(404)
-
-        return render_template(
-            'demande.html.j2',
-            parlementaire=parl
-        )

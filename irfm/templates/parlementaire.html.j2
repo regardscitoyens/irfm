@@ -36,27 +36,10 @@
   </div>
   {% if parlementaire.etape.ordre == 10 %}
     <div class="col-md-12" id="letter-container">
-      <button type="button" class="btn btn-primary btn-lg active" id="#print-button">Imprimer la demande</button>
-      <br><br>
-
-      <iframe name="demande" id="demande" src="{{ url_for('demande', id=parlementaire.id) }}">
+      <iframe name="demande" id="demande" src="{{ url_for('demande_pdf', id=parlementaire.id) }}">
       </iframe>
     </div>
   {% else %}
-    WIIIIIII :)
+    ...
   {% endif %}
-{% endblock %}
-
-{% block scripts %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-  <script>
-    $(document).ready(function () {
-      (function ($) {
-        $('#print-button').click(function() {
-          frames['demande'].print();
-        });
-      })(jQuery);
-    });
-  </script>
 {% endblock %}
