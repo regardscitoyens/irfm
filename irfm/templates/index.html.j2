@@ -16,8 +16,18 @@
       <header class="panel-heading">
         <b>Avancement du projet</b>
       </header>
-      <article class="panel-body">
-        <canvas id="pie-canvas" height="200"></canvas>
+      <article class="panel-body" id="pie-container">
+        <div>
+          {% for etape in etapes %}
+            <p>
+              <span class="label" style="background-color: {{ etape.couleur }};">{{ etape.label }}</span>
+              <small>{{ etape.description }}</small>
+            </p>
+          {% endfor %}
+        </div>
+        <div>
+          <canvas id="pie-canvas" height="10" width="10"></canvas>
+        </div>
       </article>
     </section>
 
@@ -33,9 +43,14 @@
       <header class="panel-heading">
         <b>Un parlementaire au hasard...</b>
       </header>
-      <article class="panel-body">
-        <img src="{{ parlementaire.url_photo }}/120" align="left">
-        <b>{{ parlementaire.prenom }} {{ parlementaire.nom }}</b>
+      <article class="panel-body parl-card">
+        <img class="parl-photo" src="{{ parlementaire.url_photo }}/120" align="left">
+        <div class="parl-detail">
+          <b>{{ parlementaire.prenom }} {{ parlementaire.nom }}</b> {{ parlementaire.groupe|label_groupe }}<br>
+          {{ parlementaire|fonc_parlementaire }} &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}<br><br>
+
+          <a class="btn btn-primary btn-sm" href="{{ url_for('parlementaire', id=parlementaire.id) }}" role="button">Envoyer la demande</a>
+        </div>
       </article>
     </section>
   </div>
@@ -46,20 +61,19 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
 
   <script>
-    var chart = new Chart($('#pie-canvas'), {
-      type: 'pie',
-      data: {
-        labels: {{ etapes.labels|tojson }},
-        datasets: [
-          {
-            data: {{ etapes.counts|tojson }},
-            backgroundColor: {{ etapes.couleurs|tojson }}
+    $(document).ready(function () {
+      (function ($) {
+        var chart = new Chart($('#pie-canvas'), {
+          type: 'pie',
+          data: {{ etapes_data|tojson }},
+          options: {
+            legend: {
+              display: false
+            },
+            maintainAspectRatio: true
           }
-        ]
-      },
-      options: {
-        maintainAspectRatio: false
-      }
+        });
+      })(jQuery);
     });
   </script>
 {% endblock %}

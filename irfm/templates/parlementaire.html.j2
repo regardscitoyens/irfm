@@ -1,0 +1,62 @@
+{% extends "_base.html.j2" %}
+
+{% block header %}
+  <style>
+    #letter-container {
+      text-align: center;
+    }
+
+    iframe {
+      width: 21cm;
+      height: 29.7cm;
+
+      margin-left: auto;
+      margin-right: auto;
+
+      border: 1px solid #ccc;
+    }
+  </style>
+{% endblock %}
+
+{% block menuitem %}
+  <li role="presentation" class="active"><a href="#">{{ parlementaire.prenom }} {{ parlementaire.nom }}</a></li>
+{% endblock %}
+
+{% block content %}
+  <div class="col-md-12">
+    <section class="panel panel-default">
+      <article class="panel-body parl-card">
+        <img class="parl-photo" src="{{ parlementaire.url_photo }}/120" align="left">
+        <div class="parl-detail">
+          <b>{{ parlementaire.prenom }} {{ parlementaire.nom }}</b> {{ parlementaire.groupe|label_groupe }}<br>
+          {{ parlementaire|fonc_parlementaire }} &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}<br><br><br>
+        </div>
+      </article>
+    </section>
+  </div>
+  {% if parlementaire.etape.ordre == 10 %}
+    <div class="col-md-12" id="letter-container">
+      <button type="button" class="btn btn-primary btn-lg active" id="#print-button">Imprimer la demande</button>
+      <br><br>
+
+      <iframe name="demande" id="demande" src="{{ url_for('demande', id=parlementaire.id) }}">
+      </iframe>
+    </div>
+  {% else %}
+    WIIIIIII :)
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function () {
+      (function ($) {
+        $('#print-button').click(function() {
+          frames['demande'].print();
+        });
+      })(jQuery);
+    });
+  </script>
+{% endblock %}

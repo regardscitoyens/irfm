@@ -1,5 +1,9 @@
 {% extends "_base.html.j2" %}
 
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-sortable.css') }}">
+{% endblock %}
+
 {% block content %}
   <section class="panel panel-default">
     <header class="panel-heading">
@@ -17,29 +21,39 @@
       <thead>
         <tr>
           <th colspan="2" data-defaultsort="asc" data-mainsort="1">Parlementaire</th>
-          <th>Groupe</th>
+          <th class="col-center">Groupe</th>
           <th>Circonscription</th>
-          <th>Etape</th>
+          <th class="col-center">Etape</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
         {% for parl in parlementaires %}
 
           <tr>
-            <td>
+            <td class="col-center">
               <img class="chamber-icon" src="{{ url_for('static', filename=parl.chambre|lower+'.png') }}">
               <span class="search-vector">{{ parl.nom }} {{ parl.prenom }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }}</span>
             </td>
             <td data-value="{{ parl.nom }} {{ parl.prenom }}">{{ parl.prenom }} {{ parl.nom }}</td>
-            <td><span title="{{ parl.groupe.nom }}" class="label" style="background-color: {{ parl.groupe.couleur }};">{{ parl.groupe.sigle }}</span></td>
+            <td class="col-center">{{ parl.groupe|label_groupe }}</td>
             <td data-value="{{ parl.num_deptmt }} {{ parl.num_circo }}">{{ parl.nom_circo }} n°{{ parl.num_circo }}</td>
-            <td><span class="label" style="background-color: {{ parl.etape.couleur }};">{{ parl.etape.label }}</span></td>
+            <td class="col-center">
+              <span class="label" style="background-color: {{ parl.etape.couleur }};">{{ parl.etape.label }}</span>
+            </td>
+            <td class="col-right">
+              {% if parl.etape.ordre == 10 %}
+                <a class="btn btn-primary btn-sm" href="{{ url_for('parlementaire', id=parl.id) }}" role="button">Envoyer la demande</a>
+              {% else %}
+                <a class="btn btn-default btn-sm" href="{{ url_for('parlementaire', id=parl.id) }}" role="button">Informations</a>
+              {% endif %}
+            </td>
           </tr>
 
         {% else %}
 
           <tr>
-            <td class="warning" colspan="5">
+            <td class="warning" colspan="6">
               <em>Aucun parlementaire trouvé :(</em>
             </td>
           </tr>
@@ -48,14 +62,6 @@
       </tbody>
     </table>
   </section>
-{% endblock %}
-
-{% block header %}
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap-sortable.css') }}">
-
-  <style>
-    .search-vector { display: none; }
-  </style>
 {% endblock %}
 
 {% block scripts %}

@@ -22,6 +22,8 @@
         {% for item in menu %}
           <li role="presentation" {% if request.endpoint == item.endpoint %}class="active"{% endif %}><a href="{{ item.url }}">{{ item.label }}</a></li>
         {% endfor %}
+        {% block menuitem %}
+        {% endblock %}
       </ul>
     </div>
   </header>

@@ -30,49 +30,82 @@ ETAPES = [
     {
         'ordre': 10,
         'label': 'À envoyer',
-        'description': '',
+        'description': """
+            La demande d'accès aux relevés de comptes du parlementaire n'a pas
+            encore été envoyée.
+        """,
         'couleur': '#cccccc',
+    },
+    {
+        'ordre': 15,
+        'label': 'À confirmer',
+        'description': """
+            Un utilisateur a souhaité se charger de l'envoi de la demande, mais
+            nous n'avons pas encore confirmation de cet envoi.
+        """,
+        'couleur': '#8888aa',
     },
     {
         'ordre': 20,
         'label': 'Envoyé',
-        'description': '',
+        'description': """
+            La demande d'accès aux relevés de comptes du parlementaire a été
+            envoyée, mais nous n'avons pas encore d'avis de réception.
+        """,
         'couleur': '#88dddd',
     },
     {
         'ordre': 30,
         'label': 'AR reçu',
-        'description': '',
+        'description': """
+            Le parlementaire a reçu la demande d'accès à ses relevés de comptes.
+        """,
         'couleur': '#8888dd',
     },
     {
         'ordre': 40,
         'label': 'Réponse positive',
-        'description': '',
+        'description': """
+            Le parlementaire nous a transmis les relevés de compte demandés.
+        """,
         'couleur': '#88dd88',
     },
     {
         'ordre': 50,
         'label': 'Réponse négative',
-        'description': '',
+        'description': """
+            Le parlementaire a refusé de nous transmettre ses relevés de
+            compte, soit explicitement, soit par voie de presse, soit à
+            l'expiration d'un délai de 2 mois après réception de la demande.
+        """,
         'couleur': '#dd8888',
     },
     {
         'ordre': 60,
         'label': 'Demande CADA',
-        'description': '',
+        'description': """
+            Suite au refus du parlementaire, nous avons transmis la demande à
+            la Comission d'Accès aux Documents Administratifs.
+        """,
         'couleur': '#ddaa88',
     },
     {
         'ordre': 70,
         'label': 'Accord CADA',
-        'description': '',
+        'description': """
+            Suite au refus du parlementaire, la Comission d'Accès aux Documents
+            Administratifs a répondu favorablement à la transmission des
+            relevés demandés.
+        """,
         'couleur': '#44aa44',
     },
     {
         'ordre': 90,
         'label': 'Refus CADA',
-        'description': '',
+        'description': """
+            Suite au refus du parlementaire, la Comission d'Accès aux Documents
+            Administratifs a refusé la transmission des relevés demandés.
+        """,
         'couleur': '#aa4444',
     },
 ]

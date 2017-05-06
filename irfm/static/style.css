@@ -1,3 +1,53 @@
 .chamber-icon {
   height: 1.5em;
 }
+
+.parl-card {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.parl-card .parl-photo {
+  margin-right: 1em;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.parl-card .parl-detail {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.search-vector {
+  display: none;
+}
+
+td.col-center,
+th.col-center {
+  text-align: center;
+}
+
+td.col-right,
+th.col-right {
+  text-align: right;
+}
+
+#pie-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+#pie-container > * {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+#pie-container > :first-child {
+  flex-basis: 70%;
+}
+
+#pie-container > :last-child {
+  flex-basis: 30%;
+}
