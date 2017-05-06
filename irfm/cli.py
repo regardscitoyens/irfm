@@ -3,8 +3,9 @@
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
-from .importers.nosdeputes import NosDeputesImporter
+from .importers.adresses import AdressesImporter
 from .importers.etapes import EtapesImporter
+from .importers.nosdeputes import NosDeputesImporter
 
 from .irfm import app
 from .models import db
@@ -34,3 +35,9 @@ def import_nd():
     """Importe les députés depuis NosDéputés.fr"""
     app.config.update(SQLALCHEMY_ECHO=False)
     NosDeputesImporter(app).run()
+
+@manager.command
+def import_adresses():
+    """Importe adresses postales des parlementaires"""
+    app.config.update(SQLALCHEMY_ECHO=False)
+    AdressesImporter(app).run()

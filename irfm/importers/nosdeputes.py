@@ -130,7 +130,6 @@ class NosDeputesImporter(BaseImporter):
                 updated += 1
 
         db.session.commit()
-        db.session.flush()
 
         self.info('Import députés terminé: %s créés, %s mis à jour'
                   % (created, updated))
@@ -188,7 +187,6 @@ class NosDeputesImporter(BaseImporter):
                 updated += 1
 
         db.session.commit()
-        db.session.flush()
 
         self.info('Import groupes terminé: %s créés, %s mis à jour'
                   % (created, updated))

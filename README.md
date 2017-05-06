@@ -24,6 +24,7 @@ $ cd /path/to/irfm
 $ workon irfm
 $ irfm import_etapes
 $ irfm import_nd
+$ irfm import_adresses
 ```
 
 ## Mise à jour

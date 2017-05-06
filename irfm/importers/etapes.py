@@ -49,7 +49,6 @@ class EtapesImporter(BaseImporter):
                 updated += 1
 
         db.session.commit()
-        db.session.flush()
 
         self.info('Import étapes terminé: %s créées, %s mises à jour'
                   % (created, updated))

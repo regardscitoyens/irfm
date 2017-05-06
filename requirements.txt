@@ -1,8 +1,10 @@
+beautifulsoup4==4.5.3
 dateparser==0.6.0
 flask==0.12.1
 flask-markdown==0.3
 flask-migrate==2.0.3
 flask-script==2.0.5
 flask-sqlalchemy==2.2
+html5lib==0.999999999
 psycopg2==2.7.1
 requests==2.13.0
