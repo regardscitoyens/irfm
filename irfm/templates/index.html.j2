@@ -3,9 +3,23 @@
 {% block content %}
   <div class="col-md-6">
     <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Présentation de l'opération</b>
+      </header>
       <article class="panel-body">
         {% filter markdown -%}
-          {% include "text/explications.md" %}
+          {% include "text/presentation.md" %}
+        {% endfilter %}
+      </article>
+    </section>
+
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Comment nous aider ?</b>
+      </header>
+      <article class="panel-body">
+        {% filter markdown -%}
+          {% include "text/howto_help.md" %}
         {% endfilter %}
       </article>
     </section>
@@ -14,7 +28,7 @@
   <div class="col-md-6">
     <section class="panel panel-default">
       <header class="panel-heading">
-        <b>Avancement du projet</b>
+        <b>Avancement</b>
       </header>
       <article class="panel-body" id="pie-container">
         <div>
@@ -28,14 +42,6 @@
         <div>
           <canvas id="pie-canvas" height="10" width="10"></canvas>
         </div>
-      </article>
-    </section>
-
-    <section class="panel panel-default">
-      <article class="panel-body">
-        {% filter markdown -%}
-          {% include "text/nousaider.md" %}
-        {% endfilter %}
       </article>
     </section>
 
