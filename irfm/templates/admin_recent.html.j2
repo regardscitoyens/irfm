@@ -20,7 +20,10 @@
       <tbody>
         {% for action in actions %}
           <tr>
-            <td>{{ action.parlementaire.nom_complet }}</td>
+            <td>
+              <a class="btn btn-default btn-sm" href="{{ url_for('parlementaire', id=action.parlementaire_id) }}">Voir</a>
+              {{ action.parlementaire.nom_complet }}
+            </td>
             <td>{{ action.etape|label_etape }}</td>
             <td>{{ action.date.strftime('%c') }}</td>
             <td>
@@ -32,11 +35,12 @@
             </td>
             <td>
               {% if action.attachment %}
-                <a class="btn btn-default" href="{{ url_for('admin_fichier', id_action=action.id) }}" target="_blank">{{ action.attachment }}</a>
+                <a class="btn btn-default btn-sm" href="{{ url_for('admin_fichier', id_action=action.id) }}" target="_blank">Voir</a>
+                {{ action.attachment }}
               {% endif %}
             </td>
-            <td>
-              <a class="btn btn-danger" href="{{ url_for('admin_delete', id=action.id) }}">Supprimer</a>
+            <td class="col-right">
+              <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=action.id) }}">Supprimer</a>
             </td>
           </tr>
 
