@@ -1,31 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import re
 
 from flask import abort, flash, redirect, request, session, url_for
-from urllib.parse import urlparse, urljoin
 
-
-def is_safe_url(target):
-    ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
-
-
-def redirect_back():
-    if request.referrer and is_safe_url(request.referrer):
-        return redirect(request.referrer)
-    else:
-        return redirect(url_for('home'))
-
-
-def sanitize(text):
-    return re.sub(r'[^@A-Za-z0-9_.-]', '', text)
-
-
-def check_email(text):
-    return re.search(r'^[^@]+@[^@]+\.[^@]+$', text)
+from .util import check_email, redirect_back, sanitize
 
 
 def setup_routes(app):

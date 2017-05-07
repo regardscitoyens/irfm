@@ -1,26 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from io import BytesIO
-import re
-import unicodedata
 
 from flask import abort, make_response, render_template
 from xhtml2pdf import pisa
 
+from .util import slugify
 from ..models import Parlementaire
 
-
-SLUG_STRIP_RE = re.compile(r'[^\w\s-]')
-SLUG_HYP_RE = re.compile(r'[-\s]+')
-
-def slugify(value):
-    if not isinstance(value, str):
-        value = str(value)
-    value = str(unicodedata.normalize('NFKD', value).encode('ascii', 'ignore'))
-    value = str(SLUG_STRIP_RE.sub('', value).strip().lower())
-    value = SLUG_HYP_RE.sub('-', value)
-
-    return value[1:]
 
 
 def setup_routes(app):
