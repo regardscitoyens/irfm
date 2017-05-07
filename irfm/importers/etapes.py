@@ -58,5 +58,5 @@ class EtapesImporter(BaseImporter):
 
         db.session.commit()
 
-        self.info('Import étapes terminé: %s créées, %s mises à jour, ' \
+        self.info('Import étapes terminé: %s créées, %s mises à jour, '
                   '%s supprimées' % (created, updated, deleted))

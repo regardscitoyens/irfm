@@ -3,9 +3,9 @@
 import os
 
 from flask import make_response, render_template
-from sqlalchemy.orm import contains_eager, joinedload
+from sqlalchemy.orm import joinedload
 
-from .util import redirect_back, require_admin
+from .util import not_found, redirect_back, require_admin
 from ..models import db, Action, Etape, Parlementaire
 from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER, EXTENSIONS
 
@@ -25,7 +25,6 @@ def setup_routes(app):
                                titre='Actions récentes',
                                actions=qs)
 
-
     @app.route('/admin/en-attente', endpoint='admin_en_attente')
     @require_admin
     def admin_en_attente():
@@ -43,8 +42,6 @@ def setup_routes(app):
         return render_template('admin_recent.html.j2',
                                titre='Actions en attente',
                                actions=qs)
-
-
 
     @app.route('/admin/delete/<id>', endpoint='admin_delete')
     @require_admin

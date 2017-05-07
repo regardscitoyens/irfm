@@ -16,7 +16,6 @@ def setup_routes(app):
             h.update(bytes(request.form['email'], encoding='utf-8'))
             digest = h.hexdigest()
 
-
             if hmac.compare_digest(digest, app.config['ADMIN_PASSWORD']):
                 session['user'] = {
                     'nick': '!rc',
