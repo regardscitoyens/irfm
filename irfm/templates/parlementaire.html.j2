@@ -47,7 +47,7 @@
           Vous avez pris en charge l'envoi du courrier à ce parlementaire. Pour confirmer l'envoi,
           merci de nous envoyer une photo ou un scan de la preuve de dépôt à l'aide du formulaire ci-dessous.
 
-          <form>
+          <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}">
             <div class="form-group">
               <label class="col-md-4" for="file">Preuve d'envoi</label>
               <div class="col-md-8">

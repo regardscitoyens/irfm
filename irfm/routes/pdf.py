@@ -5,7 +5,7 @@ from io import BytesIO
 from flask import abort, make_response, render_template
 from xhtml2pdf import pisa
 
-from .util import slugify
+from .util import not_found, slugify
 from ..models import Parlementaire
 
 
@@ -17,7 +17,7 @@ def setup_routes(app):
         parl = Parlementaire.query.filter_by(id=id).first()
 
         if not parl:
-            abort(404)
+            return not_found()
 
         slug = slugify(parl.nom_complet)
 

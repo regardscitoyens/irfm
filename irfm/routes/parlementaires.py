@@ -5,9 +5,9 @@ from datetime import datetime
 from flask import abort, flash, redirect, render_template, session, url_for
 from sqlalchemy.orm import joinedload, contains_eager
 
-from .util import redirect_back, require_user
+from .util import not_found, redirect_back, require_user
 from ..models import db, Action, Etape, Parlementaire
-from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER
+from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER, ETAPE_ENVOYE
 
 
 def setup_routes(app):
@@ -34,7 +34,7 @@ def setup_routes(app):
                                   .first()
 
         if not parl:
-            abort(404)
+            return not_found()
 
         pris_en_charge = False
         if session.get('user') and parl.etape.ordre == ETAPE_A_CONFIRMER:
@@ -64,7 +64,7 @@ def setup_routes(app):
                                 .first()
 
             if not parl:
-                abort(404)
+                return not_found()
 
             if parl.etape.ordre != ETAPE_A_ENVOYER:
                 msg = 'Oups, la situation a changé pour ce parlementaire...'
@@ -98,7 +98,7 @@ def setup_routes(app):
                                   .first()
 
         if not parl:
-            abort(404)
+            return not_found()
 
         pris_en_charge = False
         if parl.etape.ordre == ETAPE_A_CONFIRMER:
@@ -118,6 +118,34 @@ def setup_routes(app):
 
         parl.etape = Etape.query.filter_by(ordre=ETAPE_A_ENVOYER).first()
         db.session.delete(action)
+        db.session.commit()
+
+        return redirect(url_for('parlementaire', id=id))
+
+    @app.route('/parlementaire/<id>/confirmer', endpoint='confirmer',
+               methods=['POST'])
+    @require_user
+    def confirmer(id):
+        parl = Parlementaire.query.filter_by(id=id) \
+                                  .options(joinedload(Parlementaire.groupe)) \
+                                  .options(joinedload(Parlementaire.etape)) \
+                                  .options(joinedload(Parlementaire.actions)) \
+                                  .first()
+
+        if not parl:
+            return not_found()
+
+        parl.etape = Etape.query.filter_by(ordre=ETAPE_ENVOYE).first()
+
+        action = Action(
+            date=datetime.utcnow(),
+            nick=session['user']['nick'],
+            email=session['user']['email'],
+            parlementaire=parl,
+            etape=parl.etape
+        )
+
+        db.session.add(action)
         db.session.commit()
 
         return redirect(url_for('parlementaire', id=id))

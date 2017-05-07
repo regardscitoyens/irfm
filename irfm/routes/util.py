@@ -5,7 +5,7 @@ import unicodedata
 from urllib.parse import urlparse, urljoin
 
 from flask import (abort, flash, make_response, redirect, render_template,
-                   request, session)
+                   request, session, url_for)
 
 
 SLUG_STRIP_RE = re.compile(r'[^\w\s-]')
@@ -39,6 +39,10 @@ def redirect_back(fallback=None, error=None):
         return redirect(fallback)
     else:
         return redirect(url_for('home'))
+
+
+def not_found():
+    return redirect_back(error='Oups, la page demandée n\'existe pas')
 
 
 def sanitize(text):
