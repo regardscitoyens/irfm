@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template
+import os
+
+from flask import make_response, render_template
 from sqlalchemy.orm import contains_eager, joinedload
 
 from .util import redirect_back, require_admin
 from ..models import db, Action, Etape, Parlementaire
-from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER
+from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER, EXTENSIONS
 
 
 def setup_routes(app):
@@ -72,3 +74,19 @@ def setup_routes(app):
             db.session.commit()
 
         return redirect_back()
+
+    @app.route('/admin/fichier/<id_action>', endpoint='admin_fichier')
+    @require_admin
+    def admin_fichier(id_action):
+        act = Action.query.filter_by(id=id_action).first()
+
+        if not act or not act.attachment:
+            return not_found()
+
+        path = os.path.join(app.config['DATA_DIR'], act.attachment)
+        ext = path.rsplit('.', 1)[1].lower()
+
+        with open(path, 'rb') as fichier:
+            response = make_response(fichier.read())
+            response.headers['Content-Type'] = EXTENSIONS[ext]
+            return response

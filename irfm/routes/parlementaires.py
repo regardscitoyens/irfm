@@ -9,15 +9,8 @@ from sqlalchemy.orm import joinedload, contains_eager
 
 from .util import not_found, redirect_back, require_user, slugify
 from ..models import db, Action, Etape, Parlementaire
-from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER, ETAPE_ENVOYE
-
-
-EXTENSIONS = {
-    'pdf': 'application/pdf',
-    'jpg': 'image/jpeg',
-    'jpeg': 'image/jpeg',
-    'png': 'image/png',
-}
+from ..models.constants import (ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
+                                ETAPE_ENVOYE, EXTENSIONS)
 
 
 def pris_en_charge(parl):

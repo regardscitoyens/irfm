@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 
+EXTENSIONS = {
+    'pdf': 'application/pdf',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'png': 'image/png',
+}
+
 #
 # Lors de la modification de ces énumérations, penser à créer une migration DB
 # pour mettre à jour les types ENUM correspondants en base de données.
