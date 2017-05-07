@@ -12,28 +12,29 @@ def setup_routes(app):
 
     @app.route('/', endpoint='home')
     def home():
-        pqs = Parlementaire.query.options(joinedload(Parlementaire.etape)) \
-                                 .filter(Etape.ordre == ETAPE_A_ENVOYER) \
-                                 .order_by(func.random())
+        parl = Parlementaire.query.join(Parlementaire.etape) \
+                                  .filter(Etape.ordre == ETAPE_A_ENVOYER) \
+                                  .order_by(func.random()) \
+                                  .first()
 
-        eqs = db.session.query(Etape) \
-                        .outerjoin(Etape.parlementaires) \
-                        .add_columns(func.count(Parlementaire.id)
-                                         .label('nb')) \
-                        .filter(Etape.ordre > ETAPE_NA) \
-                        .group_by(Etape) \
-                        .order_by(Etape.ordre) \
-                        .all()
+        etapes_qs = db.session.query(Etape) \
+                              .outerjoin(Etape.parlementaires) \
+                              .add_columns(func.count(Parlementaire.id)
+                                               .label('nb')) \
+                              .filter(Etape.ordre > ETAPE_NA) \
+                              .group_by(Etape) \
+                              .order_by(Etape.ordre) \
+                              .all()
 
         return render_template(
             'index.html.j2',
-            parlementaire=pqs.first(),
-            etapes=[e.Etape for e in eqs],
+            parlementaire=parl,
+            etapes=[e.Etape for e in etapes_qs],
             etapes_data={
-                'labels': [e.Etape.label for e in eqs],
+                'labels': [e.Etape.label for e in etapes_qs],
                 'datasets': [{
-                    'data': [e.nb for e in eqs],
-                    'backgroundColor': [e.Etape.couleur for e in eqs]
+                    'data': [e.nb for e in etapes_qs],
+                    'backgroundColor': [e.Etape.couleur for e in etapes_qs]
                 }]
             }
         )
