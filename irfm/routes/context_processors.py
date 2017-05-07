@@ -2,6 +2,9 @@
 
 from flask import url_for
 
+from ..models.constants import (ETAPE_NA, ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
+                                ETAPE_ENVOYE)
+
 
 def setup(app):
 
@@ -31,4 +34,15 @@ def setup(app):
                     'endpoint': 'parlementaires',
                 },
             ]
+        }
+
+    @app.context_processor
+    def inject_etapes():
+        return {
+            'ordres': {
+                'ETAPE_NA': ETAPE_NA,
+                'ETAPE_A_ENVOYER': ETAPE_A_ENVOYER,
+                'ETAPE_A_CONFIRMER': ETAPE_A_CONFIRMER,
+                'ETAPE_ENVOYE': ETAPE_ENVOYE,
+            }
         }

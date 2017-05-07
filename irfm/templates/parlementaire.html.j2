@@ -29,7 +29,7 @@
       </article>
     </section>
 
-    {% if parlementaire.etape.ordre == 10 %}
+    {% if parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER %}
       {% if session.user %}
         <section class="panel panel-default">
           <article class="panel-body">
@@ -41,7 +41,7 @@
     {% endif %}
   </div>
 
-  {% if parlementaire.etape.ordre == 10 %}
+  {% if parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER %}
     {% if session.user %}
       <div class="col-md-8">
         <section class="panel panel-default">
@@ -69,7 +69,33 @@
     {% endif %}
   {% else %}
     <div class="col-md-8">
-      ...
+      <section class="panel panel-default">
+        <header class="panel-heading">
+          <b>Avancement</b>
+        </header>
+
+        <table class="table table-striped">
+          <tr>
+            <th>Etape</th>
+            <th>Utilisateur</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+
+          {% for act in parlementaire.actions %}
+            <tr>
+              <td>{{ act.etape|label_etape }}</td>
+              <td>{{ act.nick }}</td>
+              <td>{{ act.date.strftime("%c") }}</td>
+              <td class="col-right">
+                {% if act.etape.ordre == ordres.ETAPE_A_CONFIRMER %}
+                  <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">Voir le courrier</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </section>
     </div>
   {% endif %}
 {% endblock %}

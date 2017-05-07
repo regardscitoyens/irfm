@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import locale
 import os
 
 from flask import Flask
@@ -31,5 +32,8 @@ def setup_app(name):
 
     # Setup routes
     setup_routes(app)
+
+    # Setup locale
+    locale.setlocale(locale.LC_ALL, '')
 
     return app

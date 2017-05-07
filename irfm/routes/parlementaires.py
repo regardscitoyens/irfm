@@ -30,6 +30,7 @@ def setup_routes(app):
         parl = Parlementaire.query.filter_by(id=id) \
                                   .options(joinedload(Parlementaire.groupe)) \
                                   .options(joinedload(Parlementaire.etape)) \
+                                  .options(joinedload(Parlementaire.actions)) \
                                   .first()
 
         if not parl:
