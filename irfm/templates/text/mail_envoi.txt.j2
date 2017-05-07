@@ -1,0 +1,42 @@
+Bonjour {{ session.user.nick }},
+
+Vous avez indiqué vouloir prendre en charge l'envoi d'une demande de documents
+à {{ parlementaire.nom_complet }}.  Merci beaucoup !
+
+Voici la marche à suivre :
+
+1. Envoyez le courrier en recommandé avec avis de réception au parlementaire.
+   Son adresse figure en tête du courrier.  Pensez bien à indiquer l'adresse de
+   Regards Citoyens, elle aussi sur le courrier, comme expéditeur afin que nous
+   recevions l'avis de réception.
+
+   Pour télécharger le courrier à envoyer au format PDF, suivez ce lien :
+   <{{ url_for('demande_pdf', id=parlementaire.id, mode='download', _external=True) }}>.
+
+   Vous pouvez envoyer le recommandé au format papier depuis un bureau de Poste,
+   ou bien en ligne depuis <http://boutique.laposte.fr/>.
+
+2. Prenez une photo, une capture d'écran, ou scannez la preuve de dépôt du
+   recommandé.  Retournez la page du parlementaire pour nous l'envoyer :
+   <{{ url_for('parlementaire', id=parlementaire.id, _external=True) }}>.
+
+   N'oubliez pas cette étape pour que nous puissions suivre l'avancement de
+   l'opération !
+
+Note: pour pouvoir envoyer la preuve de dépôt, vous devrez vous identifier avec
+les mêmes identifiants, à savoir :
+
+  Pseudo: {{ session.user.nick }}
+  E-mail: {{ session.user.email }}
+
+Enfin, si vous changez d'avis (ce n'est pas grave !), merci de le signaler sur
+la page du parlementaire <{{ url_for('parlementaire', id=parlementaire.id, _external=True) }}>.
+
+N'hésitez pas à nous contacter par e-mail en cas de souci.
+
+--
+
+Regards Citoyens
+
+Ce message a été envoyé automatiquement.  Si vous pensez l'avoir reçu par
+erreur, merci de nous contacter par retour de mail.

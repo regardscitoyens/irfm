@@ -41,6 +41,13 @@ class DefaultConfig(object):
     ADMIN_EMAIL = 'none@example.com'
     ADMIN_PASSWORD = None
 
+    MAIL_SERVER = 'localhost'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = False
+    MAIL_USERNAME = None
+    MAIL_PASSWORD = None
+
 
 class DebugConfig(DefaultConfig):
     """
@@ -61,6 +68,12 @@ class EnvironmentConfig(DefaultConfig):
     - IRFM_PIWIK_ID: piwik site ID
     - IRFM_ADMIN_EMAIL: admin email
     - IRFM_ADMIN_PASSWORD: admin password as hashed by `irfm password`
+    - IRFM_MAIL_SERVER:
+    - IRFM_MAIL_PORT:
+    - IRFM_MAIL_USE_TLS: 'True' to enable
+    - IRFM_MAIL_USE_SSL: 'True' to enable
+    - IRFM_MAIL_USERNAME:
+    - IRFM_MAIL_PASSWORD:
     """
     DEBUG = os.environ.get('IRFM_DEBUG', 'False') == 'True'
     SQLALCHEMY_ECHO = os.environ.get('IRFM_DEBUG_SQL', 'False') == 'True'
@@ -76,3 +89,12 @@ class EnvironmentConfig(DefaultConfig):
     ADMIN_EMAIL = os.environ.get('IRFM_ADMIN_EMAIL', DefaultConfig.ADMIN_EMAIL)
     ADMIN_PASSWORD = os.environ.get('IRFM_ADMIN_PASSWORD',
                                     DefaultConfig.ADMIN_PASSWORD)
+
+    MAIL_SERVER = os.environ.get('IRFM_MAIL_SERVER', DefaultConfig.MAIL_SERVER)
+    MAIL_PORT = os.environ.get('IRFM_MAIL_PORT', DefaultConfig.MAIL_PORT)
+    MAIL_USE_TLS = os.environ.get('IRFM_MAIL_USE_TLS', 'False') == 'True'
+    MAIL_USE_SSL = os.environ.get('IRFM_MAIL_USE_SSL', 'False') == 'True'
+    MAIL_USERNAME = os.environ.get('IRFM_MAIL_USERNAME',
+                                   DefaultConfig.MAIL_USERNAME)
+    MAIL_PASSWORD = os.environ.get('IRFM_MAIL_PASSWORD',
+                                   DefaultConfig.MAIL_PASSWORD)

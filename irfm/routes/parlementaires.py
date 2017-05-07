@@ -5,6 +5,7 @@ import os
 
 from flask import (flash, make_response, redirect, render_template, request,
                    session, url_for)
+from flask_mail import Mail, Message
 from sqlalchemy.orm import joinedload, contains_eager
 
 from .util import not_found, redirect_back, remote_addr, require_user, slugify
@@ -31,6 +32,7 @@ def pris_en_charge(parl):
 
 
 def setup_routes(app):
+    mail = Mail(app)
 
     @app.route('/parlementaires', endpoint='parlementaires')
     def parlementaires():
@@ -95,6 +97,16 @@ def setup_routes(app):
 
             db.session.add(action)
             db.session.commit()
+
+            subject = 'Envoi d\'une demande de documents à %s' \
+                % parl.nom_complet
+            body = render_template('text/mail_envoi.txt.j2',
+                                   parlementaire=parl)
+            msg = Message(subject=subject, body=body,
+                          sender=('Transparence IRFM',
+                                  app.config['ADMIN_EMAIL']),
+                          recipients=[session['user']['email']])
+            mail.send(msg)
 
             return redirect(url_for('parlementaire', id=id))
         finally:
