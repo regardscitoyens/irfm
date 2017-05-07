@@ -12,22 +12,22 @@ def setup_routes(app):
     def login():
         nick = sanitize(request.form['nick'])
         if nick != request.form['nick']:
-            flash('Seuls les caractères suivants sont autorisés: '
-                  'a-z 0-9 _ - @ . ', category='error')
-            return redirect_back()
+            msg = 'Seuls les caractères suivants sont autorisés: ' \
+                  'a-z 0-9 _ - @ . '
+            return redirect_back(error=msg)
 
         if not len(nick):
-            flash('Veuillez saisir un pseudonyme !', category='error')
-            return redirect_back()
+            msg = 'Veuillez saisir un pseudonyme !'
+            return redirect_back(error=msg)
 
         if not check_email(request.form['email']):
-            flash('Veuillez saisir une adresse e-mail valide pour assurer le '
-                  'suivi de l\'envoi des demandes !', category='error')
-            return redirect_back()
+            msg = 'Veuillez saisir une adresse e-mail valide pour assurer ' \
+                  'le suivi de l\'envoi des demandes !'
+            return redirect_back(error=msg)
 
         session['user'] = {
             'nick': nick,
-            'email': request.form['email'],
+            'email': request.form['email']
         }
 
         return redirect_back()

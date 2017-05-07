@@ -20,15 +20,20 @@ SEXES = {
 # L'ordre est utilisé comme clé primaire lors de cet import.
 #
 
+ETAPE_NA = 0
+ETAPE_A_ENVOYER = 10
+ETAPE_A_CONFIRMER = 15
+ETAPE_ENVOYE = 20
+
 ETAPES = [
     {
-        'ordre': 0,
+        'ordre': ETAPE_NA,
         'label': 'N/A',
         'description': '',
         'couleur': '',
     },
     {
-        'ordre': 10,
+        'ordre': ETAPE_A_ENVOYER,
         'label': 'À envoyer',
         'description': """
             La demande d'accès aux relevés de comptes du parlementaire n'a pas
@@ -37,7 +42,7 @@ ETAPES = [
         'couleur': '#cccccc',
     },
     {
-        'ordre': 15,
+        'ordre': ETAPE_A_CONFIRMER,
         'label': 'À confirmer',
         'description': """
             Un utilisateur a souhaité se charger de l'envoi de la demande, mais
@@ -46,7 +51,7 @@ ETAPES = [
         'couleur': '#8888aa',
     },
     {
-        'ordre': 20,
+        'ordre': ETAPE_ENVOYE,
         'label': 'Envoyé',
         'description': """
             La demande d'accès aux relevés de comptes du parlementaire a été

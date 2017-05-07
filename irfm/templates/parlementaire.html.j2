@@ -1,35 +1,21 @@
 {% extends "_base.html.j2" %}
 
-{% block header %}
-  <style>
-    #letter-container {
-      text-align: center;
-    }
-
-    iframe {
-      width: 21cm;
-      height: 29.7cm;
-
-      margin-left: auto;
-      margin-right: auto;
-
-      border: 1px solid #ccc;
-    }
-  </style>
-{% endblock %}
-
 {% block menuitem %}
   <li role="presentation" class="active"><a href="#">{{ parlementaire.nom_complet }}</a></li>
 {% endblock %}
 
 {% block content %}
-  <div class="col-md-6">
+  <div class="col-md-4">
     <section class="panel panel-default">
       <article class="panel-body parl-card">
         <img class="parl-photo" src="{{ parlementaire.url_photo }}/120" align="left">
         <div class="parl-detail">
           <b>{{ parlementaire.nom_complet }}</b> {{ parlementaire.groupe|label_groupe }}<br>
-          {{ parlementaire|fonc_parlementaire }} &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}<br><br><br>
+          {{ parlementaire|fonc_parlementaire }} &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}<br><br>
+          {{ parlementaire.etape|label_etape }}
+          {% if not parlementaire.adresse %}
+            <span class="label label-danger">Adresse manquante !</span>
+          {% endif %}
         </div>
       </article>
     </section>
@@ -38,7 +24,7 @@
       {% if session.user %}
         <section class="panel panel-default">
           <article class="panel-body">
-            <a class="btn btn-primary btn-lg btn-block" href="#">Je prends en charge l'envoi !</button>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('envoi', id=parlementaire.id) }}">Je prends en charge l'envoi !</button>
             <a class="btn btn-default btn-lg btn-block" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">Télécharger le courrier au format PDF</a>
           </article>
         </section>
@@ -48,7 +34,7 @@
 
   {% if parlementaire.etape.ordre == 10 %}
     {% if session.user %}
-      <div class="col-md-6">
+      <div class="col-md-8">
         <section class="panel panel-default">
           <header class="panel-heading">
             <b>Quelle est la marche à suivre ?</b>
@@ -66,14 +52,16 @@
         </iframe>
       </div>
     {% else %}
-      <div class="col-md-6">
+      <div class="col-md-8">
         <div class="alert alert-warning" role="alert">
           Pour envoyer une demande et assurer son suivi, il faut au préalable <a href="#" id="identify-link">vous identifier</a>.
         </div>
       </div>
     {% endif %}
   {% else %}
-    ...
+    <div class="col-md-8">
+      ...
+    </div>
   {% endif %}
 {% endblock %}
 

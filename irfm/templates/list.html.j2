@@ -35,11 +35,16 @@
               <img class="chamber-icon" src="{{ url_for('static', filename=parl.chambre|lower+'.png') }}">
               <span class="search-vector">{{ parl.nom_complet }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }}</span>
             </td>
-            <td data-value="{{ parl.nom }} {{ parl.prenom }}">{{ parl.nom_complet }}</td>
+            <td data-value="{{ parl.nom }} {{ parl.prenom }}">
+              {{ parl.nom_complet }}
+              {% if not parl.adresse %}
+                <span class="label label-danger">Adresse manquante !</span>
+              {% endif %}
+            </td>
             <td class="col-center">{{ parl.groupe|label_groupe }}</td>
             <td data-value="{{ parl.num_deptmt }} {{ parl.num_circo }}">{{ parl.nom_circo }} n°{{ parl.num_circo }}</td>
             <td class="col-center">
-              <span class="label" style="background-color: {{ parl.etape.couleur }};">{{ parl.etape.label }}</span>
+              {{ parl.etape|label_etape }}
             </td>
             <td class="col-right">
               {% if parl.etape.ordre == 10 %}

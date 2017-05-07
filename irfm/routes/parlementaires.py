@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from flask import abort, render_template
+from datetime import datetime
+
+from flask import abort, flash, redirect, render_template, session, url_for
 from sqlalchemy.orm import joinedload, contains_eager
 
-from ..models import Etape, Parlementaire
+from .util import redirect_back, require_user
+from ..models import db, Action, Etape, Parlementaire
+from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER
 
 
 def setup_routes(app):
@@ -35,3 +39,40 @@ def setup_routes(app):
             'parlementaire.html.j2',
             parlementaire=parl
         )
+
+    @app.route('/parlementaires/<id>/envoi', endpoint='envoi')
+    @require_user
+    def envoi(id):
+
+        try:
+            # SELECT FOR UPDATE sur le parlementaire pour éviter une race
+            # condition sur son étape courante
+            parl = Parlementaire.query \
+                                .filter_by(id=id) \
+                                .with_for_update() \
+                                .first()
+
+            if not parl:
+                abort(404)
+
+            if parl.etape.ordre != ETAPE_A_ENVOYER:
+                msg = 'Oups, la situation a changé pour ce parlementaire...'
+                return redirect_back(error=msg,
+                                     fallback=url_for('parlementaire', id=id))
+
+            parl.etape = Etape.query.filter_by(ordre=ETAPE_A_CONFIRMER).first()
+
+            action = Action(
+                date=datetime.utcnow(),
+                nick=session['user']['nick'],
+                email=session['user']['email'],
+                parlementaire=parl,
+                etape=parl.etape
+            )
+
+            db.session.add(action)
+            db.session.commit()
+
+            return redirect(url_for('parlementaire', id=id))
+        finally:
+            db.session.rollback()

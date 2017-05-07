@@ -34,7 +34,7 @@
         <div>
           {% for etape in etapes %}
             <p>
-              <span class="label" style="background-color: {{ etape.couleur }};">{{ etape.label }}</span>
+              {{ etape|label_etape }}
               <small>{{ etape.description }}</small>
             </p>
           {% endfor %}

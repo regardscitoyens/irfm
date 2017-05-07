@@ -8,6 +8,7 @@ from sqlalchemy.inspection import inspect
 
 from .base import BaseImporter
 from ..models import db, Etape, Groupe, Parlementaire
+from ..models.constants import ETAPE_NA, ETAPE_A_ENVOYER
 
 
 def parse_date(date):
@@ -63,7 +64,7 @@ class NosDeputesImporter(BaseImporter):
         depute = Parlementaire.query.filter_by(**id_data).first()
 
         if not depute:
-            id_data.update({'etape': self.etape_nv})
+            id_data.update({'etape': self.etape_ae})
             depute = Parlementaire(**id_data)
             db.session.add(depute)
             created = True
@@ -102,13 +103,13 @@ class NosDeputesImporter(BaseImporter):
         return created, updated
 
     def import_deputes(self):
-        self.etape_na = Etape.query.filter_by(label='N/A').first()
+        self.etape_na = Etape.query.filter_by(ordre=ETAPE_NA).first()
         if not self.etape_na:
             self.error('Etape N/A introuvable, exécuter import_etapes ?')
             return
 
-        self.etape_nv = Etape.query.filter_by(label='À envoyer').first()
-        if not self.etape_nv:
+        self.etape_ae = Etape.query.filter_by(ordre=ETAPE_A_ENVOYER).first()
+        if not self.etape_ae:
             self.error('Etape À envoyer introuvable, exécuter import_etapes ?')
             return
 

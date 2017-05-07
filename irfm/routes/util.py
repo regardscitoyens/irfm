@@ -4,8 +4,8 @@ import re
 import unicodedata
 from urllib.parse import urlparse, urljoin
 
-from flask import (abort, make_response, redirect, render_template, request,
-                   session)
+from flask import (abort, flash, make_response, redirect, render_template,
+                   request, session)
 
 
 SLUG_STRIP_RE = re.compile(r'[^\w\s-]')
@@ -29,9 +29,14 @@ def is_safe_url(target):
            ref_url.netloc == test_url.netloc
 
 
-def redirect_back():
+def redirect_back(fallback=None, error=None):
+    if error:
+        flash(error, category='error')
+
     if request.referrer and is_safe_url(request.referrer):
         return redirect(request.referrer)
+    elif fallback and is_safe_url(fallback):
+        return redirect(fallback)
     else:
         return redirect(url_for('home'))
 
@@ -47,9 +52,8 @@ def check_email(text):
 def require_user(f):
     def decorator(*args, **kwargs):
         if not session.get('user'):
-            flash('Vous devez vous identifier pour accéder à cette page',
-                  category='error')
-            return redirect_back()
+            return redirect_back(error='Vous devez vous identifier pour '
+                                       'accéder à cette page')
 
         return f(*args, **kwargs)
 

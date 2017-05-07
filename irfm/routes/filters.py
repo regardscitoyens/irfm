@@ -30,6 +30,12 @@ def setup(app):
                 groupe.nom, groupe.couleur, groupe.sigle
             )
 
+    @app.template_filter('label_etape')
+    def label_etape(etape):
+        return '<span class="label" title="%s" ' \
+            'style="background-color: %s;">%s</span>' % (
+                etape.description, etape.couleur, etape.label
+            )
 
     _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
