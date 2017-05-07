@@ -34,7 +34,7 @@ class DefaultConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
     DATA_DIR = os.path.join(BASE_DIR, 'data')
-    API_PAGE_SIZE = 10
+    MAX_CONTENT_LENGTH = 4 * 1024 * 1024
     PIWIK_HOST = None
     PIWIK_ID = None
 

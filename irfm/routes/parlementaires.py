@@ -1,13 +1,40 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+import os
 
-from flask import redirect, render_template, request, session, url_for
+from flask import (flash, make_response, redirect, render_template, request,
+                   session, url_for)
 from sqlalchemy.orm import joinedload, contains_eager
 
-from .util import not_found, redirect_back, require_user
+from .util import not_found, redirect_back, require_user, slugify
 from ..models import db, Action, Etape, Parlementaire
 from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER, ETAPE_ENVOYE
+
+
+EXTENSIONS = {
+    'pdf': 'application/pdf',
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'png': 'image/png',
+}
+
+
+def pris_en_charge(parl):
+    """
+    Verifie si l'user courant a pris en charge le parlementaire et qu'il est
+    bien à l'étape "à confirmer".
+    Renvoie l'action correspondante ou None
+    """
+    if session.get('user') and parl.etape.ordre == ETAPE_A_CONFIRMER:
+        action = [a for a in parl.actions
+                  if a.etape.ordre == ETAPE_A_CONFIRMER
+                  and a.nick == session.get('user')['nick']
+                  and a.email == session.get('user')['email']]
+        if len(action):
+            return action[0]
+
+    return None
 
 
 def setup_routes(app):
@@ -36,19 +63,10 @@ def setup_routes(app):
         if not parl:
             return not_found()
 
-        pris_en_charge = False
-        if session.get('user') and parl.etape.ordre == ETAPE_A_CONFIRMER:
-            action = [a for a in parl.actions
-                      if a.etape.ordre == ETAPE_A_CONFIRMER
-                      and a.nick == session.get('user')['nick']
-                      and a.email == session.get('user')['email']]
-            if len(action):
-                pris_en_charge = True
-
         return render_template(
             'parlementaire.html.j2',
             parlementaire=parl,
-            pris_en_charge=pris_en_charge
+            pris_en_charge=bool(pris_en_charge(parl))
         )
 
     @app.route('/parlementaires/<id>/envoi', endpoint='envoi')
@@ -101,17 +119,8 @@ def setup_routes(app):
         if not parl:
             return not_found()
 
-        pris_en_charge = False
-        if parl.etape.ordre == ETAPE_A_CONFIRMER:
-            action = [a for a in parl.actions
-                      if a.etape.ordre == ETAPE_A_CONFIRMER
-                      and a.nick == session.get('user')['nick']
-                      and a.email == session.get('user')['email']]
-            if len(action):
-                pris_en_charge = True
-                action = action[0]
-
-        if not pris_en_charge:
+        action = pris_en_charge(parl)
+        if not action:
             msg = 'Oups, vous n\'avez pas pris en charge l\'envoi pour ce ' \
                   'parlementaire !'
             return redirect_back(error=msg,
@@ -136,6 +145,34 @@ def setup_routes(app):
         if not parl:
             return not_found()
 
+        action = pris_en_charge(parl)
+        if not action:
+            msg = 'Oups, vous n\'avez pas pris en charge l\'envoi pour ce ' \
+                  'parlementaire !'
+            return redirect_back(error=msg,
+                                 fallback=url_for('parlementaire', id=id))
+
+        if 'file' not in request.files or not request.files['file'] \
+           or request.files['file'].filename == '':
+            msg = 'Veuillez indiquer un fichier à envoyer'
+            return redirect_back(error=msg,
+                                 fallback=url_for('parlementaire', id=id))
+
+        file = request.files['file']
+        ext = file.filename.rsplit('.', 1)[1].lower()
+
+        if ext not in EXTENSIONS.keys():
+            msg = 'Type de fichier non pris en charge, merci d\'envoyer ' \
+                  'uniquement un fichier PDF, JPG ou PNG'
+            return redirect_back(error=msg,
+                                 fallback=url_for('parlementaire', id=id))
+
+        if ext == 'jpeg':
+            ext = 'jpg'
+
+        filename = 'preuve-envoi-%s.%s' % (slugify(parl.nom_complet), ext)
+        file.save(os.path.join(app.config['DATA_DIR'], filename))
+
         parl.etape = Etape.query.filter_by(ordre=ETAPE_ENVOYE).first()
 
         action = Action(
@@ -144,10 +181,30 @@ def setup_routes(app):
             email=session['user']['email'],
             ip=request.remote_addr,
             parlementaire=parl,
-            etape=parl.etape
+            etape=parl.etape,
+            attachment=filename
         )
 
         db.session.add(action)
         db.session.commit()
 
+        flash('Confirmation reçue, merci beaucoup !', category='success')
         return redirect(url_for('parlementaire', id=id))
+
+    @app.route('/parlementaire/<id>/preuve-envoi', endpoint='preuve_envoi')
+    def preuve_envoi(id):
+        act = Action.query.join(Action.etape) \
+                          .filter(Etape.ordre == ETAPE_ENVOYE,
+                                  Action.parlementaire_id == id) \
+                          .first()
+
+        if not act or not act.attachment:
+            return not_found()
+
+        path = os.path.join(app.config['DATA_DIR'], act.attachment)
+        ext = path.rsplit('.', 1)[1].lower()
+
+        with open(path, 'rb') as preuve:
+            response = make_response(preuve.read())
+            response.headers['Content-Type'] = EXTENSIONS[ext]
+            return response

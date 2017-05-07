@@ -45,13 +45,13 @@
         </header>
         <article class="panel-body">
           Vous avez pris en charge l'envoi du courrier à ce parlementaire. Pour confirmer l'envoi,
-          merci de nous envoyer une photo ou un scan de la preuve de dépôt à l'aide du formulaire ci-dessous.
+          merci de nous envoyer une photo ou un scan de la preuve de dépôt (format PDF, PNG ou JPG, 4 Mo maximum) à l'aide du formulaire ci-dessous.
 
-          <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}">
+          <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
             <div class="form-group">
               <label class="col-md-4" for="file">Preuve d'envoi</label>
               <div class="col-md-8">
-                <input class="name="file" type="file" title="Choisissez un fichier...">
+                <input name="file" type="file" title="Choisissez un fichier...">
               </div>
             </div>
             <div class="form-group">
@@ -116,6 +116,8 @@
               <td class="col-right">
                 {% if act.etape.ordre == ordres.ETAPE_A_CONFIRMER %}
                   <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">Voir le courrier</a>
+                {% elif act.etape.ordre == ordres.ETAPE_ENVOYE and act.attachment %}
+                  <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('preuve_envoi', id=parlementaire.id) }}">Voir la preuve d'envoi</a>
                 {% endif %}
               </td>
             </tr>

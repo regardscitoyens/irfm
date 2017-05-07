@@ -12,7 +12,7 @@ from ..models import Parlementaire
 
 def setup_routes(app):
 
-    @app.route('/demande/<id>/<mode>', endpoint='demande_pdf')
+    @app.route('/parlementaire/<id>/demande/<mode>', endpoint='demande_pdf')
     def demande_pdf(id, mode='download'):
         parl = Parlementaire.query.filter_by(id=id).first()
 

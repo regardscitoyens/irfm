@@ -59,8 +59,12 @@
   </header>
 
   <section class="container-fluid">
-    {% for message in get_flashed_messages() %}
-      <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% for cat, message in get_flashed_messages(with_categories=True) %}
+      {% if cat == 'success' %}
+        <div class="alert alert-success" role="alert">{{ message }}</div>
+      {% else %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+      {% endif %}
     {% endfor %}
 
     <div class="alert alert-warning" role="alert">
