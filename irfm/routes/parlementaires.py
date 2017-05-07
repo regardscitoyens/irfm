@@ -7,7 +7,7 @@ from flask import (flash, make_response, redirect, render_template, request,
                    session, url_for)
 from sqlalchemy.orm import joinedload, contains_eager
 
-from .util import not_found, redirect_back, require_user, slugify
+from .util import not_found, redirect_back, remote_addr, require_user, slugify
 from ..models import db, Action, Etape, Parlementaire
 from ..models.constants import (ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
                                 ETAPE_ENVOYE, EXTENSIONS)
@@ -88,7 +88,7 @@ def setup_routes(app):
                 date=datetime.utcnow(),
                 nick=session['user']['nick'],
                 email=session['user']['email'],
-                ip=request.remote_addr,
+                ip=remote_addr(),
                 parlementaire=parl,
                 etape=parl.etape
             )
@@ -172,7 +172,7 @@ def setup_routes(app):
             date=datetime.utcnow(),
             nick=session['user']['nick'],
             email=session['user']['email'],
-            ip=request.remote_addr,
+            ip=remote_addr(),
             parlementaire=parl,
             etape=parl.etape,
             attachment=filename

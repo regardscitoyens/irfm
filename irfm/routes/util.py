@@ -71,3 +71,7 @@ def require_admin(f):
         return f(*args, **kwargs)
 
     return decorator
+
+
+def remote_addr():
+    return request.headers.get('X-Forwarded-For', request.remote_addr)
