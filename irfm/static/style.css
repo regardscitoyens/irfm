@@ -88,3 +88,8 @@ th.col-right {
 
   border: 1px solid #ccc;
 }
+
+img.rc-small {
+  height: 1.5em;
+  vertical-align: top;
+}

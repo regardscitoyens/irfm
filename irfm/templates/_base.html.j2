@@ -31,7 +31,11 @@
             <div class="btn-group">
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if session.user %}
-                  {{ session.user.nick }}
+                  {% if session.user.admin %}
+                    <img class="rc-small" src="{{ url_for('static', filename='rc.png') }}">
+                  {% else %}
+                    {{ session.user.nick }}
+                  {% endif %}
                 {% else %}
                   S'identifier
                 {% endif %}
@@ -44,7 +48,7 @@
                   {% else %}
                     <form class="form-horizontal login-form" method="POST" action="{{ url_for('login') }}">
                       <input name="nick" type="text" class="form-control" placeholder="Pseudo">
-                      <input name="email" type="email" class="form-control" placeholder="Adresse e-mail">
+                      <input name="email" type="text" class="form-control" placeholder="Adresse e-mail">
                       <br>
                       <input type="submit" class="btn btn-primary" value="Valider">
                     </form>

@@ -38,6 +38,9 @@ class DefaultConfig(object):
     PIWIK_HOST = None
     PIWIK_ID = None
 
+    ADMIN_EMAIL = 'none@example.com'
+    ADMIN_PASSWORD = None
+
 
 class DebugConfig(DefaultConfig):
     """
@@ -56,6 +59,8 @@ class EnvironmentConfig(DefaultConfig):
     - IRFM_DATA_DIR: directory for data files
     - IRFM_PIWIK_HOST: piwik hostname
     - IRFM_PIWIK_ID: piwik site ID
+    - IRFM_ADMIN_EMAIL: admin email
+    - IRFM_ADMIN_PASSWORD: admin password as hashed by `irfm password`
     """
     DEBUG = os.environ.get('IRFM_DEBUG', 'False') == 'True'
     SQLALCHEMY_ECHO = os.environ.get('IRFM_DEBUG_SQL', 'False') == 'True'
@@ -67,3 +72,7 @@ class EnvironmentConfig(DefaultConfig):
 
     PIWIK_HOST = os.environ.get('IRFM_PIWIK_HOST', DefaultConfig.PIWIK_HOST)
     PIWIK_ID = os.environ.get('IRFM_PIWIK_ID', DefaultConfig.PIWIK_ID)
+
+    ADMIN_EMAIL = os.environ.get('IRFM_ADMIN_EMAIL', DefaultConfig.ADMIN_EMAIL)
+    ADMIN_PASSWORD = os.environ.get('IRFM_ADMIN_PASSWORD',
+                                    DefaultConfig.ADMIN_PASSWORD)

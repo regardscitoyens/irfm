@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import hmac
 
 from flask import request, session
 
@@ -10,7 +11,23 @@ def setup_routes(app):
 
     @app.route('/login', methods=['POST'])
     def login():
+        if app.config['ADMIN_PASSWORD'] and request.form['nick'] == '!rc':
+            h = hmac.new(bytes(app.config['SECRET_KEY'], encoding='ascii'))
+            h.update(bytes(request.form['email'], encoding='utf-8'))
+            digest = h.hexdigest()
+
+
+            if hmac.compare_digest(digest, app.config['ADMIN_PASSWORD']):
+                session['user'] = {
+                    'nick': '!rc',
+                    'email': app.config['ADMIN_EMAIL'],
+                    'admin': True
+                }
+
+                return redirect_back()
+
         nick = sanitize(request.form['nick'])
+
         if nick != request.form['nick']:
             msg = 'Seuls les caractères suivants sont autorisés: ' \
                   'a-z 0-9 _ - @ . '
@@ -27,7 +44,8 @@ def setup_routes(app):
 
         session['user'] = {
             'nick': nick,
-            'email': request.form['email']
+            'email': request.form['email'],
+            'admin': False
         }
 
         return redirect_back()
