@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from flask import abort, flash, redirect, render_template, session, url_for
+from flask import redirect, render_template, request, session, url_for
 from sqlalchemy.orm import joinedload, contains_eager
 
 from .util import not_found, redirect_back, require_user
@@ -77,6 +77,7 @@ def setup_routes(app):
                 date=datetime.utcnow(),
                 nick=session['user']['nick'],
                 email=session['user']['email'],
+                ip=request.remote_addr,
                 parlementaire=parl,
                 etape=parl.etape
             )
@@ -141,6 +142,7 @@ def setup_routes(app):
             date=datetime.utcnow(),
             nick=session['user']['nick'],
             email=session['user']['email'],
+            ip=request.remote_addr,
             parlementaire=parl,
             etape=parl.etape
         )
