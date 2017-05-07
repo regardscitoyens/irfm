@@ -61,3 +61,12 @@ def require_user(f):
         return f(*args, **kwargs)
 
     return decorator
+
+def require_admin(f):
+    def decorator(*args, **kwargs):
+        if not session.get('user') or not session.get('user')['admin']:
+            return not_found()
+
+        return f(*args, **kwargs)
+
+    return decorator

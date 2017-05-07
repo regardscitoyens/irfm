@@ -63,6 +63,10 @@ th.col-right {
   font-weight: bold;
 }
 
+.nav .admin {
+  color: red;
+}
+
 .nav li.login {
   float: right;
 }

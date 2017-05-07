@@ -1,0 +1,44 @@
+{% extends "_base.html.j2" %}
+
+{% block content %}
+  <section class="panel panel-default">
+    <header class="panel-heading">
+      <b>{{ titre }}</b>
+    </header>
+
+    <table class="table table-condensed table-striped">
+      <thead>
+        <tr>
+          <th>Parlementaire</th>
+          <th>Etape</th>
+          <th>Date</th>
+          <th>Utilisateur</th>
+          <th>Fichier joint</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for action in actions %}
+          <tr>
+            <td>{{ action.parlementaire.nom_complet }}</td>
+            <td>{{ action.etape|label_etape }}</td>
+            <td>{{ action.date.strftime('%c') }}</td>
+            <td>
+              {% if action.nick == '!rc' %}
+                <img class="rc-small" src="{{ url_for('static', filename='rc.png') }}">
+              {% else %}
+                {{ action.nick }} ({{ action.email }}) depuis {{ action.ip }}
+              {% endif %}
+            </td>
+            <td>{{ action.attachment or '' }}</td>
+            <td>
+              <a class="btn btn-danger" href="{{ url_for('admin_delete', id=action.id) }}">Supprimer</a>
+            </td>
+          </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}
+
