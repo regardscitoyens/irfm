@@ -39,15 +39,24 @@ class EtapesImporter(BaseImporter):
 
         created = 0
         updated = 0
+        ordres = []
 
         for etape in ETAPES:
+            ordres.append(etape['ordre'])
+
             c, u = self.import_etape(etape)
             if c:
                 created += 1
             elif u:
                 updated += 1
 
+        deleted = 0
+        for etape in Etape.query.all():
+            if etape.ordre not in ordres:
+                db.session.delete(etape)
+                deleted += 1
+
         db.session.commit()
 
-        self.info('Import étapes terminé: %s créées, %s mises à jour'
-                  % (created, updated))
+        self.info('Import étapes terminé: %s créées, %s mises à jour, ' \
+                  '%s supprimées' % (created, updated, deleted))

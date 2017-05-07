@@ -77,6 +77,15 @@ ETAPES = [
         'couleur': '#88dd88',
     },
     {
+        'ordre': 45,
+        'label': 'Réponse partielle',
+        'description': """
+            Le parlementaire accepté de nous transmettre une partie des
+            documents demandés.
+        """,
+        'couleur': '#ddaa88',
+    },
+    {
         'ordre': 50,
         'label': 'Réponse négative',
         'description': """
@@ -85,34 +94,5 @@ ETAPES = [
             l'expiration d'un délai de 2 mois après réception de la demande.
         """,
         'couleur': '#dd8888',
-    },
-    {
-        'ordre': 60,
-        'label': 'Demande CADA',
-        'description': """
-            Suite au refus du parlementaire, nous avons transmis la demande à
-            la Commission d'Accès aux Documents Administratifs.
-        """,
-        'couleur': '#ddaa88',
-    },
-    {
-        'ordre': 70,
-        'label': 'Accord CADA',
-        'description': """
-            Suite au refus du parlementaire, la Commission d'Accès aux
-            Documents Administratifs a répondu favorablement à la transmission
-            des relevés demandés.
-        """,
-        'couleur': '#44aa44',
-    },
-    {
-        'ordre': 90,
-        'label': 'Refus CADA',
-        'description': """
-            Suite au refus du parlementaire, la Commission d'Accès aux
-            Documents Administratifs a refusé la transmission des relevés
-            demandés.
-        """,
-        'couleur': '#aa4444',
     },
 ]
