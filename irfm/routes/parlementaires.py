@@ -36,9 +36,19 @@ def setup_routes(app):
         if not parl:
             abort(404)
 
+        pris_en_charge = False
+        if session.get('user') and parl.etape.ordre == ETAPE_A_CONFIRMER:
+            action = [a for a in parl.actions
+                      if a.etape.ordre == ETAPE_A_CONFIRMER
+                      and a.nick == session.get('user')['nick']
+                      and a.email == session.get('user')['email']]
+            if len(action):
+                pris_en_charge = True
+
         return render_template(
             'parlementaire.html.j2',
-            parlementaire=parl
+            parlementaire=parl,
+            pris_en_charge=pris_en_charge
         )
 
     @app.route('/parlementaires/<id>/envoi', endpoint='envoi')
@@ -77,3 +87,37 @@ def setup_routes(app):
             return redirect(url_for('parlementaire', id=id))
         finally:
             db.session.rollback()
+
+    @app.route('/parlementaire/<id>/annuler', endpoint='annuler')
+    @require_user
+    def annuler(id):
+        parl = Parlementaire.query.filter_by(id=id) \
+                                  .options(joinedload(Parlementaire.groupe)) \
+                                  .options(joinedload(Parlementaire.etape)) \
+                                  .options(joinedload(Parlementaire.actions)) \
+                                  .first()
+
+        if not parl:
+            abort(404)
+
+        pris_en_charge = False
+        if parl.etape.ordre == ETAPE_A_CONFIRMER:
+            action = [a for a in parl.actions
+                      if a.etape.ordre == ETAPE_A_CONFIRMER
+                      and a.nick == session.get('user')['nick']
+                      and a.email == session.get('user')['email']]
+            if len(action):
+                pris_en_charge = True
+                action = action[0]
+
+        if not pris_en_charge:
+            msg = 'Oups, vous n\'avez pas pris en charge l\'envoi pour ce ' \
+                  'parlementaire !'
+            return redirect_back(error=msg,
+                                 fallback=url_for('parlementaire', id=id))
+
+        parl.etape = Etape.query.filter_by(ordre=ETAPE_A_ENVOYER).first()
+        db.session.delete(action)
+        db.session.commit()
+
+        return redirect(url_for('parlementaire', id=id))

@@ -38,6 +38,32 @@
           </article>
         </section>
       {% endif %}
+    {% elif pris_en_charge %}
+      <section class="panel panel-default">
+        <header class="panel-heading">
+          <b>Confirmation d'envoi</b>
+        </header>
+        <article class="panel-body">
+          Vous avez pris en charge l'envoi du courrier à ce parlementaire. Pour confirmer l'envoi,
+          merci de nous envoyer une photo ou un scan de la preuve de dépôt à l'aide du formulaire ci-dessous.
+
+          <form>
+            <div class="form-group">
+              <label class="col-md-4" for="file">Preuve d'envoi</label>
+              <div class="col-md-8">
+                <input class="name="file" type="file" title="Choisissez un fichier...">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-offset-4 col-md-8">
+                <br>
+                <input class="btn btn-primary" type="submit" value="Confirmer !">
+                <a href="{{ url_for('annuler', id=parlementaire.id) }}" class="btn btn-danger">Annuler la prise en charge</a>
+              </div>
+            </div>
+          </form>
+        </article>
+      </section>
     {% endif %}
   </div>
 
@@ -101,9 +127,12 @@
 {% endblock %}
 
 {% block scripts %}
+  <script src="{{ url_for('static', filename='bootstrap.file-input.js') }}"></script>
   <script>
     $('#identify-link').click(function() {
       $('.login .dropdown-toggle').dropdown('toggle');
     });
+
+    $('input[type=file]').bootstrapFileInput();
   </script>
 {% endblock %}
