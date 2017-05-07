@@ -41,7 +41,6 @@ class NosDeputesImporter(BaseImporter):
     URL_GROUPES = 'https://www.nosdeputes.fr/organismes/groupe/json'
     URL_DEPUTES = 'https://www.nosdeputes.fr/deputes/json'
     URL_PHOTO = '//www.nosdeputes.fr/depute/photo/%(slug)s'
-    DATE_DEBUT = parse_date('2017-01-01')
 
     columns = None
     groupes = {}
@@ -86,7 +85,8 @@ class NosDeputesImporter(BaseImporter):
             'url_off': data['url_an'],
         }
 
-        if fields['mandat_fin'] and fields['mandat_fin'] < self.DATE_DEBUT:
+        if fields['mandat_fin']:
+            # On ignore tous les députés qui ne sont plus en mandat
             fields['etape'] = self.etape_na
 
         for key, newvalue in fields.items():
