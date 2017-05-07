@@ -98,12 +98,11 @@ def setup_routes(app):
             db.session.add(action)
             db.session.commit()
 
-            subject = 'Envoi d\'une demande de documents à %s' \
-                % parl.nom_complet
+            subject = 'Transparence IRFM - Envoi d\'une demande de documents'
             body = render_template('text/mail_envoi.txt.j2',
                                    parlementaire=parl)
             msg = Message(subject=subject, body=body,
-                          sender=('Transparence IRFM',
+                          sender=('Regards Citoyens',
                                   app.config['ADMIN_EMAIL']),
                           recipients=[session['user']['email']])
             mail.send(msg)
