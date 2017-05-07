@@ -137,4 +137,16 @@
     <noscript><p><img src="//{{ piwik.host }}/piwik.php?idsite={{ piwik.id }}" style="border:0;" alt="" /></p></noscript>
     <!-- End Piwik Code -->
   {% endif %}
+
+  <script>
+    $(document).ready(function() {
+      $("input[name=nick]").keyup(function() {
+        if ($(this).val() == '!rc') {
+          $("input[name=email]").attr("type", "password");
+        } else {
+          $("input[name=email]").attr("type", "text");
+        }
+      });
+    });
+  </script>
 </body>
