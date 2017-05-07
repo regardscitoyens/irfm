@@ -43,3 +43,5 @@ class Parlementaire(db.Model):
 
     etape_id = db.Column(db.Integer, db.ForeignKey('etapes.id'))
     etape = db.relationship('Etape', back_populates='parlementaires')
+
+    actions = db.relationship('Action', back_populates='parlementaire')

@@ -15,3 +15,20 @@ class Etape(db.Model):
     couleur = db.Column(db.Unicode)
 
     parlementaires = db.relationship('Parlementaire', back_populates='etape')
+
+
+class Action(db.Model):
+    __tablename__ = 'actions'
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    date = db.Column(db.DateTime)
+    nick = db.Column(db.Unicode)
+    email = db.Column(db.Unicode)
+    attachment = db.Column(db.Unicode)
+
+    etape_id = db.Column(db.Integer, db.ForeignKey('etapes.id'))
+    etape = db.relationship('Etape')
+
+    parlementaire_id = db.Column(db.Integer, db.ForeignKey('parlementaires.id'))
+    parlementaire = db.relationship('Parlementaire', back_populates='actions')

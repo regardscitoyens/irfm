@@ -3,4 +3,4 @@
 from .database import db
 
 from .parlementaire import Groupe, Parlementaire
-from .procedure import Etape
+from .procedure import Action, Etape
