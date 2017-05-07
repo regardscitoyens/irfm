@@ -10,8 +10,17 @@
       <article class="panel-body parl-card">
         <img class="parl-photo" src="{{ parlementaire.url_photo }}/120" align="left">
         <div class="parl-detail">
-          <b>{{ parlementaire.nom_complet }}</b> {{ parlementaire.groupe|label_groupe }}<br>
-          {{ parlementaire|fonc_parlementaire }} &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}<br><br>
+          <b>{{ parlementaire.nom_complet }}</b>
+            {{ parlementaire.groupe|label_groupe }}
+            <a title="Accéder à la page du parlementaire" target="_blank" href="{{ parlementaire.url_off }}">
+              <img class="chamber-icon" src="{{ url_for('static', filename=parlementaire.chambre|lower+'.png') }}">
+            </a>
+          <br>
+
+          {{ parlementaire|fonc_parlementaire }}
+            &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}
+          <br><br>
+
           {{ parlementaire.etape|label_etape }}
           {% if not parlementaire.adresse %}
             <span class="label label-danger">Adresse manquante !</span>
