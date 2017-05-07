@@ -116,7 +116,8 @@ class NosDeputesImporter(BaseImporter):
         try:
             data = requests.get(self.URL_DEPUTES).json()
         except Exception as e:
-            self.error('Téléchargement %s impossible: %s' % (URL_DEPUTES, e))
+            self.error('Téléchargement %s impossible: %s' % (self.URL_DEPUTES,
+                                                             e))
             return
 
         self.info('%s députés trouvés' % len(data['deputes']))
@@ -173,7 +174,8 @@ class NosDeputesImporter(BaseImporter):
         try:
             data = requests.get(self.URL_GROUPES).json()
         except Exception as e:
-            self.error('Téléchargement %s impossible: %s' % (URL_DEPUTES, e))
+            self.error('Téléchargement %s impossible: %s' % (self.URL_GROUPES,
+                                                             e))
             return
 
         self.info('%s organismes trouvés' % len(data['organismes']))

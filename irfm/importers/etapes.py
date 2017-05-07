@@ -32,7 +32,6 @@ class EtapesImporter(BaseImporter):
 
         return created, updated
 
-
     def run(self):
         self.info('Début import étapes')
 

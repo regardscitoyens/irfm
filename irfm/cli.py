@@ -14,7 +14,6 @@ from .models import db
 manager = Manager(app)
 migrate = Migrate(app, db)
 
-
 manager.add_command('db', MigrateCommand)
 
 
@@ -30,11 +29,13 @@ def import_etapes():
     app.config.update(SQLALCHEMY_ECHO=False)
     EtapesImporter(app).run()
 
+
 @manager.command
 def import_nd():
     """Importe les députés depuis NosDéputés.fr"""
     app.config.update(SQLALCHEMY_ECHO=False)
     NosDeputesImporter(app).run()
+
 
 @manager.command
 def import_adresses():

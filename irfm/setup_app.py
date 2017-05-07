@@ -10,7 +10,6 @@ from .config import get_secret_key
 from .routes import setup_routes
 
 
-
 def setup_app(name):
     # Create app
     app = Flask(name)

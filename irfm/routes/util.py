@@ -4,8 +4,7 @@ import re
 import unicodedata
 from urllib.parse import urlparse, urljoin
 
-from flask import (abort, flash, make_response, redirect, render_template,
-                   request, session, url_for)
+from flask import flash, redirect, request, session, url_for
 
 
 SLUG_STRIP_RE = re.compile(r'[^\w\s-]')
@@ -26,7 +25,7 @@ def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and \
-           ref_url.netloc == test_url.netloc
+        ref_url.netloc == test_url.netloc
 
 
 def redirect_back(fallback=None, error=None):

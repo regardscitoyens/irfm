@@ -9,7 +9,7 @@ from ..models import db, Parlementaire
 
 class AdressesImporter(BaseImporter):
     def import_adresse(self, parl):
-        if not 'assemblee-nationale' in parl.url_off:
+        if 'assemblee-nationale' not in parl.url_off:
             return
 
         soup = BeautifulSoup(requests.get(parl.url_off).text, 'html5lib')
@@ -31,7 +31,7 @@ class AdressesImporter(BaseImporter):
             self.error('Erreur sur %s: %s' % (parl.url_off, e))
             return
 
-        parl.adresse = '\n'.join(lines);
+        parl.adresse = '\n'.join(lines)
         db.session.commit()
 
     def run(self):

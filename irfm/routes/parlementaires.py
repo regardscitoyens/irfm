@@ -74,7 +74,7 @@ def setup_routes(app):
     def envoi(id):
 
         try:
-            # SELECT FOR UPDATE sur le parlementaire pour éviter une race
+            # SELECT FOR UPDATE sur le parlementaire pour éviter une race
             # condition sur son étape courante
             parl = Parlementaire.query \
                                 .filter_by(id=id) \

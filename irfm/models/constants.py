@@ -63,7 +63,8 @@ ETAPES = [
         'ordre': 30,
         'label': 'AR reçu',
         'description': """
-            Le parlementaire a reçu la demande d'accès à ses relevés de comptes.
+            Le parlementaire a reçu la demande d'accès à ses relevés de
+            comptes.
         """,
         'couleur': '#8888dd',
     },

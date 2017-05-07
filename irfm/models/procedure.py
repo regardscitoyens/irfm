@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .constants import ETAPES
 from .database import db
 
 
@@ -31,5 +30,6 @@ class Action(db.Model):
     etape_id = db.Column(db.Integer, db.ForeignKey('etapes.id'))
     etape = db.relationship('Etape')
 
-    parlementaire_id = db.Column(db.Integer, db.ForeignKey('parlementaires.id'))
+    parlementaire_id = db.Column(db.Integer,
+                                 db.ForeignKey('parlementaires.id'))
     parlementaire = db.relationship('Parlementaire', back_populates='actions')

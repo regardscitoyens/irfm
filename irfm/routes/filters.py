@@ -11,10 +11,10 @@ def setup(app):
     def titre_parlementaire(parl):
         if parl.sexe == 'F':
             return 'Madame la %s' % ('Sénatrice' if parl.chambre == 'SEN'
-                                                 else 'Députée')
+                                     else 'Députée')
         else:
             return 'Monsieur le %s' % ('Sénateur' if parl.chambre == 'SEN'
-                                                  else 'Député')
+                                       else 'Député')
 
     @app.template_filter('fonc_parlementaire')
     def fonc_parlementaire(parl):
@@ -42,8 +42,8 @@ def setup(app):
     @app.template_filter('nl2br')
     @evalcontextfilter
     def nl2br(eval_ctx, value):
-        result = u'\n\n'.join(u'%s' % p.replace('\n', '<br>\n') \
-            for p in _paragraph_re.split(escape(value)))
+        result = u'\n\n'.join(u'%s' % p.replace('\n', '<br>\n')
+                              for p in _paragraph_re.split(escape(value)))
         if eval_ctx.autoescape:
             result = Markup(result)
         return result

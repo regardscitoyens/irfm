@@ -2,12 +2,11 @@
 
 from io import BytesIO
 
-from flask import abort, make_response, render_template
+from flask import make_response, render_template
 from xhtml2pdf import pisa
 
 from .util import not_found, slugify
 from ..models import Parlementaire
-
 
 
 def setup_routes(app):
@@ -22,8 +21,7 @@ def setup_routes(app):
         slug = slugify(parl.nom_complet)
 
         html = render_template('demande.html.j2',
-            parlementaire=parl
-        )
+                               parlementaire=parl)
 
         pdf = BytesIO()
         pisa.CreatePDF(html, pdf)

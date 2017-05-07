@@ -17,7 +17,7 @@ def setup(app):
                 'id': app.config['PIWIK_ID']
             }
 
-        return {'piwik':piwik}
+        return {'piwik': piwik}
 
     @app.context_processor
     def inject_menu():
