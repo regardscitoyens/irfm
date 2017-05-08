@@ -44,6 +44,7 @@ def setup_routes(app):
         return send_file(
             path,
             mimetype='application/pdf',
+            conditional=True,
             as_attachment=bool(attach),
             attachment_filename=attach
         )
@@ -63,5 +64,6 @@ def setup_routes(app):
 
         return send_file(
             path,
-            mimetype=EXTENSIONS[ext]
+            mimetype=EXTENSIONS[ext],
+            conditional=True,
         )
