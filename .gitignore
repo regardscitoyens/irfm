@@ -3,5 +3,6 @@
 *.pyc
 *~
 data/secret.txt
-data/preuve-envoi-*
+data/files
+data/uploads
 

@@ -2,6 +2,7 @@
 
 from getpass import getpass
 import hmac
+import os
 
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
@@ -54,3 +55,14 @@ def import_adresses():
     """Importe adresses postales des parlementaires"""
     app.config.update(SQLALCHEMY_ECHO=False)
     AdressesImporter(app).run()
+
+
+@manager.command
+def clear_cache():
+    """Vide le cache des fichiers générés"""
+
+    files_root = os.path.join(app.config['DATA_DIR'], 'files')
+    if os.path.exists(files_root):
+        for item in os.listdir(files_root):
+            print('Suppression %s' % item)
+            os.unlink(os.path.join(files_root, item))

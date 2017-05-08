@@ -175,7 +175,10 @@ def setup_routes(app):
             ext = 'jpg'
 
         filename = 'preuve-envoi-%s.%s' % (slugify(parl.nom_complet), ext)
-        file.save(os.path.join(app.config['DATA_DIR'], filename))
+
+
+        uploads_root = os.path.join(app.config['DATA_DIR'], 'uploads')
+        file.save(os.path.join(uploads_root, filename))
 
         parl.etape = Etape.query.filter_by(ordre=ETAPE_ENVOYE).first()
 
@@ -194,21 +197,3 @@ def setup_routes(app):
 
         flash('Confirmation reçue, merci beaucoup !', category='success')
         return redirect(url_for('parlementaire', id=id))
-
-    @app.route('/parlementaire/<id>/preuve-envoi', endpoint='preuve_envoi')
-    def preuve_envoi(id):
-        act = Action.query.join(Action.etape) \
-                          .filter(Etape.ordre == ETAPE_ENVOYE,
-                                  Action.parlementaire_id == id) \
-                          .first()
-
-        if not act or not act.attachment:
-            return not_found()
-
-        path = os.path.join(app.config['DATA_DIR'], act.attachment)
-        ext = path.rsplit('.', 1)[1].lower()
-
-        with open(path, 'rb') as preuve:
-            response = make_response(preuve.read())
-            response.headers['Content-Type'] = EXTENSIONS[ext]
-            return response
