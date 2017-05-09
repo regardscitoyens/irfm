@@ -78,3 +78,7 @@ img.rc-small {
   height: 1.5em;
   vertical-align: top;
 }
+
+.faq h5 {
+  font-weight: bold;
+}

@@ -77,7 +77,10 @@
           data: {{ etapes_data|tojson }},
           options: {
             legend: {
-              position: 'left'
+              position: 'right',
+              labels: {
+                boxWidth: 12
+              }
             },
             maintainAspectRatio: true
           }

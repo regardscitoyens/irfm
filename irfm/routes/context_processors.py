@@ -28,6 +28,11 @@ def setup(app):
                 'endpoint': 'home',
             },
             {
+                'url': url_for('faq'),
+                'label': 'FAQ',
+                'endpoint': 'faq',
+            },
+            {
                 'url': url_for('parlementaires'),
                 'label': 'Liste des parlementaires',
                 'endpoint': 'parlementaires',

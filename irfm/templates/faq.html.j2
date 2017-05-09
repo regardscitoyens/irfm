@@ -1,0 +1,16 @@
+{% extends "_base.html.j2" %}
+
+{% block content %}
+  <div class="col-md-offset-2 col-md-8">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Foire aux questions</b>
+      </header>
+      <article class="panel-body faq">
+        {% filter markdown -%}
+          {% include "text/FAQ.md" %}
+        {% endfilter %}
+      </article>
+    </section>
+  </div>
+{% endblock %}

@@ -31,10 +31,15 @@ def setup_routes(app):
             parlementaire=parl,
             etapes=[e.Etape for e in etapes_qs],
             etapes_data={
-                'labels': [e.Etape.label for e in etapes_qs],
+                'labels': [e.Etape.label for e in etapes_qs if e.nb > 0],
                 'datasets': [{
-                    'data': [e.nb for e in etapes_qs],
-                    'backgroundColor': [e.Etape.couleur for e in etapes_qs]
+                    'data': [e.nb for e in etapes_qs if e.nb > 0],
+                    'backgroundColor': [e.Etape.couleur for e in etapes_qs
+                                         if e.nb > 0]
                 }]
             }
         )
+
+    @app.route('/faq', endpoint='faq')
+    def faq():
+        return render_template('faq.html.j2')
