@@ -82,3 +82,22 @@ img.rc-small {
 .faq h5 {
   font-weight: bold;
 }
+
+#pie-container {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+#pie-container #pie,
+#pie-container #pie-legend {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+#pie-container #pie {
+  flex-basis: 70%;
+}
+
+#pie-container #pie-legend {
+  flex-basis: 30%;
+}

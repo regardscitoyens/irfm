@@ -45,7 +45,16 @@
         <b>Avancement</b>
       </header>
       <article class="panel-body" id="pie-container">
-        <canvas id="pie-canvas" height="100" width="200"></canvas>
+        <div id="pie">
+          <canvas id="pie-canvas" height="150" width="200"></canvas>
+        </div>
+        <div id="pie-legend">
+          {% for etape in etapes %}
+            {% if etape.label in etapes_data.labels %}
+              <p>{{ etape|label_etape }}</p>
+            {% endif %}
+          {% endfor %}
+        </div>
       </article>
     </section>
 
@@ -77,10 +86,7 @@
           data: {{ etapes_data|tojson }},
           options: {
             legend: {
-              position: 'right',
-              labels: {
-                boxWidth: 12
-              }
+              display: false
             },
             maintainAspectRatio: true
           }
