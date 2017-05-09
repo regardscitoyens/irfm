@@ -32,7 +32,7 @@
 
           <tr>
             <td class="col-center">
-              <a title="Accéder à la page du parlementaire" target="_blank" href="{{ parl.url_off }}">
+              <a data-toggle="tooltip" title="Accéder à la page du parlementaire ({{ chambres[parl.chambre] }})" target="_blank" href="{{ parl.url_off }}">
                 <img class="chamber-icon" src="{{ url_for('static', filename=parl.chambre|lower+'.png') }}">
               </a>
               <span class="search-vector">{{ parl.nom_complet }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }}</span>

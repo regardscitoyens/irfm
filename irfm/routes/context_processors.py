@@ -3,7 +3,7 @@
 from flask import session, url_for
 
 from ..models.constants import (ETAPE_NA, ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
-                                ETAPE_ENVOYE)
+                                ETAPE_ENVOYE, CHAMBRES)
 
 
 def setup(app):
@@ -51,12 +51,13 @@ def setup(app):
         return {'menu': menu}
 
     @app.context_processor
-    def inject_etapes():
+    def inject_constante():
         return {
             'ordres': {
                 'ETAPE_NA': ETAPE_NA,
                 'ETAPE_A_ENVOYER': ETAPE_A_ENVOYER,
                 'ETAPE_A_CONFIRMER': ETAPE_A_CONFIRMER,
                 'ETAPE_ENVOYE': ETAPE_ENVOYE,
-            }
+            },
+            'chambres': CHAMBRES
         }

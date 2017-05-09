@@ -26,6 +26,7 @@ def setup(app):
     @app.template_filter('label_groupe')
     def label_groupe(groupe):
         return '<span title="%s" class="label" ' \
+            'data-toggle="tooltip" ' \
             'style="background-color: %s;">%s</span>' % (
                 groupe.nom, groupe.couleur, groupe.sigle
             )
@@ -33,6 +34,7 @@ def setup(app):
     @app.template_filter('label_etape')
     def label_etape(etape):
         return '<span class="label" title="%s" ' \
+            'data-toggle="tooltip" ' \
             'style="background-color: %s;">%s</span>' % (
                 etape.description, etape.couleur, etape.label
             )
