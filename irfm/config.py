@@ -47,6 +47,7 @@ class DefaultConfig(object):
     MAIL_USE_SSL = False
     MAIL_USERNAME = None
     MAIL_PASSWORD = None
+    MAIL_SUPPRESS_SEND = False
 
 
 class DebugConfig(DefaultConfig):
@@ -98,3 +99,6 @@ class EnvironmentConfig(DefaultConfig):
                                    DefaultConfig.MAIL_USERNAME)
     MAIL_PASSWORD = os.environ.get('IRFM_MAIL_PASSWORD',
                                    DefaultConfig.MAIL_PASSWORD)
+
+    MAIL_SUPPRESS_SEND = os.environ.get('IRFM_MAIL_SUPPRESS_SEND', 'False') \
+        == 'True'

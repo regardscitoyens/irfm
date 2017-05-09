@@ -52,6 +52,10 @@ def check_email(text, allow_empty=True):
     return not text or re.search(r'^[^@]+@[^@]+\.[^@]+$', text)
 
 
+def check_suivi(text):
+    return text and re.search(r'^\d[A-Z]\d{11}$', text.upper())
+
+
 def require_user(f):
     def decorator(*args, **kwargs):
         if not session.get('user'):

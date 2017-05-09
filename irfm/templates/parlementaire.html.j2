@@ -44,12 +44,23 @@
           <b>Confirmation d'envoi</b>
         </header>
         <article class="panel-body">
-          Vous avez pris en charge l'envoi du courrier à ce parlementaire. Pour confirmer l'envoi,
-          merci de nous envoyer une photo ou un scan de la preuve de dépôt (format PDF, PNG ou JPG, 4 Mo maximum) à l'aide du formulaire ci-dessous.
+          Vous avez pris en charge l'envoi du courrier à ce parlementaire.<br><br>
+
+          Pour confirmer l'envoi, merci de nous transmettre le numéro de suivi du recommandé à l'aide du formulaire ci-dessous.  Vous pouvez aussi nous envoyer une photo ou un scan de la preuve de dépôt (format PDF, PNG ou JPG, 4 Mo maximum) si vous le souhaitez.
 
           <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
             <div class="form-group">
-              <label class="col-md-4" for="file">Preuve d'envoi</label>
+              <div class="col-md-4">
+                <label for="suivi">Numéro de suivi</label>
+              </div>
+              <div class="col-md-8">
+                <input name="suivi" type="text" placeholder="Ex: 1X12345678901" maxlength="13"> <b>*</b>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-4">
+                <label for="file">Preuve d'envoi</label>
+              </div>
               <div class="col-md-8">
                 <input name="file" type="file" title="Choisissez un fichier...">
               </div>
@@ -106,6 +117,7 @@
             <th>Utilisateur</th>
             <th>Date</th>
             <th></th>
+            <th></th>
           </tr>
 
           {% for act in parlementaire.actions %}
@@ -119,6 +131,11 @@
                 {% endif %}
               </td>
               <td>{{ act.date.strftime("%c") }}</td>
+              <td>
+                {% if act.suivi %}
+                  Suivi&nbsp;: <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ act.suivi }}" target="_blank">{{ act.suivi }}</a>
+                {% endif %}
+              </td>
               <td class="col-right">
                 {% if act.etape.ordre == ordres.ETAPE_A_CONFIRMER %}
                   <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">Voir le courrier</a>

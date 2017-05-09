@@ -13,6 +13,7 @@
           <th>Etape</th>
           <th>Date</th>
           <th>Utilisateur</th>
+          <th>Suivi</th>
           <th>Fichier joint</th>
           <th></th>
         </tr>
@@ -31,6 +32,11 @@
                 <img class="rc-small" src="{{ url_for('static', filename='rc.png') }}">
               {% else %}
                 {{ action.nick }} ({{ action.email }}) depuis {{ action.ip }}
+              {% endif %}
+            </td>
+            <td>
+              {% if action.suivi %}
+                <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ action.suivi }}" target="_blank">{{ action.suivi }}</a>
               {% endif %}
             </td>
             <td>

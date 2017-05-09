@@ -8,7 +8,8 @@ from flask import (flash, make_response, redirect, render_template, request,
 from flask_mail import Mail, Message
 from sqlalchemy.orm import joinedload, contains_eager
 
-from .util import not_found, redirect_back, remote_addr, require_user, slugify
+from .util import (check_suivi, not_found, redirect_back, remote_addr,
+                   require_user, slugify)
 from ..models import db, Action, Etape, Parlementaire
 from ..models.constants import (ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
                                 ETAPE_ENVOYE, EXTENSIONS)
@@ -111,7 +112,7 @@ def setup_routes(app):
         finally:
             db.session.rollback()
 
-    @app.route('/parlementaire/<id>/annuler', endpoint='annuler')
+    @app.route('/parlementaires/<id>/annuler', endpoint='annuler')
     @require_user
     def annuler(id):
         parl = Parlementaire.query.filter_by(id=id) \
@@ -136,7 +137,7 @@ def setup_routes(app):
 
         return redirect(url_for('parlementaire', id=id))
 
-    @app.route('/parlementaire/<id>/confirmer', endpoint='confirmer',
+    @app.route('/parlementaires/<id>/confirmer', endpoint='confirmer',
                methods=['POST'])
     @require_user
     def confirmer(id):
@@ -156,29 +157,29 @@ def setup_routes(app):
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id))
 
-        if 'file' not in request.files or not request.files['file'] \
-           or request.files['file'].filename == '':
-            msg = 'Veuillez indiquer un fichier à envoyer'
+        if not check_suivi(request.form['suivi']):
+            msg = 'Veuillez indiquer un numéro de suivi valide'
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id))
 
-        file = request.files['file']
-        ext = file.filename.rsplit('.', 1)[1].lower()
+        filename = None
+        if request.files.get('file') and request.files['file'].filename != '':
+            file = request.files['file']
+            ext = file.filename.rsplit('.', 1)[1].lower()
 
-        if ext not in EXTENSIONS.keys():
-            msg = 'Type de fichier non pris en charge, merci d\'envoyer ' \
-                  'uniquement un fichier PDF, JPG ou PNG'
-            return redirect_back(error=msg,
-                                 fallback=url_for('parlementaire', id=id))
+            if ext not in EXTENSIONS.keys():
+                msg = 'Type de fichier non pris en charge, merci d\'envoyer ' \
+                      'uniquement un fichier PDF, JPG ou PNG'
+                return redirect_back(error=msg,
+                                     fallback=url_for('parlementaire', id=id))
 
-        if ext == 'jpeg':
-            ext = 'jpg'
+            if ext == 'jpeg':
+                ext = 'jpg'
 
-        filename = 'preuve-envoi-%s.%s' % (slugify(parl.nom_complet), ext)
+            filename = 'preuve-envoi-%s.%s' % (slugify(parl.nom_complet), ext)
 
-
-        uploads_root = os.path.join(app.config['DATA_DIR'], 'uploads')
-        file.save(os.path.join(uploads_root, filename))
+            uploads_root = os.path.join(app.config['DATA_DIR'], 'uploads')
+            file.save(os.path.join(uploads_root, filename))
 
         parl.etape = Etape.query.filter_by(ordre=ETAPE_ENVOYE).first()
 
@@ -189,7 +190,8 @@ def setup_routes(app):
             ip=remote_addr(),
             parlementaire=parl,
             etape=parl.etape,
-            attachment=filename
+            attachment=filename,
+            suivi=request.form['suivi'].upper()
         )
 
         db.session.add(action)

@@ -25,6 +25,8 @@ class Action(db.Model):
     nick = db.Column(db.Unicode)
     email = db.Column(db.Unicode)
     ip = db.Column(db.Unicode)
+
+    suivi = db.Column(db.Unicode)
     attachment = db.Column(db.Unicode)
 
     etape_id = db.Column(db.Integer, db.ForeignKey('etapes.id'))
