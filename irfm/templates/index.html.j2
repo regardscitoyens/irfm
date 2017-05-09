@@ -1,7 +1,7 @@
 {% extends "_base.html.j2" %}
 
 {% block content %}
-  <div class="col-md-6">
+  <div class="col-md-8">
     <section class="panel panel-default">
       <header class="panel-heading">
         <b>Présentation de l'opération</b>
@@ -23,25 +23,29 @@
         {% endfilter %}
       </article>
     </section>
+
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Les étapes de l'opération</b>
+      </header>
+      <article class="panel-body">
+        {% for etape in etapes %}
+          <p>
+            {{ etape|label_etape }}
+            <small>{{ etape.description }}</small>
+          </p>
+        {% endfor %}
+      </article>
+    </section>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-4">
     <section class="panel panel-default">
       <header class="panel-heading">
         <b>Avancement</b>
       </header>
       <article class="panel-body" id="pie-container">
-        <div>
-          {% for etape in etapes %}
-            <p>
-              {{ etape|label_etape }}
-              <small>{{ etape.description }}</small>
-            </p>
-          {% endfor %}
-        </div>
-        <div>
-          <canvas id="pie-canvas" height="10" width="10"></canvas>
-        </div>
+        <canvas id="pie-canvas" height="100" width="200"></canvas>
       </article>
     </section>
 
@@ -73,7 +77,7 @@
           data: {{ etapes_data|tojson }},
           options: {
             legend: {
-              display: false
+              position: 'left'
             },
             maintainAspectRatio: true
           }

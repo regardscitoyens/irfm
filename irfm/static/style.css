@@ -33,25 +33,6 @@ th.col-right {
   text-align: right;
 }
 
-#pie-container {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-}
-
-#pie-container > * {
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-#pie-container > :first-child {
-  flex-basis: 70%;
-}
-
-#pie-container > :last-child {
-  flex-basis: 30%;
-}
-
 .jumbotron {
   background-image: url(hemicycle.jpg);
   background-size: cover;
