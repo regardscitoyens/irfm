@@ -48,8 +48,8 @@ def sanitize(text):
     return re.sub(r'[^@A-Za-z0-9_.-]', '', text)
 
 
-def check_email(text):
-    return re.search(r'^[^@]+@[^@]+\.[^@]+$', text)
+def check_email(text, allow_empty=True):
+    return not text or re.search(r'^[^@]+@[^@]+\.[^@]+$', text)
 
 
 def require_user(f):

@@ -36,14 +36,15 @@ def setup_routes(app):
             msg = 'Veuillez saisir un pseudonyme !'
             return redirect_back(error=msg)
 
-        if not check_email(request.form['email']):
+        if not check_email(request.form['email'].strip()):
             msg = 'Veuillez saisir une adresse e-mail valide pour assurer ' \
-                  'le suivi de l\'envoi des demandes !'
+                  'le suivi de l\'envoi des demandes ! Vous pouvez aussi ' \
+                  'laisser le champ vide si vous le préférez.'
             return redirect_back(error=msg)
 
         session['user'] = {
             'nick': nick,
-            'email': request.form['email'],
+            'email': request.form['email'].strip(),
             'admin': False
         }
 
