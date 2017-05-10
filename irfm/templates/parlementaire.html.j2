@@ -31,12 +31,10 @@
 
     {% if parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER %}
       {% if session.user %}
-        <section class="panel panel-default">
-          <article class="panel-body">
-            <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('envoi', id=parlementaire.id) }}">Je prends en charge l'envoi !</button>
-            <a class="btn btn-default btn-lg btn-block" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">Télécharger le courrier au format PDF</a>
-          </article>
-        </section>
+            <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('envoi', id=parlementaire.id) }}">
+              <i class="fa fa-thumbs-up"></i>
+              Je prends en charge l'envoi !
+            </a>
       {% endif %}
     {% elif pris_en_charge %}
       <section class="panel panel-default">
@@ -44,9 +42,11 @@
           <b>Confirmation d'envoi</b>
         </header>
         <article class="panel-body">
-          Vous avez pris en charge l'envoi du courrier à ce parlementaire.<br><br>
+          Vous avez pris en charge l'envoi du courrier à ce parlementaire. Merci !<br><br>
 
-          Pour confirmer l'envoi, merci de nous transmettre le numéro de suivi du recommandé à l'aide du formulaire ci-dessous.  Vous pouvez aussi nous envoyer une photo ou un scan de la preuve de dépôt (format PDF, PNG ou JPG, 4 Mo maximum) si vous le souhaitez.
+          <b>Revenez sur cette page une fois l'envoi effectué.</b><br><br>
+
+          Pour confirmer l'envoi, saisissez ci-dessous le numéro de suivi du recommandé.  Vous pouvez aussi joindre une photo ou un scan de la preuve de dépôt (format PDF, PNG ou JPG, 4 Mo maximum) si vous le souhaitez.
 
           <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
             <div class="form-group">
@@ -79,32 +79,16 @@
   </div>
 
   {% if parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER %}
-    {% if session.user %}
-      <div class="col-md-8">
-        <section class="panel panel-default">
-          <header class="panel-heading">
-            <b>Quelle est la marche à suivre ?</b>
-          </header>
-          <article class="panel-body">
-            {% filter markdown -%}
-              {% include "text/howto_envoi.md" %}
-            {% endfilter %}
-          </article>
-        </section>
-      </div>
-
-      <div class="col-md-12" id="letter-container">
-        <iframe name="demande" id="demande" src="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">
-        </iframe>
-      </div>
-    {% else %}
+    {% if not session.user %}
       <div class="col-md-8">
         <div class="alert alert-warning" role="alert">
           Pour envoyer une demande et assurer son suivi, il faut au préalable <a href="#" id="identify-link">vous identifier</a>.
         </div>
       </div>
     {% endif %}
-  {% else %}
+  {% endif %}
+
+  {% if parlementaire.etape.ordre > ordres.ETAPE_A_ENVOYER %}
     <div class="col-md-8">
       <section class="panel panel-default">
         <header class="panel-heading">
@@ -147,6 +131,31 @@
           {% endfor %}
         </table>
       </section>
+    </div>
+  {% endif %}
+
+  {% if (parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER and session.user) or pris_en_charge %}
+    <div class="col-md-8">
+      <section class="panel panel-default">
+        <header class="panel-heading">
+          <b>Quelle est la marche à suivre ?</b>
+        </header>
+        <article class="panel-body">
+          {% filter markdown -%}
+            {% include "text/howto_envoi.md" %}
+          {% endfilter %}
+        </article>
+      </section>
+    </div>
+
+    <div class="col-md-12" id="letter-container">
+      <a class="btn btn-default btn-lg" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">
+        <i class="fa fa-download"></i>
+        Télécharger le courrier au format PDF
+      </a>
+      <br><br>
+      <iframe name="demande" id="demande" src="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">
+      </iframe>
     </div>
   {% endif %}
 {% endblock %}
