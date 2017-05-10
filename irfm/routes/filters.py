@@ -35,8 +35,9 @@ def setup(app):
     def label_etape(etape):
         return '<span class="label" title="%s" ' \
             'data-toggle="tooltip" ' \
-            'style="background-color: %s;">%s</span>' % (
-                etape.description, etape.couleur, etape.label
+            'style="background-color: %s;"><i class="fa fa-%s"></i> ' \
+            '%s</span>' % (
+                etape.description, etape.couleur, etape.icone, etape.label
             )
 
     _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')

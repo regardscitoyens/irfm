@@ -46,7 +46,8 @@ ETAPES = [
             La demande d'accès aux relevés de comptes du parlementaire n'a pas
             encore été envoyée.
         """,
-        'couleur': '#cccccc',
+        'couleur': '#aaaaaa',
+        'icone': 'envelope-open',
     },
     {
         'ordre': ETAPE_A_CONFIRMER,
@@ -55,7 +56,8 @@ ETAPES = [
             Un utilisateur a souhaité se charger de l'envoi de la demande, mais
             nous n'avons pas encore confirmation de cet envoi.
         """,
-        'couleur': '#8888aa',
+        'couleur': '#666699',
+        'icone': 'clock-o',
     },
     {
         'ordre': ETAPE_ENVOYE,
@@ -64,7 +66,8 @@ ETAPES = [
             La demande d'accès aux relevés de comptes du parlementaire a été
             envoyée, mais nous n'avons pas encore d'avis de réception.
         """,
-        'couleur': '#88dddd',
+        'couleur': '#66bbbb',
+        'icone': 'envelope'
     },
     {
         'ordre': 30,
@@ -73,7 +76,8 @@ ETAPES = [
             Le parlementaire a reçu la demande d'accès à ses relevés de
             comptes.
         """,
-        'couleur': '#8888dd',
+        'couleur': '#6666bb',
+        'icone': 'check'
     },
     {
         'ordre': 40,
@@ -81,7 +85,8 @@ ETAPES = [
         'description': """
             Le parlementaire nous a transmis les relevés de compte demandés.
         """,
-        'couleur': '#88dd88',
+        'couleur': '#66bb66',
+        'icone': 'smile-o',
     },
     {
         'ordre': 45,
@@ -90,7 +95,8 @@ ETAPES = [
             Le parlementaire accepté de nous transmettre une partie des
             documents demandés.
         """,
-        'couleur': '#ddaa88',
+        'couleur': '#ddbb66',
+        'icone': 'meh-o',
     },
     {
         'ordre': 50,
@@ -100,6 +106,7 @@ ETAPES = [
             compte, soit explicitement, soit par voie de presse, soit à
             l'expiration d'un délai de 2 mois après réception de la demande.
         """,
-        'couleur': '#dd8888',
+        'couleur': '#bb6666',
+        'icone': 'frown-o',
     },
 ]

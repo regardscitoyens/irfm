@@ -12,6 +12,7 @@ class Etape(db.Model):
     label = db.Column(db.Unicode)
     description = db.Column(db.Unicode)
     couleur = db.Column(db.Unicode)
+    icone = db.Column(db.Unicode)
 
     parlementaires = db.relationship('Parlementaire', back_populates='etape')
 
