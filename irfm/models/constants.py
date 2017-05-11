@@ -31,6 +31,7 @@ ETAPE_NA = 0
 ETAPE_A_ENVOYER = 10
 ETAPE_A_CONFIRMER = 15
 ETAPE_ENVOYE = 20
+ETAPE_AR_RECU = 30
 
 ETAPES = [
     {
@@ -38,6 +39,7 @@ ETAPES = [
         'label': 'N/A',
         'description': '',
         'couleur': '',
+        'icone': '',
     },
     {
         'ordre': ETAPE_A_ENVOYER,
@@ -70,7 +72,7 @@ ETAPES = [
         'icone': 'envelope'
     },
     {
-        'ordre': 30,
+        'ordre': ETAPE_AR_RECU,
         'label': 'AR reçu',
         'description': """
             Le parlementaire a reçu la demande d'accès à ses relevés de
@@ -110,3 +112,5 @@ ETAPES = [
         'icone': 'frown-o',
     },
 ]
+
+ETAPES_BY_ORDRE = {e['ordre']: e for e in ETAPES}

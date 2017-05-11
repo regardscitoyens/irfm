@@ -33,12 +33,28 @@ def setup(app):
 
     @app.template_filter('label_etape')
     def label_etape(etape):
+        if isinstance(etape, dict):
+            data = (etape['description'], etape['couleur'], etape['icone'],
+                    etape['label'])
+        else:
+            data = (etape.description, etape.couleur, etape.icone, etape.label)
+
         return '<span class="label" title="%s" ' \
             'data-toggle="tooltip" ' \
             'style="background-color: %s;"><i class="fa fa-%s"></i> ' \
-            '%s</span>' % (
-                etape.description, etape.couleur, etape.icone, etape.label
-            )
+            '%s</span>' % data
+
+    @app.template_filter('label_etape_text')
+    def label_etape_text(etape):
+        if isinstance(etape, dict):
+            data = (etape['icone'], etape['label'])
+        else:
+            data = (etape.icone, etape.label)
+
+        return '<span data-toggle="tooltip"><i class="fa fa-%s"></i> ' \
+            '%s</span>' % data
+
+
 
     _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 

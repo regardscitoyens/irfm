@@ -30,10 +30,12 @@
       </header>
       <article class="panel-body">
         {% for etape in etapes %}
-          <p>
-            {{ etape|label_etape }}
-            <small>{{ etape.description }}</small>
-          </p>
+          {% if etape.ordre > 0 %}
+            <p>
+              {{ etape|label_etape }}
+              <small>{{ etape.description }}</small>
+            </p>
+          {% endif %}
         {% endfor %}
       </article>
     </section>
@@ -46,7 +48,7 @@
       </header>
       <article class="panel-body" id="pie-container">
         <div id="pie">
-          <canvas id="pie-canvas" height="150" width="200"></canvas>
+          <canvas id="pie-canvas" height="200" width="200"></canvas>
         </div>
         <div id="pie-legend">
           {% for etape in etapes %}
@@ -72,26 +74,66 @@
         </div>
       </article>
     </section>
+
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Carte par département</b>
+      </header>
+      <article class="panel-body" id="carte-container">
+        {% include "viz/carte.html.j2" %}
+      </article>
+    </section>
   </div>
 {% endblock %}
 
 {% block scripts %}
+  <div id="carte-popover" class="popover" role="tooltip" style="display: none;">
+    <div class="arrow"></div>
+    <h3 class="popover-title"></h3>
+    <div class="popover-content"></div>
+  </div>
+
   <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
 
   <script>
     $(document).ready(function () {
-      (function ($) {
-        var chart = new Chart($('#pie-canvas'), {
-          type: 'pie',
-          data: {{ etapes_data|tojson }},
-          options: {
-            legend: {
-              display: false
-            },
-            maintainAspectRatio: true
-          }
-        });
-      })(jQuery);
+      var chart = new Chart($('#pie-canvas'), {
+        type: 'pie',
+        data: {{ etapes_data|tojson }},
+        options: {
+          legend: {
+            display: false
+          },
+          responsive: false
+        }
+      });
+
+      {% for dep in departements %}
+        $('.departement{{ dep.num_deptmt }}')
+          .attr('data-content',
+            {% for ordre in [ordres.ETAPE_A_ENVOYER, ordres.ETAPE_A_CONFIRMER, ordres.ETAPE_ENVOYE] %}
+              {{ etapes_by_ordre[ordre]|label_etape_text|tojson }} +
+              "&nbsp;: {{ dep['nb_etape_%s' % ordre] }} <br>" +
+            {% endfor %}
+            ''
+          );
+      {% endfor %}
+
+      $('.land').mouseover(function(e) {
+        $('#carte-popover .popover-title').html($(this).attr('title'));
+        $('#carte-popover .popover-content').html($(this).attr('data-content'));
+
+      });
+
+      $('.land').mousemove(function(e) {
+        $('#carte-popover').css('left', e.clientX - 200)
+                           .css('top', e.clientY + 20)
+                           .show();
+      });
+
+      $('.land').mouseleave(function(e) {
+        $('#carte-popover').hide();
+      });
     });
   </script>
 {% endblock %}

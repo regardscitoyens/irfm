@@ -95,9 +95,39 @@ img.rc-small {
 }
 
 #pie-container #pie {
+  text-align: center;
   flex-basis: 70%;
+}
+
+#pie-container #pie canvas {
+  margin: 0 auto 0 auto;
 }
 
 #pie-container #pie-legend {
   flex-basis: 30%;
+}
+
+#carte-container {
+  text-align: center;
+}
+
+#carte .land {
+  fill: white;
+  fill-opacity: 1;
+  stroke: #666;
+  stroke-opacity: 1;
+  stroke-width:0.5;
+  stroke-miterlimit: 3.97446823;
+  stroke-dasharray: none;
+  cursor: pointer;
+}
+
+#carte text {
+  fill: #666;
+}
+
+#carte-popover {
+  display: none;
+  position: fixed;
+  min-width: 200px;
 }
