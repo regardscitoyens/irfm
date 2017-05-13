@@ -83,7 +83,7 @@
       </section>
     {% endif %}
 
-    {% if session.user and session.user.admin and next_etapes %}
+    {% if session.user and session.user.admin and next_etapes and parlementaire.etape.ordre > ordres.ETAPE_A_ENVOYER %}
     <section class="panel panel-danger">
       <header class="panel-heading">
         <b>Ajout d'une étape (admin)</b>
