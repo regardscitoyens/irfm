@@ -1,3 +1,14 @@
+.header-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.header-logo {
+  height: 80px;
+  margin-right: 1em;
+}
+
 .chamber-icon {
   height: 1.5em;
 }

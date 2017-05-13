@@ -15,9 +15,14 @@
 <body>
   <header class="jumbotron">
     <div class="container-fluid">
-      {% filter markdown -%}
-        {% include "text/header.md" %}
-      {% endfilter %}
+      <div class="header-container">
+        <img class="header-logo" src="{{ url_for('static', filename='rc-big.png') }}">
+        <div class="header-text">
+          {% filter markdown -%}
+            {% include "text/header.md" %}
+          {% endfilter %}
+        </div>
+      </div>
 
       <ul class="nav nav-pills">
         {% for item in menu %}
