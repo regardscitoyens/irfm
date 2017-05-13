@@ -13,7 +13,10 @@
     <article class="panel-body">
       <div class="input-group">
         <span class="input-group-addon" id="search-header">Filtrer les parlementaires</span>
-        <input type="search" autocomplete="off" class="form-control" id="search" placeholder="Nom, groupe, circonscription..." aria-describedby="search-header">
+        <input type="search" autocomplete="off" class="form-control" id="search" placeholder="Nom, groupe, circonscription..." value="{{ request.args.q }}" aria-describedby="search-header">
+        <span class="input-group-btn">
+          <button class="btn btn-primary" type="button" id="search-clear" style="display: none;">Effacer le filtre</button>
+        </span>
       </div>
     </article>
 
@@ -76,16 +79,34 @@
   <script src="{{ url_for('static', filename='bootstrap-sortable.js') }}"></script>
 
   <script>
-    $(document).ready(function () {
-      (function ($) {
-        $('#search').keyup(function () {
-          var rex = new RegExp($(this).val(), 'i');
+    $(document).ready(function() {
+      var search = $('#search');
+      var clear = $('#search-clear');
+
+      clear.hide();
+
+      function filterRows() {
+        if (search.val()) {
+          clear.show();
+
+          var rex = new RegExp(search.val(), 'i');
           $('.searchable tbody tr').hide();
           $('.searchable tbody tr').filter(function () {
             return rex.test($(this).find('.search-vector').text());
           }).show();
-        });
-      }(jQuery));
+        } else {
+          $('.searchable tbody tr').show();
+          clear.hide();
+        }
+      }
+
+      clear.click(function() {
+        search.val('');
+        filterRows();
+      });
+
+      search.keyup(filterRows);
+      filterRows();
     });
   </script>
 {% endblock %}

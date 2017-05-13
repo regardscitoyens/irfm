@@ -116,7 +116,10 @@
               "&nbsp;: {{ dep['nb_etape_%s' % ordre] }} <br>" +
             {% endfor %}
             ''
-          );
+          )
+          .click(function() {
+            location.href = '{{ url_for('parlementaires') }}?q={{ dep.num_deptmt }}';
+          });
       {% endfor %}
 
       $('.land').mouseover(function(e) {
