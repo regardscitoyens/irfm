@@ -48,7 +48,7 @@ ETAPES = [
             La demande d'accès aux relevés de comptes du parlementaire n'a pas
             encore été envoyée.
         """,
-        'couleur': '#aaaaaa',
+        'couleur': '#bbbbbb',
         'icone': 'envelope-open',
     },
     {
@@ -58,7 +58,7 @@ ETAPES = [
             Un utilisateur a souhaité se charger de l'envoi de la demande, mais
             nous n'avons pas encore confirmation de cet envoi.
         """,
-        'couleur': '#666699',
+        'couleur': '#aaaaff',
         'icone': 'clock-o',
     },
     {
@@ -68,7 +68,7 @@ ETAPES = [
             La demande d'accès aux relevés de comptes du parlementaire a été
             envoyée, mais nous n'avons pas encore d'avis de réception.
         """,
-        'couleur': '#66bbbb',
+        'couleur': '#8888dd',
         'icone': 'envelope'
     },
     {
@@ -78,7 +78,7 @@ ETAPES = [
             Le parlementaire a reçu la demande d'accès à ses relevés de
             comptes.
         """,
-        'couleur': '#6666bb',
+        'couleur': '#4444bb',
         'icone': 'check'
     },
     {
