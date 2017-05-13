@@ -2,6 +2,7 @@
 
 import re
 
+from flask import url_for
 from jinja2 import evalcontextfilter, Markup, escape
 
 
@@ -17,11 +18,42 @@ def setup(app):
                                        else 'Député')
 
     @app.template_filter('fonc_parlementaire')
-    def fonc_parlementaire(parl):
+    def fonc_parlementaire(parl, article=False):
         if parl.sexe == 'F':
             return 'Sénatrice' if parl.chambre == 'SEN' else 'Députée'
         else:
             return 'Sénateur' if parl.chambre == 'SEN' else 'Député'
+
+    @app.template_filter('lien_parl')
+    def lien_parl(parl):
+        if parl.chambre == 'AN':
+            site = 'de l\'Assemblée nationale'
+        else:
+            site = 'du Sénat'
+
+        data = (site, parl.url_off,
+                url_for('static', filename=parl.chambre.lower() + '.png'))
+
+        return ('<a title="Accéder à la page du parlementaire sur le %s" '
+                'data-toggle="tooltip" target="_blank" href="%s">'
+                '<img class="chamber-icon" src="%s">'
+                '</a>' % data)
+
+    @app.template_filter('lien_rc')
+    def lien_parl(parl):
+        if parl.chambre == 'AN':
+            site = 'NosDéputés.fr'
+            icon = 'nd'
+        else:
+            site = 'NosSénateurs.fr'
+            icon = 'ns'
+
+        data = (site, parl.url_rc, url_for('static', filename=icon + '.png'))
+
+        return ('<a title="Accéder à la page du parlementaire sur %s" '
+                'data-toggle="tooltip" target="_blank" href="%s">'
+                '<img class="chamber-icon" src="%s">'
+                '</a>' % data)
 
     @app.template_filter('label_groupe')
     def label_groupe(groupe):

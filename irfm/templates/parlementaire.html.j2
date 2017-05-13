@@ -12,9 +12,10 @@
         <div class="parl-detail">
           <b>{{ parlementaire.nom_complet }}</b>
             {{ parlementaire.groupe|label_groupe }}
-            <a title="Accéder à la page du parlementaire ({{ chambres[parlementaire.chambre] }})" data-toggle="tooltip" target="_blank" href="{{ parlementaire.url_off }}">
-              <img class="chamber-icon" src="{{ url_for('static', filename=parlementaire.chambre|lower+'.png') }}">
-            </a>
+
+            {{ parlementaire|lien_rc }}
+
+            {{ parlementaire|lien_parl }}
           <br>
 
           {{ parlementaire|fonc_parlementaire }}
