@@ -64,11 +64,19 @@ def setup_routes(app):
         if not parl:
             return not_found()
 
-        return render_template(
-            'parlementaire.html.j2',
-            parlementaire=parl,
-            pris_en_charge=bool(pris_en_charge(parl))
-        )
+        data = {
+            'parlementaire': parl,
+            'pris_en_charge': bool(pris_en_charge(parl))
+        }
+
+        if session.get('user') and session['user']['admin']:
+            etapes = Etape.query.filter(Etape.ordre > parl.etape.ordre) \
+                                .order_by(Etape.ordre) \
+                                .all()
+
+            data['next_etapes'] = etapes
+
+        return render_template('parlementaire.html.j2', **data)
 
     @app.route('/parlementaires/<id>/envoi', endpoint='envoi')
     @require_user

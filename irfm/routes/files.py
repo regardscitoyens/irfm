@@ -67,3 +67,19 @@ def setup_routes(app):
             mimetype=EXTENSIONS[ext],
             conditional=True,
         )
+
+    @app.route('/parlementaire/document/<id>', endpoint='document')
+    def document(id):
+        act = Action.query.filter_by(id=id).first()
+
+        if not act or not act.attachment:
+            return not_found()
+
+        path = os.path.join(uploads_root, act.attachment)
+        ext = path.rsplit('.', 1)[1].lower()
+
+        return send_file(
+            path,
+            mimetype=EXTENSIONS[ext],
+            conditional=True,
+        )

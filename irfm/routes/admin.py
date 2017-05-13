@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 import os
 
-from flask import make_response, render_template
+from flask import (make_response, redirect, render_template, request, session,
+                   url_for)
 from sqlalchemy.orm import joinedload
 
-from .util import not_found, redirect_back, require_admin
+from .util import not_found, redirect_back, remote_addr, require_admin, slugify
 from ..models import db, Action, Etape, Parlementaire
 from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER, EXTENSIONS
 
@@ -91,3 +93,57 @@ def setup_routes(app):
             response = make_response(fichier.read())
             response.headers['Content-Type'] = EXTENSIONS[ext]
             return response
+
+    @app.route('/admin/action/<id_parl>', endpoint='admin_action',
+               methods=['POST'])
+    @require_admin
+    def admin_action(id_parl):
+        parl = Parlementaire.query.filter_by(id=id_parl).first()
+        if not parl:
+            return not_found()
+
+        etape = Etape.query.filter_by(id=request.form['etape']).first()
+        if not etape:
+            msg = 'Etape inconnue !?'
+            return redirect_back(error=msg,
+                                 fallback=url_for('parlementaire', id=id_parl))
+
+        filename = None
+        if request.files.get('file') and request.files['file'].filename != '':
+            file = request.files['file']
+            ext = file.filename.rsplit('.', 1)[1].lower()
+
+            if ext not in EXTENSIONS.keys():
+                msg = 'Type de fichier non pris en charge, merci d\'envoyer ' \
+                      'uniquement un fichier PDF, JPG ou PNG'
+                return redirect_back(error=msg,
+                                     fallback=url_for('parlementaire',
+                                                      id=id_parl))
+
+            if ext == 'jpeg':
+                ext = 'jpg'
+
+            filename = 'etape-%s-%s.%s' % (etape.ordre,
+                                           slugify(parl.nom_complet),
+                                           ext)
+
+            uploads_root = os.path.join(app.config['DATA_DIR'], 'uploads')
+            file.save(os.path.join(uploads_root, filename))
+
+        parl.etape = etape
+
+        action = Action(
+            date=datetime.utcnow(),
+            nick=session['user']['nick'],
+            email=session['user']['email'],
+            ip=remote_addr(),
+            parlementaire=parl,
+            etape=etape,
+            attachment=filename,
+            suivi=request.form['suivi']
+        )
+
+        db.session.add(action)
+        db.session.commit()
+
+        return redirect(url_for('parlementaire', id=id_parl))
