@@ -36,17 +36,23 @@
               Je prends en charge l'envoi !
             </a>
       {% endif %}
-    {% elif pris_en_charge %}
+    {% elif parlementaire.etape.ordre == ordres.ETAPE_A_CONFIRMER and (pris_en_charge or (session.user and session.user.admin)) %}
       <section class="panel panel-default">
         <header class="panel-heading">
           <b>Confirmation d'envoi</b>
         </header>
         <article class="panel-body">
-          Vous avez pris en charge l'envoi du courrier à ce parlementaire. Merci !<br><br>
+          {% if pris_en_charge %}
+            Vous avez pris en charge l'envoi du courrier à ce parlementaire. Merci !<br><br>
 
-          <b>Revenez sur cette page une fois l'envoi effectué.</b><br><br>
+            <b>Revenez sur cette page une fois l'envoi effectué.</b><br><br>
 
-          Pour confirmer l'envoi, saisissez ci-dessous le numéro de suivi du recommandé.  Vous pouvez aussi joindre une photo ou un scan de la preuve de dépôt (format PDF, PNG ou JPG, 4 Mo maximum) si vous le souhaitez.
+            Pour confirmer l'envoi, saisissez ci-dessous le numéro de suivi du recommandé.  Vous pouvez aussi joindre une photo ou un scan de la preuve de dépôt (format PDF, PNG ou JPG, 4 Mo maximum) si vous le souhaitez.
+          {% elif session.user.admin %}
+            <span class="admin">
+              Vous êtes administrateur&nbsp;: vous pouvez confirmer ou annuler à la place de l'utilisateur.
+            </span>
+          {% endif %}
 
           <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
             <div class="form-group">

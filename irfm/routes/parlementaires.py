@@ -15,17 +15,22 @@ from ..models.constants import (ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
                                 ETAPE_ENVOYE, EXTENSIONS)
 
 
-def pris_en_charge(parl):
+def pris_en_charge(parl, force=False):
     """
     Verifie si l'user courant a pris en charge le parlementaire et qu'il est
     bien à l'étape "à confirmer".
     Renvoie l'action correspondante ou None
     """
     if session.get('user') and parl.etape.ordre == ETAPE_A_CONFIRMER:
-        action = [a for a in parl.actions
-                  if a.etape.ordre == ETAPE_A_CONFIRMER
-                  and a.nick == session.get('user')['nick']
-                  and a.email == session.get('user')['email']]
+        if force:
+            action = [a for a in parl.actions
+                      if a.etape.ordre == ETAPE_A_CONFIRMER]
+        else:
+            action = [a for a in parl.actions
+                      if a.etape.ordre == ETAPE_A_CONFIRMER
+                      and a.nick == session.get('user')['nick']
+                      and a.email == session.get('user')['email']]
+
         if len(action):
             return action[0]
 
@@ -125,11 +130,17 @@ def setup_routes(app):
             return not_found()
 
         action = pris_en_charge(parl)
-        if not action:
+        if not action and not session['user']['admin']:
             msg = 'Oups, vous n\'avez pas pris en charge l\'envoi pour ce ' \
                   'parlementaire !'
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id))
+        elif session['user']['admin']:
+            action = pris_en_charge(parl, True)
+            if not action:
+                msg = 'Oups, action introuvable !'
+                return redirect_back(error=msg,
+                                     fallback=url_for('parlementaire', id=id))
 
         parl.etape = Etape.query.filter_by(ordre=ETAPE_A_ENVOYER).first()
         db.session.delete(action)
@@ -151,11 +162,17 @@ def setup_routes(app):
             return not_found()
 
         action = pris_en_charge(parl)
-        if not action:
+        if not action and not session['user']['admin']:
             msg = 'Oups, vous n\'avez pas pris en charge l\'envoi pour ce ' \
                   'parlementaire !'
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id))
+        elif session['user']['admin']:
+            action = pris_en_charge(parl, True)
+            if not action:
+                msg = 'Oups, action introuvable !'
+                return redirect_back(error=msg,
+                                     fallback=url_for('parlementaire', id=id))
 
         if not check_suivi(request.form['suivi']):
             msg = 'Veuillez indiquer un numéro de suivi valide'

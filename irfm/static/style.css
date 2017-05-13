@@ -55,8 +55,8 @@ th.col-right {
   font-weight: bold;
 }
 
-.nav .admin {
-  color: red;
+.admin {
+  color: #b33237;
 }
 
 .nav li.login {
