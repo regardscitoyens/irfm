@@ -46,7 +46,10 @@
               {% endif %}
             </td>
             <td class="col-right">
-              <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=action.id) }}">Supprimer</a>
+              {% if action.etape.ordre == action.parlementaire.etape.ordre %}
+                {# On n'autorise la suppression que si l'étape est la dernière du parlementaire #}
+                <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=action.id) }}">Supprimer</a>
+              {% endif %}
             </td>
           </tr>
 

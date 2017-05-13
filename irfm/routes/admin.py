@@ -15,7 +15,9 @@ def setup_routes(app):
     @app.route('/admin/recent', endpoint='admin_recent')
     @require_admin
     def admin_recent():
-        qs = Action.query.options(joinedload(Action.parlementaire)) \
+        # Les 500 actions les plus récentes
+        qs = Action.query.options(joinedload(Action.parlementaire)
+                                  .joinedload(Parlementaire.etape)) \
                          .options(joinedload(Action.etape)) \
                          .order_by(Action.date.desc()) \
                          .limit(500) \
@@ -28,11 +30,13 @@ def setup_routes(app):
     @app.route('/admin/en-attente', endpoint='admin_en_attente')
     @require_admin
     def admin_en_attente():
+        # Sous requête des parlementaires à l'étape "à confirmer"
         parls = db.session.query(Parlementaire.id) \
                           .join(Parlementaire.etape) \
                           .filter(Etape.ordre == ETAPE_A_CONFIRMER) \
                           .subquery()
 
+        # Actions "à confirmer" pour ces parlementaires
         qs = Action.query.join(Action.etape) \
                          .filter(Action.parlementaire_id.in_(parls)) \
                          .filter(Etape.ordre == ETAPE_A_CONFIRMER) \
