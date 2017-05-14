@@ -1,3 +1,16 @@
+/* En-tête de page */
+
+.jumbotron {
+  background-image: url(hemicycle.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.jumbotron h1 {
+  font-size: 40px;
+  font-weight: bold;
+}
+
 .header-container {
   display: flex;
   flex-flow: row nowrap;
@@ -8,6 +21,8 @@
   height: 80px;
   margin-right: 1em;
 }
+
+/* Composants génériques */
 
 .chamber-icon {
   height: 1.5em;
@@ -30,6 +45,22 @@
   flex-shrink: 0;
 }
 
+.admin {
+  color: #b33237;
+}
+
+
+img.rc-small {
+  height: 1.5em;
+  vertical-align: top;
+}
+
+.faq h5 {
+  font-weight: bold;
+}
+
+/* Tableaux */
+
 .search-vector {
   display: none;
 }
@@ -44,20 +75,8 @@ th.col-right {
   text-align: right;
 }
 
-.jumbotron {
-  background-image: url(hemicycle.jpg);
-  background-size: cover;
-  background-position: center;
-}
+/* Login */
 
-.jumbotron h1 {
-  font-size: 40px;
-  font-weight: bold;
-}
-
-.admin {
-  color: #b33237;
-}
 
 .nav li.login {
   float: right;
@@ -70,6 +89,8 @@ th.col-right {
 .login-form input {
   width: 20em;
 }
+
+/* Conteneur pour le courrier */
 
 #letter-container {
   text-align: center;
@@ -85,14 +106,7 @@ th.col-right {
   border: 1px solid #ccc;
 }
 
-img.rc-small {
-  height: 1.5em;
-  vertical-align: top;
-}
-
-.faq h5 {
-  font-weight: bold;
-}
+/* Camembert */
 
 #pie-container {
   display: flex;
@@ -118,6 +132,8 @@ img.rc-small {
   flex-basis: 30%;
 }
 
+/* Carte des départements */
+
 #carte-container {
   text-align: center;
 }
@@ -141,4 +157,14 @@ img.rc-small {
   display: none;
   position: fixed;
   min-width: 200px;
+
+  font-size: 0.8em;
+}
+
+#procedure-popover {
+  display: none;
+  position: fixed;
+  width: 200px;
+
+  font-size: 0.8em;
 }

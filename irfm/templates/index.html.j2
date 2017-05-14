@@ -24,6 +24,7 @@
       </article>
     </section>
 
+    <!--
     <section class="panel panel-default">
       <header class="panel-heading">
         <b>Les étapes de l'opération</b>
@@ -39,6 +40,7 @@
         {% endfor %}
       </article>
     </section>
+    -->
   </div>
 
   <div class="col-md-4">
@@ -84,6 +86,17 @@
       </article>
     </section>
   </div>
+
+  <div class="col-md-12">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Comment arriver à la transparence de l'IRFM ?</b>
+      </header>
+      <article class="panel-body" id="procedure-container">
+        {% include "viz/procedure.svg" %}
+      </article>
+    </section>
+  </div>
 {% endblock %}
 
 {% block scripts %}
@@ -93,10 +106,18 @@
     <div class="popover-content"></div>
   </div>
 
+  <div id="procedure-popover" class="popover" role="tooltip" style="display: none;">
+    <div class="arrow"></div>
+    <div class="popover-content"></div>
+  </div>
+
   <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
 
   <script>
     $(document).ready(function () {
+
+      /* Camembert */
+
       var chart = new Chart($('#pie-canvas'), {
         type: 'pie',
         data: {{ etapes_data|tojson }},
@@ -107,6 +128,8 @@
           responsive: false
         }
       });
+
+      /* Carte */
 
       {% for dep in departements %}
         $('.departement{{ dep.num_deptmt }}')
@@ -137,6 +160,70 @@
       $('.land').mouseleave(function(e) {
         $('#carte-popover').hide();
       });
+
+      /* Procedure */
+
+      var tooltips = {
+        '#demande': "Envoi d'une demande de communication des relevés bancaires et de l'attestation d'utilisation de l'IRFM aux parlementaires",
+
+        '#parl_cada': "Demande de communication au parlementaire suite à l'accord CADA",
+        '#parl_ta': "Demande de communication au parlementaire suite à l'accord du Tribunal Administratif",
+        '#parl_caa': "Demande de communication au parlementaire suite à l'accord de la Cour d'Appel Administrative",
+
+        '#silence_parl': "Pas de réponse du parlementaire",
+        '#silence_parl_cada': "Pas de réponse du parlementaire",
+
+        '#refus_parl': "Le parlementaire refuse de nous communiquer les informations demandées",
+        '#refus_parl_cada': "Le parlementaire refuse de nous communiquer les informations demandées malgré la décision de la CADA",
+        '#refus_parl_ta': "Le parlementaire fait appel de la décision du Tribunal Administratif",
+        '#refus_parl_caa': "Le parlementaire se pourvoit devant le Conseil d'État",
+
+        '#accord_parl': "Le parlementaire accepte de nous communiquer les informations demandées",
+        '#accord_parl_cada': "Le parlementaire accepte de nous communiquer les informations demandées",
+        '#accord_parl_ta': "Le parlementaire accepte de nous communiquer les informations demandées",
+        '#accord_parl_caa': "Le parlementaire accepte de nous communiquer les informations demandées",
+
+        '#incompetence_cada': "La CADA se déclare incompétente pour traiter notre demande",
+        '#incompetence_ta': "Le Tribunal Administratif se déclare incompétent pour traiter notre demande",
+        '#incompetence_ce': "Le Conseil d'État se déclare incompétent pour traiter notre demande",
+
+        '#rejet_cada': "La CADA rejette notre demande",
+        '#rejet_ta': "Le Tribunal Administratif rejette notre demande",
+        '#rejet_caa': "La Cour d'Appel Administrative rejette notre demande",
+        '#rejet_ce': "Le Conseil d'État rejette notre demande",
+        '#rejet_eur': "La juridiction Européenne rejette notre demande",
+
+        '#accord_cada': "La CADA nous accorde le droit d'accès aux informations",
+        '#accord_ta': "Le Tribunal Administratif nous accorde le droit d'accès aux informations",
+        '#accord_caa': "La Cour d'Appel Administrative nous accorde le droit d'accès aux informations",
+        '#accord_ce': "Le Conseil d'État nous accorde le droit d'accès aux informations",
+        '#accord_eur': "La juridiction Européenne nous accorde le droit d'accès aux informations",
+
+        '#lobbying': "Nous faisons du lobbying pour qu'un projet de loi soit adopté qui établisse la transparence de l'IRFM"
+      };
+
+      var tooltips_right = ['#accord_eur', '#rejet_eur', '#lobbying'];
+
+      Object.keys(tooltips).forEach(function(sel) {
+        var is_right = tooltips_right.indexOf(sel) !== -1;
+
+        $(sel)
+          .css('cursor', 'help')
+          .mouseover(function(e) {
+            $('#procedure-popover .popover-content').html(tooltips[sel]);
+          })
+          .mousemove(function(e) {
+            $('#procedure-popover')
+              .css('left', e.clientX + (is_right ? -210 : 10))
+              .css('top', e.clientY + 10)
+              .show();
+          })
+          .mouseleave(function(e) {
+            $('#procedure-popover')
+              .hide();
+          });
+      });
+
     });
   </script>
 {% endblock %}
