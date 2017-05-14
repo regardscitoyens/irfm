@@ -8,11 +8,11 @@ from flask import (flash, make_response, redirect, render_template, request,
 from flask_mail import Mail, Message
 from sqlalchemy.orm import joinedload, contains_eager
 
-from .util import (check_suivi, not_found, redirect_back, remote_addr,
-                   require_user, slugify)
 from ..models import db, Action, Etape, Parlementaire
 from ..models.constants import (ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
                                 ETAPE_ENVOYE, EXTENSIONS)
+from ..tools.routing import not_found, redirect_back, remote_addr, require_user
+from ..tools.text import check_suivi, slugify
 
 
 def pris_en_charge(parl, force=False):

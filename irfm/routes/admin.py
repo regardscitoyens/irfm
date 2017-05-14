@@ -7,9 +7,11 @@ from flask import (make_response, redirect, render_template, request, session,
                    url_for)
 from sqlalchemy.orm import joinedload
 
-from .util import not_found, redirect_back, remote_addr, require_admin, slugify
 from ..models import db, Action, Etape, Parlementaire
 from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER, EXTENSIONS
+from ..tools.routing import (not_found, redirect_back, remote_addr,
+                             require_admin)
+from ..tools.text import slugify
 
 
 def setup_routes(app):

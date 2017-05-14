@@ -6,9 +6,10 @@ import os
 from flask import make_response, render_template, send_file
 from xhtml2pdf import pisa
 
-from .util import not_found, slugify
 from ..models import Action, Etape, Parlementaire
 from ..models.constants import ETAPE_ENVOYE, EXTENSIONS
+from ..tools.routing import not_found
+from ..tools.text import slugify
 
 
 def setup_routes(app):

@@ -4,7 +4,8 @@ import hmac
 
 from flask import request, session
 
-from .util import check_email, redirect_back, sanitize
+from ..tools.routing import redirect_back
+from ..tools.text import check_email, sanitize
 
 
 def setup_routes(app):
