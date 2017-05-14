@@ -39,7 +39,7 @@ def parse_couleur(couleur):
 class NosDeputesImporter(BaseImporter):
 
     URL_GROUPES = 'https://www.nosdeputes.fr/organismes/groupe/json'
-    URL_DEPUTES = 'https://www.nosdeputes.fr/deputes/json'
+    URL_DEPUTES = 'https://www.nosdeputes.fr/deputes/enmandat/json'
     URL_PHOTO = '//www.nosdeputes.fr/depute/photo/%(slug)s'
 
     columns = None
@@ -71,9 +71,10 @@ class NosDeputesImporter(BaseImporter):
         fields = {
             'sexe': data['sexe'],
             'nom_complet': data['nom'],
+            'emails': ','.join([e['email'] for e in data['emails']]),
+            'twitter': data['twitter'],
 
             'mandat_debut': parse_date(data['mandat_debut']),
-            'mandat_fin': parse_date(data.get('mandat_fin', None)),
             'num_deptmt': data['num_deptmt'],
             'nom_circo': data['nom_circo'],
             'num_circo': data['num_circo'],
@@ -84,10 +85,6 @@ class NosDeputesImporter(BaseImporter):
             'url_rc': data['url_nosdeputes'],
             'url_off': data['url_an'],
         }
-
-        if fields['mandat_fin']:
-            # On ignore tous les députés qui ne sont plus en mandat
-            fields['etape'] = self.etape_na
 
         for key, newvalue in fields.items():
             curvalue = getattr(depute, key)
@@ -125,8 +122,8 @@ class NosDeputesImporter(BaseImporter):
         created = 0
         updated = 0
 
-        for depute in data['deputes']:
-            c, u = self.import_depute(depute['depute'])
+        for depute in [d['depute'] for d in data['deputes']]:
+            c, u = self.import_depute(depute)
             if c:
                 created += 1
             elif u:
