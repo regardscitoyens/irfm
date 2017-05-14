@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import date
 import os
 
 from flask import render_template, request
@@ -20,7 +21,24 @@ def generer_demande(parl, directory, force=False):
     filename = 'demande-irfm-%s.pdf' % slugify(parl.nom_complet)
     path = os.path.join(directory, filename)
 
-    generer_pdf('courriers/demande.html.j2', {'parlementaire': parl}, path,
+    aujourdhui = date.today()
+    m = aujourdhui.month - 6
+    y = aujourdhui.year
+    if m < 1:
+        m = m + 12
+        y = y - 1
+
+    debut = max(date(y, m, aujourdhui.day),
+                date(parl.mandat_debut.year, parl.mandat_debut.month, 1))
+
+    generer_pdf('courriers/demande.html.j2', {
+                    'parlementaire': parl,
+                    'aujourdhui': aujourdhui.strftime('%d %B %Y'),
+                    'debut_releves': debut.strftime('%B %Y'),
+                    'fin_releves': aujourdhui.strftime('%B %Y'),
+                    'declaration': debut < date(2017, 1, 1)
+                },
+                path,
                 force)
 
     return filename
