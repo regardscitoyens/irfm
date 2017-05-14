@@ -110,27 +110,14 @@ def setup_routes(app):
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id_parl))
 
-        filename = None
-        if request.files.get('file') and request.files['file'].filename != '':
-            file = request.files['file']
-            ext = file.filename.rsplit('.', 1)[1].lower()
-
-            if ext not in EXTENSIONS.keys():
-                msg = 'Type de fichier non pris en charge, merci d\'envoyer ' \
-                      'uniquement un fichier PDF, JPG ou PNG'
-                return redirect_back(error=msg,
-                                     fallback=url_for('parlementaire',
-                                                      id=id_parl))
-
-            if ext == 'jpeg':
-                ext = 'jpg'
-
-            filename = 'etape-%s-%s.%s' % (etape.ordre,
-                                           slugify(parl.nom_complet),
-                                           ext)
-
-            uploads_root = os.path.join(app.config['DATA_DIR'], 'uploads')
-            file.save(os.path.join(uploads_root, filename))
+        try:
+            filename = handle_upload(
+                os.path.join(app.config['DATA_DIR'], 'uploads'),
+                'etape-%s-%s.%s' % (etape.ordre, slugify(parl.nom_complet))
+            )
+        except Exception as e:
+            return redirect_back(error=str(e),
+                                 fallback=url_for('parlementaire', id=id_parl))
 
         parl.etape = etape
 

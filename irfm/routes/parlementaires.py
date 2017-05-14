@@ -10,7 +10,8 @@ from sqlalchemy.orm import joinedload, contains_eager
 
 from ..models import db, Action, Etape, Parlementaire
 from ..models.constants import (ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
-                                ETAPE_ENVOYE, EXTENSIONS)
+                                ETAPE_ENVOYE)
+from ..tools.files import handle_upload
 from ..tools.routing import not_found, redirect_back, remote_addr, require_user
 from ..tools.text import check_suivi, slugify
 
@@ -187,24 +188,14 @@ def setup_routes(app):
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id))
 
-        filename = None
-        if request.files.get('file') and request.files['file'].filename != '':
-            file = request.files['file']
-            ext = file.filename.rsplit('.', 1)[1].lower()
-
-            if ext not in EXTENSIONS.keys():
-                msg = 'Type de fichier non pris en charge, merci d\'envoyer ' \
-                      'uniquement un fichier PDF, JPG ou PNG'
-                return redirect_back(error=msg,
-                                     fallback=url_for('parlementaire', id=id))
-
-            if ext == 'jpeg':
-                ext = 'jpg'
-
-            filename = 'preuve-envoi-%s.%s' % (slugify(parl.nom_complet), ext)
-
-            uploads_root = os.path.join(app.config['DATA_DIR'], 'uploads')
-            file.save(os.path.join(uploads_root, filename))
+        try:
+            filename = handle_upload(
+                os.path.join(app.config['DATA_DIR'], 'uploads'),
+                'preuve-envoi-%s' % slugify(parl.nom_complet)
+            )
+        except Exception as e:
+            return redirect_back(error=str(e),
+                                 fallback=url_for('parlementaire', id=id))
 
         parl.etape = Etape.query.filter_by(ordre=ETAPE_ENVOYE).first()
 
