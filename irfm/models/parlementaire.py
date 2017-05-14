@@ -25,6 +25,8 @@ class Parlementaire(db.Model):
     nom_complet = db.Column(db.Unicode)
     sexe = db.Column(db.Enum(*SEXES.keys(), name='sexes'))
     adresse = db.Column(db.Unicode)
+    emails = db.Column(db.Unicode)
+    twitter = db.Column(db.Unicode)
 
     chambre = db.Column(db.Enum(*CHAMBRES.keys(), name='chambres'))
 
