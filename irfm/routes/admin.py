@@ -8,7 +8,9 @@ from flask import (make_response, redirect, render_template, request, session,
 from sqlalchemy.orm import joinedload
 
 from ..models import db, Action, Etape, Parlementaire
-from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER, EXTENSIONS
+from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER
+
+from ..tools.files import EXTENSIONS
 from ..tools.routing import (not_found, redirect_back, remote_addr,
                              require_admin)
 from ..tools.text import slugify

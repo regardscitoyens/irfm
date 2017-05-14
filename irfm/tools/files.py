@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from flask import request
+import os
+
+from flask import render_template, request
+from xhtml2pdf import pisa
+
+from .text import slugify
 
 
 EXTENSIONS = {
@@ -9,6 +14,24 @@ EXTENSIONS = {
     'jpeg': 'image/jpeg',
     'png': 'image/png',
 }
+
+
+def generer_demande(parl, directory, force=False):
+    filename = 'demande-irfm-%s.pdf' % slugify(parl.nom_complet)
+    path = os.path.join(directory, filename)
+
+    generer_pdf('courriers/demande.html.j2', {'parlementaire': parl}, path,
+                force)
+
+    return filename
+
+
+def generer_pdf(template, data, path, force=False):
+    if force or not os.path.exists(path):
+        html = render_template(template, **data)
+
+        with open(path, 'wb') as pdf:
+            pisa.CreatePDF(html, pdf)
 
 
 def handle_upload(directory, basename, key='file'):
@@ -30,3 +53,5 @@ def handle_upload(directory, basename, key='file'):
         file.save(os.path.join(directory, filename))
 
     return filename
+
+

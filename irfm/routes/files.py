@@ -4,10 +4,11 @@ from io import BytesIO
 import os
 
 from flask import make_response, render_template, send_file
-from xhtml2pdf import pisa
 
 from ..models import Action, Etape, Parlementaire
-from ..models.constants import ETAPE_ENVOYE, EXTENSIONS
+from ..models.constants import ETAPE_ENVOYE
+
+from ..tools.files import EXTENSIONS, generer_demande
 from ..tools.routing import not_found
 from ..tools.text import slugify
 
@@ -28,19 +29,11 @@ def setup_routes(app):
         if not parl:
             return not_found()
 
-        filename = 'demande-irfm-%s.pdf' % slugify(parl.nom_complet)
-
-        path = os.path.join(files_root, filename)
-        if not os.path.exists(filename):
-            html = render_template('demande.html.j2',
-                                   parlementaire=parl)
-
-            with open(path, 'wb') as pdf:
-                pisa.CreatePDF(html, pdf)
+        filename = generer_demande(parl, files_root)
 
         attach = None
         if mode == 'download':
-            attach = filename
+            attach = os.path.basename(filename)
 
         return send_file(
             path,

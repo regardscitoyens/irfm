@@ -3,6 +3,7 @@
 from getpass import getpass
 import os
 
+from flask_mail import Mail, Message
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
@@ -11,7 +12,11 @@ from .importers.etapes import EtapesImporter
 from .importers.nosdeputes import NosDeputesImporter
 
 from .irfm import app
-from .models import db
+
+from .models import db, Etape, Parlementaire
+from .models.constants import ETAPE_NA
+
+from .tools.files import generer_demande
 from .tools.text import hash_password
 
 
@@ -24,12 +29,26 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def clear_cache():
     """Vide le cache des fichiers générés"""
-
     files_root = os.path.join(app.config['DATA_DIR'], 'files')
     if os.path.exists(files_root):
         for item in os.listdir(files_root):
             print('Suppression %s' % item)
             os.unlink(os.path.join(files_root, item))
+
+
+@manager.command
+def generer_demandes():
+    """Génère les demandes pour tous les parlementaires"""
+    app.config.update(SQLALCHEMY_ECHO=False)
+    files_root = os.path.join(app.config['DATA_DIR'], 'files')
+
+    parls = Parlementaire.query.join(Parlementaire.etape) \
+                               .filter(Etape.ordre > ETAPE_NA) \
+                               .all()
+
+    for parl in parls:
+        print(parl.nom_complet)
+        generer_demande(parl, files_root, True)
 
 
 @manager.command
