@@ -22,18 +22,14 @@ manager.add_command('db', MigrateCommand)
 
 
 @manager.command
-def runserver():
-    """Exécute le serveur web flask intégré"""
-    app.run()
+def clear_cache():
+    """Vide le cache des fichiers générés"""
 
-
-@manager.command
-def password():
-    """Chiffre un mot de passe admin"""
-
-    h = hmac.new(bytes(app.config['SECRET_KEY'], encoding='ascii'))
-    h.update(bytes(getpass(), encoding='utf-8'))
-    print(h.hexdigest())
+    files_root = os.path.join(app.config['DATA_DIR'], 'files')
+    if os.path.exists(files_root):
+        for item in os.listdir(files_root):
+            print('Suppression %s' % item)
+            os.unlink(os.path.join(files_root, item))
 
 
 @manager.command
@@ -58,11 +54,15 @@ def import_adresses():
 
 
 @manager.command
-def clear_cache():
-    """Vide le cache des fichiers générés"""
+def password():
+    """Chiffre un mot de passe admin"""
 
-    files_root = os.path.join(app.config['DATA_DIR'], 'files')
-    if os.path.exists(files_root):
-        for item in os.listdir(files_root):
-            print('Suppression %s' % item)
-            os.unlink(os.path.join(files_root, item))
+    h = hmac.new(bytes(app.config['SECRET_KEY'], encoding='ascii'))
+    h.update(bytes(getpass(), encoding='utf-8'))
+    print(h.hexdigest())
+
+
+@manager.command
+def runserver():
+    """Exécute le serveur web flask intégré"""
+    app.run()
