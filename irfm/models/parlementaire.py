@@ -47,3 +47,5 @@ class Parlementaire(db.Model):
     etape = db.relationship('Etape', back_populates='parlementaires')
 
     actions = db.relationship('Action', back_populates='parlementaire')
+
+    mails_envoyes = db.Column(db.Integer, default=0, server_default='0')

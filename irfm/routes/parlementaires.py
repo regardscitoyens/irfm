@@ -114,7 +114,7 @@ def setup_routes(app):
             db.session.commit()
 
             subject = 'Transparence IRFM - Envoi d\'une demande de documents'
-            body = render_template('text/mail_envoi.txt.j2',
+            body = render_template('courriers/mail_prise_en_charge.txt.j2',
                                    parlementaire=parl)
             msg = Message(subject=subject, body=body,
                           sender=('Regards Citoyens',
