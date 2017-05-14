@@ -46,9 +46,21 @@ def generer_demandes():
                                .filter(Etape.ordre > ETAPE_NA) \
                                .all()
 
+    missed = []
     for parl in parls:
+        if not parl.adresse:
+            missed.append(parl.nom_complet)
+            continue
+
         print(parl.nom_complet)
         generer_demande(parl, files_root, True)
+
+    print('')
+    if len(missed):
+        print('Parlementaires sans adresse:\n')
+        print('\n'.join(missed))
+    else:
+        print('Aucun parlementaire sans adresse :)')
 
 
 @manager.command
