@@ -124,7 +124,7 @@ def setup_routes(app):
         parl.etape = etape
 
         action = Action(
-            date=datetime.utcnow(),
+            date=datetime.now(),
             nick=session['user']['nick'],
             email=session['user']['email'],
             ip=remote_addr(),

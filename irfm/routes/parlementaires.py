@@ -102,7 +102,7 @@ def setup_routes(app):
             parl.etape = Etape.query.filter_by(ordre=ETAPE_A_CONFIRMER).first()
 
             action = Action(
-                date=datetime.utcnow(),
+                date=datetime.now(),
                 nick=session['user']['nick'],
                 email=session['user']['email'],
                 ip=remote_addr(),
@@ -200,7 +200,7 @@ def setup_routes(app):
         parl.etape = Etape.query.filter_by(ordre=ETAPE_ENVOYE).first()
 
         action = Action(
-            date=datetime.utcnow(),
+            date=datetime.now(),
             nick=session['user']['nick'],
             email=session['user']['email'],
             ip=remote_addr(),
