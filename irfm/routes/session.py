@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import hmac
-
 from flask import request, session
 
 from ..tools.routing import redirect_back
-from ..tools.text import check_email, sanitize
+from ..tools.text import check_email, check_password, sanitize
 
 
 def setup_routes(app):
@@ -13,11 +11,9 @@ def setup_routes(app):
     @app.route('/login', methods=['POST'])
     def login():
         if app.config['ADMIN_PASSWORD'] and request.form['nick'] == '!rc':
-            h = hmac.new(bytes(app.config['SECRET_KEY'], encoding='ascii'))
-            h.update(bytes(request.form['email'], encoding='utf-8'))
-            digest = h.hexdigest()
-
-            if hmac.compare_digest(digest, app.config['ADMIN_PASSWORD']):
+            if check_password(request.form['email'],
+                              app.config['ADMIN_PASSWORD'],
+                              app.config['SECRET_KEY']):
                 session['user'] = {
                     'nick': '!rc',
                     'email': app.config['ADMIN_EMAIL'],

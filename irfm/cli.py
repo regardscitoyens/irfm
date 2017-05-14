@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from getpass import getpass
-import hmac
 import os
 
 from flask_migrate import Migrate, MigrateCommand
@@ -13,6 +12,7 @@ from .importers.nosdeputes import NosDeputesImporter
 
 from .irfm import app
 from .models import db
+from .tools.text import hash_password
 
 
 manager = Manager(app)
@@ -56,10 +56,7 @@ def import_adresses():
 @manager.command
 def password():
     """Chiffre un mot de passe admin"""
-
-    h = hmac.new(bytes(app.config['SECRET_KEY'], encoding='ascii'))
-    h.update(bytes(getpass(), encoding='utf-8'))
-    print(h.hexdigest())
+    print(hash_password(getpass(), app.config['SECRET_KEY']))
 
 
 @manager.command

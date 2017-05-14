@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import hmac
 import re
 import unicodedata
 from urllib.parse import urlparse, urljoin
@@ -15,8 +16,19 @@ def check_email(text, allow_empty=True):
     return not text or re.search(r'^[^@]+@[^@]+\.[^@]+$', text)
 
 
+def check_password(candidate, hashed_password, secret):
+    return hmac.compare_digest(hash_password(candidate, secret),
+                               hashed_password)
+
+
 def check_suivi(text):
     return text and re.search(r'^\d[A-Z]\d{11}$', text.upper())
+
+
+def hash_password(password, secret):
+    h = hmac.new(bytes(secret, encoding='ascii'))
+    h.update(bytes(password, encoding='utf-8'))
+    return h.hexdigest()
 
 
 def is_safe_url(target):
