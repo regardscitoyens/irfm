@@ -29,6 +29,11 @@ def setup(app):
                 'endpoint': 'home',
             },
             {
+                'url': url_for('historique'),
+                'label': 'Historique de l\'IRFM',
+                'endpoint': 'historique',
+            },
+            {
                 'url': url_for('faq'),
                 'label': 'FAQ',
                 'endpoint': 'faq',

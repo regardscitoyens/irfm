@@ -2,4 +2,4 @@ La première étape consiste à envoyer une demande de document à chaque parlem
 
 C'est simple : choisissez un parlementaire pour lequel la demande de document n'a pas encore été envoyée depuis la [liste des parlementaires](/parlementaires), cliquez sur le bouton « *Envoyer la demande* » et laissez-vous guider.  Si vous ne savez pas lequel choisir, un parlementaire au hasard est affiché ci-contre.
 
-Notez bien que les parlementaires sont des élus de la Nation, vous êtes donc tout à fait en droit d'envoyer une demande à un élu d'une circonscription autre que celle de votre domicile.
+Notez bien que tous les parlementaires sont des élus de la Nation, vous êtes donc tout à fait en droit d'envoyer une demande à un élu d'une circonscription autre que celle de votre domicile.

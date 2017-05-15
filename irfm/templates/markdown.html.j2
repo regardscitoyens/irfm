@@ -4,11 +4,11 @@
   <div class="col-md-offset-2 col-md-8">
     <section class="panel panel-default">
       <header class="panel-heading">
-        <b>Foire aux questions</b>
+        <b>{{ title }}</b>
       </header>
-      <article class="panel-body faq">
+      <article class="panel-body markdown">
         {% filter markdown -%}
-          {% include "text/FAQ.md" %}
+          {% include file %}
         {% endfilter %}
       </article>
     </section>

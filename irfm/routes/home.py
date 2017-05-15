@@ -68,4 +68,15 @@ def setup_routes(app):
 
     @app.route('/faq', endpoint='faq')
     def faq():
-        return render_template('faq.html.j2')
+        return render_template('markdown.html.j2',
+                               title='Foire aux Questions',
+                               file='text/FAQ.md')
+
+
+
+    @app.route('/historique', endpoint='historique')
+    def historique():
+        return render_template('markdown.html.j2',
+                               title='Quel est l\'historique de l\'IRFM ?',
+                               file='text/historique.md')
+
