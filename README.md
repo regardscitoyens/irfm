@@ -4,7 +4,7 @@
 
 * Python 3 + headers (ie. python3-dev)
 * virtualenvwrapper
-* PostgreSQL
+* PostgreSQL (postgresql-server-dev-all)
 
 ### Nouvelle Installation
 
@@ -13,8 +13,8 @@ $ git clone https://git.regardscitoyens.org/regardscitoyens/irfm.git
 $ cd irfm
 $ mkvirtualenv --python=$(which python3) irfm
 $ pip install -e .
-$ psql -c "create user irfm with password 'irfm';"
-$ psql -c "create database irfm with owner irfm;"
+$ sudo -u postgres psql -c "create user irfm with password 'irfm';"
+$ sudo -u postgres psql -c "create database irfm with owner irfm;"
 $ irfm db upgrade
 $ irfm import_etapes
 $ irfm import_nd
