@@ -26,7 +26,7 @@ def generer_demande(parl, directory, force=False):
                 date(parl.mandat_debut.year, parl.mandat_debut.month, 1))
 
     if parl.mandat_fin:
-        fin = max(DEBUT_ACTION,
+        fin = min(DEBUT_ACTION,
                   date(parl.mandat_fin.year, parl.mandat_fin.month, 1))
     else:
         fin = DEBUT_ACTION
