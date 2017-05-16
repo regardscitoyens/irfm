@@ -41,7 +41,7 @@
             </td>
             <td>
               {% if action.attachment %}
-                <a class="btn btn-default btn-sm" href="{{ url_for('admin_fichier', id_action=action.id) }}" target="_blank">Voir</a>
+                <a class="btn btn-default btn-sm" href="{{ url_for('attachment', id=action.id) }}" target="_blank">Voir</a>
                 {{ action.attachment }}
               {% endif %}
             </td>

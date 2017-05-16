@@ -39,6 +39,8 @@ $ irfm clear_cache
 
 `irfm.irfm:app` est une application WSGI qui peut être servie avec n'importe quel serveur compatible (comme gunicorn).
 
+#### Configuration
+
 L'application peut être configurée avec des variables d'environnement:
 
 * `IRFM_CONFIG`: `irfm.config.EnvironmentConfig` (sauf si vous voulez utiliser votre propre module de configuration)
@@ -54,6 +56,16 @@ L'application peut être configurée avec des variables d'environnement:
     * `IRFM_MAIL_SUPPRESS_SEND`: permet de désactivé totalement l'envoi de mails si positionné à `True`
 
 Pour générer le mot de passe administrateur, exécuter `irfm password` dans le virtualenv de l'application puis saisir le mot de passe souhaité.  Attention, `IRFM_DATA_DIR` doit avoir la même valeur que lors de l'exécution de l'application WSGI, car la clé secrète qui y est stockée est utilisée pour hasher le mot de passe.
+
+#### Fichiers statiques
+
+Les répertoires suivants peuvent être servis directement par le serveur web frontal le cas échéant:
+
+* `irfm/static` (depuis la racine du dépôt) sur `/static`
+* `$IRFM_DATA_DIR/files` sur `/files`
+* `$IRFM_DATA_DIR/uploads` sur `/uploads`
+
+**ATTENTION:** ne pas servir directement le répertoire `$IRFM_DATA_DIR`. Il contient la clé secrète permettant de chiffrer les cookies.
 
 ## Développement
 

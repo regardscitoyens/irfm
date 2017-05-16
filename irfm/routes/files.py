@@ -3,7 +3,7 @@
 from io import BytesIO
 import os
 
-from flask import make_response, render_template, send_file
+from flask import redirect, send_from_directory, url_for
 
 from ..models import Action, Etape, Parlementaire
 from ..models.constants import ETAPE_ENVOYE
@@ -30,18 +30,7 @@ def setup_routes(app):
             return not_found()
 
         filename = generer_demande(parl, files_root)
-
-        attach = None
-        if mode == 'download':
-            attach = os.path.basename(filename)
-
-        return send_file(
-            path,
-            mimetype='application/pdf',
-            conditional=True,
-            as_attachment=bool(attach),
-            attachment_filename=attach
-        )
+        return redirect(url_for('get_file', filename=filename))
 
     @app.route('/parlementaire/<id>/preuve-envoi', endpoint='preuve_envoi')
     def preuve_envoi(id):
@@ -53,27 +42,21 @@ def setup_routes(app):
         if not act or not act.attachment:
             return not_found()
 
-        path = os.path.join(uploads_root, act.attachment)
-        ext = path.rsplit('.', 1)[1].lower()
+        return redirect(url_for('get_upload', filename=act.attachment))
 
-        return send_file(
-            path,
-            mimetype=EXTENSIONS[ext],
-            conditional=True,
-        )
-
-    @app.route('/parlementaire/document/<id>', endpoint='document')
-    def document(id):
+    @app.route('/parlementaire/attachment/<id>', endpoint='attachment')
+    def attachment(id):
         act = Action.query.filter_by(id=id).first()
 
         if not act or not act.attachment:
             return not_found()
 
-        path = os.path.join(uploads_root, act.attachment)
-        ext = path.rsplit('.', 1)[1].lower()
+        return redirect(url_for('get_upload', filename=act.attachment))
 
-        return send_file(
-            path,
-            mimetype=EXTENSIONS[ext],
-            conditional=True,
-        )
+    @app.route('/files/<filename>', endpoint='get_file')
+    def get_file(filename):
+        return send_from_directory(files_root, filename)
+
+    @app.route('/uploads/<filename>', endpoint='get_upload')
+    def get_upload(filename):
+        return send_from_directory(uploads_root, filename)

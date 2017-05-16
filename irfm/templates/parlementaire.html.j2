@@ -181,7 +181,7 @@
                 {% elif act.etape.ordre == ordres.ETAPE_ENVOYE and act.attachment %}
                   <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('preuve_envoi', id=parlementaire.id) }}">Voir la preuve d'envoi</a>
                 {% elif act.attachment %}
-                  <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('document', id=act.id) }}">Voir le document joint</a>
+                  <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('attachment', id=act.id) }}">Voir le document joint</a>
                 {% endif %}
               </td>
             </tr>
