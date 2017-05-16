@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
+import datetime
+
+
+MOIS_RELEVES = 6
+DEBUT_ACTION = datetime.date(2017, 5, 16)
+
+
 #
 # Lors de la modification de ces énumérations, penser à créer une migration DB
 # pour mettre à jour les types ENUM correspondants en base de données.
