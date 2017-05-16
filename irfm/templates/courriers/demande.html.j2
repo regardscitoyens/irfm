@@ -40,6 +40,14 @@
       .signature {
         text-indent: 2em;
       }
+
+      ul {
+        list-style-type: none;
+      }
+
+      li {
+        text-indent: -2em;
+      }
     </style>
   </head>
   <body>
@@ -97,15 +105,31 @@
       </p>
 
       <p>
-        Afin de faire face aux dépenses liées à votre activité de parlementaire, vous avez bénéficié d'une indemnité représentative de frais de mandat (IRFM). Cet argent public vous a été versé sur un compte bancaire dédié, l'usage de cet argent public étant encadré légalement &ndash; notamment par l'article 32bis du règlement de l'Assemblée nationale.
+        Afin de faire face aux dépenses légitimes liées à votre activité de parlementaire, vous avez pu bénéficier au cours de votre mandat d'une indemnité représentative de frais de mandat (IRFM). L'emploi de cet argent public étant réglementé, notamment par l'article 32 bis de l'Instruction générale du Bureau de l'Assemblée nationale, celui-ci vous a été versé forfaitairement sur un compte bancaire dédié.
       </p>
 
       <p>
-        Comme le reconnaissent nos principes constitutionnels et européens et le livre III du Code des relations entre le public et l'administration, tout citoyen à le droit d'accéder à l'information publique et donc au document justifiant des dépenses publiques. Nous souhaiterions donc que vous nous communiquiez par voie postale ou par courrier électronique aux coordonnées en tête de ce courrier les relevés bancaires de votre compte dédié à l'IRFM entre {{ debut_releves }} et {{ fin_releves }}{% if declaration %} ainsi que l'attestation de bon usage de votre IRFM que vous avez faite parvenir au Bureau de l'Assemblée avant le 31 janvier 2017, comme le prévoit l'alinéa 3 de l'article 32 bis du règlement de l'Assemblée nationale{% endif %}.
+        Comme le prévoient nos principes constitutionnels et européens et notamment le livre III du Code des relations entre le public et l'administration, tout citoyen à le droit d'accéder à l'information publique et donc aux documents justifiant des dépenses publiques.
       </p>
 
       <p>
-        Sachant votre dévouement pour le bien commun et dans l'attente d'une réponse positive de votre part, nous vous prions d'agréer, {{ parlementaire|titre_parlementaire }}, l'expression de nos sincères salutations.
+        {% if declaration %}
+          Ainsi, nous souhaiterions que vous nous communiquiez, par voie postale ou par courrier électronique (aux coordonnées précisées en tête de ce courrier)&nbsp;:
+          <ul>
+            <li>
+              &ndash;&nbsp;une copie des relevés bancaires de votre compte dédié à l'IRFM entre {{ debut_releves }} et {{ fin_releves }}, ainsi que
+            </li>
+            <li>
+              &ndash;&nbsp;la déclaration attestant sur l’honneur du bon usage de l'IRFM que vous avez faite parvenir au Bureau de l'Assemblée avant le 31 janvier 2017 pour l'année 2016, comme prévu au III de l'article 32 bis de l'Instruction générale du Bureau de l'Assemblée nationale.
+            </li>
+          </ul>
+        {% else %}
+          Ainsi, nous souhaiterions que vous nous communiquiez, par voie postale ou par courrier électronique (aux coordonnées précisées en tête de ce courrier), une copie des relevés bancaires de votre compte dédié à l'IRFM entre {{ debut_releves }} et {{ fin_releves }}.
+        {% endif %}
+      </p>
+
+      <p>
+        Connaissant votre dévouement pour le bien commun et dans l'attente d'une réponse positive de votre part, nous vous prions d'agréer, {{ parlementaire|titre_parlementaire }}, l'expression de notre considération la plus distinguée.
       </p>
     </div>
 

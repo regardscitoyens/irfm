@@ -82,7 +82,7 @@ def envoyer_emails(envoyer=False):
         filename = generer_demande(parl, files_root)
 
         sender = ('Regards Citoyens', app.config['ADMIN_EMAIL'])
-        subject = 'Transparence IRFM - Demande de documents'
+        subject = 'Demande d\'accès aux dépenses de vos frais de mandat'
         body = render_template('courriers/mail_parlementaire.txt.j2',
                                parlementaire=parl)
 
