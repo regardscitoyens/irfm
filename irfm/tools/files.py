@@ -31,11 +31,17 @@ def generer_demande(parl, directory, force=False):
     debut = max(date(y, m, DEBUT_ACTION.day),
                 date(parl.mandat_debut.year, parl.mandat_debut.month, 1))
 
+    if parl.mandat_fin:
+        fin = max(DEBUT_ACTION,
+                  date(parl.mandat_fin.year, parl.mandat_fin.month, 1))
+    else:
+        fin = DEBUT_ACTION
+
     generer_pdf('courriers/demande.html.j2', {
                     'parlementaire': parl,
                     'date_courrier': DEBUT_ACTION.strftime('%d %B %Y'),
                     'debut_releves': debut.strftime('%B %Y'),
-                    'fin_releves': DEBUT_ACTION.strftime('%B %Y'),
+                    'fin_releves': fin.strftime('%B %Y'),
                     'declaration': debut < date(2017, 1, 1)
                 },
                 path,
