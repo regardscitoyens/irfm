@@ -39,13 +39,14 @@ def parse_couleur(couleur):
 class NosDeputesImporter(BaseImporter):
 
     URL_GROUPES = 'https://www.nosdeputes.fr/organismes/groupe/json'
-    URL_DEPUTES = 'https://www.nosdeputes.fr/deputes/enmandat/json'
+    URL_DEPUTES = 'https://www.nosdeputes.fr/deputes/json'
+    URL_ENMANDAT = 'https://www.nosdeputes.fr/deputes/enmandat/json'
     URL_PHOTO = '//www.nosdeputes.fr/depute/photo/%(slug)s'
 
     columns = None
     groupes = {}
 
-    def import_depute(self, data):
+    def import_depute(self, data, data_enmandat):
         if not self.columns:
             mapper = inspect(Parlementaire)
             self.columns = {c.name: type(c.type).__name__
@@ -71,10 +72,13 @@ class NosDeputesImporter(BaseImporter):
         fields = {
             'sexe': data['sexe'],
             'nom_complet': data['nom'],
-            'emails': ','.join([e['email'] for e in data['emails']]),
+            'emails': ','.join([e['email']
+                                for e in data_enmandat.get('emails',{})]),
             'twitter': data['twitter'],
 
             'mandat_debut': parse_date(data['mandat_debut']),
+            'mandat_fin': parse_date(data.get('mandat_fin')),
+
             'num_deptmt': data['num_deptmt'],
             'nom_circo': data['nom_circo'],
             'num_circo': data['num_circo'],
@@ -117,13 +121,24 @@ class NosDeputesImporter(BaseImporter):
                                                              e))
             return
 
+        try:
+            data_enmandat = requests.get(self.URL_ENMANDAT).json()
+        except Exception as e:
+            self.error('Téléchargement %s impossible: %s' % (self.URL_ENMANDAT,
+                                                             e))
+            return
+
         self.info('%s députés trouvés' % len(data['deputes']))
+        self.info('%s députés en mandat trouvés' % len(data_enmandat['deputes']))
 
         created = 0
         updated = 0
 
+        enmandat = {d['depute']['slug']: d['depute']
+                    for d in data_enmandat['deputes']}
+
         for depute in [d['depute'] for d in data['deputes']]:
-            c, u = self.import_depute(depute)
+            c, u = self.import_depute(depute, enmandat.get(depute['slug'], {}))
             if c:
                 created += 1
             elif u:
