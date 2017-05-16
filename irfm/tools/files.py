@@ -7,7 +7,7 @@ from flask import render_template, request
 from xhtml2pdf import pisa
 
 from .text import slugify
-from ..models.constants import DEBUT_ACTION, MOIS_RELEVES
+from ..models.constants import DEBUT_ACTION, DEBUT_RELEVES
 
 
 EXTENSIONS = {
@@ -22,13 +22,7 @@ def generer_demande(parl, directory, force=False):
     filename = 'demande-irfm-%s.pdf' % slugify(parl.nom_complet)
     path = os.path.join(directory, filename)
 
-    m = DEBUT_ACTION.month - MOIS_RELEVES
-    y = DEBUT_ACTION.year
-    while m < 1:
-        m = m + 12
-        y = y - 1
-
-    debut = max(date(y, m, DEBUT_ACTION.day),
+    debut = max(DEBUT_RELEVES,
                 date(parl.mandat_debut.year, parl.mandat_debut.month, 1))
 
     if parl.mandat_fin:

@@ -7,6 +7,14 @@ import datetime
 MOIS_RELEVES = 6
 DEBUT_ACTION = datetime.date(2017, 5, 16)
 
+_m = DEBUT_ACTION.month - MOIS_RELEVES
+_y = DEBUT_ACTION.year
+while _m < 1:
+    _m = _m + 12
+    _y = _y - 1
+
+DEBUT_RELEVES = datetime.date(_y, _m, DEBUT_ACTION.day)
+
 
 #
 # Lors de la modification de ces énumérations, penser à créer une migration DB

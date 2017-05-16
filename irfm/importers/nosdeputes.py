@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+import re
 
 import dateparser
 import requests
@@ -8,7 +9,7 @@ from sqlalchemy.inspection import inspect
 
 from .base import BaseImporter
 from ..models import db, Etape, Groupe, Parlementaire
-from ..models.constants import ETAPE_NA, ETAPE_A_ENVOYER
+from ..models.constants import DEBUT_RELEVES, ETAPE_NA, ETAPE_A_ENVOYER
 
 
 def parse_date(date):
@@ -89,6 +90,35 @@ class NosDeputesImporter(BaseImporter):
             'url_rc': data['url_nosdeputes'],
             'url_off': data['url_an'],
         }
+
+        if fields['mandat_fin']:
+            fin = fields['mandat_fin']
+            if isinstance(fin, datetime):
+                fin = fin.date()
+
+            if fin < DEBUT_RELEVES:
+                # Mandat terminé avant T - 6 mois => député non concerné
+                fields['etape'] = self.etape_na
+            else:
+                self.info('Vérification décès pour %s' % fields['nom_complet'])
+                try:
+                    full_data = requests.get(data['url_nosdeputes_api']).json()
+                except Exception as e:
+
+                    self.error('Téléchargement %s impossible: %s' % (
+                        data['url_nosdeputes_api'], e))
+                    return
+
+                deces = [m['mandat']
+                         for m in full_data['depute']['anciens_mandats']
+                         if re.search(r'd[eé]c[eèé](s|d[ée])', m['mandat'])]
+
+                if deces:
+                    self.info('%s est décédé(e)' % fields['nom_complet'])
+                    fields['etape'] = self.etape_na
+                elif depute.etape == self.etape_na:
+                    self.info('Député concerné : %s' % fields['nom_complet'])
+                    fields['etape'] = self.etape_ae
 
         for key, newvalue in fields.items():
             curvalue = getattr(depute, key)
