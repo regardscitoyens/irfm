@@ -12,6 +12,17 @@ from ..models import db, Etape, Groupe, Parlementaire
 from ..models.constants import DEBUT_RELEVES, ETAPE_NA, ETAPE_A_ENVOYER
 
 
+IGNORER = [
+    # Remplace Corrine Erhel, député depuis 8 jours au lancement de
+    # l'opération, pas d'adresse sur le site de l'AN
+    "Eric Bothorel",
+
+    # Remplace Henri Emmanuelli puis démissionne, députée pendant environ un
+    # mois, pas d'adresse sur le site de l'AN
+    "Monique Lubin"
+]
+
+
 def parse_date(date):
     if not date:
         return None
@@ -91,6 +102,9 @@ class NosDeputesImporter(BaseImporter):
             'url_off': data['url_an'],
         }
 
+        if fields['nom_complet'] in IGNORER:
+            fields['etape'] = self.etape_na
+
         if fields['mandat_fin']:
             fin = fields['mandat_fin']
             if isinstance(fin, datetime):
@@ -116,7 +130,9 @@ class NosDeputesImporter(BaseImporter):
                 if deces:
                     self.info('%s est décédé(e)' % fields['nom_complet'])
                     fields['etape'] = self.etape_na
-                elif depute.etape == self.etape_na:
+                elif not created and depute.etape == self.etape_na:
+                    # Gestion des députés précédemment marqués comme non
+                    # concernés
                     self.info('Député concerné : %s' % fields['nom_complet'])
                     fields['etape'] = self.etape_ae
 

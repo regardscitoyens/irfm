@@ -49,8 +49,9 @@ def envoyer_emails(envoyer=False):
 
     mail = Mail(app)
     parls = Parlementaire.query.join(Parlementaire.etape) \
-                               .filter(Etape.ordre > ETAPE_NA,
-                                       Parlementaire.mails_envoyes == 0) \
+                               .filter(Etape.ordre > ETAPE_NA) \
+                               .filter(Parlementaire.mails_envoyes == 0) \
+                               .order_by(Parlementaire.nom) \
                                .all()
 
     missed_addr = []
@@ -136,6 +137,7 @@ def generer_demandes():
     files_root = os.path.join(app.config['DATA_DIR'], 'files')
     parls = Parlementaire.query.join(Parlementaire.etape) \
                                .filter(Etape.ordre > ETAPE_NA) \
+                               .order_by(Parlementaire.nom) \
                                .all()
 
     missed = []
