@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
+from urllib.parse import urlparse
 
-from flask import redirect, send_from_directory, url_for
+from flask import redirect, request, send_from_directory, url_for
 
 from ..models import Action, Etape, Parlementaire
 from ..models.constants import ETAPE_ENVOYE
@@ -40,7 +41,9 @@ def setup_routes(app):
         if not act or not act.attachment:
             return not_found()
 
-        return redirect(url_for('get_upload', filename=act.attachment))
+        return redirect(url_for('get_upload', filename=act.attachment,
+                                _external=True,
+                                _scheme=urlparse(request.host_url).scheme))
 
     @app.route('/parlementaire/attachment/<id>', endpoint='attachment')
     def attachment(id):
@@ -49,7 +52,9 @@ def setup_routes(app):
         if not act or not act.attachment:
             return not_found()
 
-        return redirect(url_for('get_upload', filename=act.attachment))
+        return redirect(url_for('get_upload', filename=act.attachment,
+                                _external=True,
+                                _scheme=urlparse(request.host_url).scheme))
 
     @app.route('/files/<filename>', endpoint='get_file')
     def get_file(filename):
