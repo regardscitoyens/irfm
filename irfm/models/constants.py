@@ -36,6 +36,7 @@ SEXES = {
 # L'ordre est utilisé comme clé primaire lors de cet import.
 #
 
+ETAPE_COURRIEL = -10
 ETAPE_NA = 0
 ETAPE_A_ENVOYER = 10
 ETAPE_A_CONFIRMER = 15
@@ -43,6 +44,15 @@ ETAPE_ENVOYE = 20
 ETAPE_AR_RECU = 30
 
 ETAPES = [
+    {
+        'ordre': ETAPE_COURRIEL,
+        'label': 'Courriel envoyé',
+        'description': """
+            La demande a été envoyée par courriel au parlementaire.
+        """,
+        'couleur': '#66aadd',
+        'icone': 'at',
+    },
     {
         'ordre': ETAPE_NA,
         'label': 'N/A',
