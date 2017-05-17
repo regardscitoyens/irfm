@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from flask import render_template
-from sqlalchemy.orm import joinedload
+
 from sqlalchemy.sql.expression import case, func
 
-from ..models import db, Etape, Parlementaire
-from ..models.constants import ETAPES, ETAPE_NA, ETAPE_A_ENVOYER, ETAPE_ENVOYE
+from ..models import Etape, Parlementaire, db
+from ..models.constants import ETAPES, ETAPE_A_ENVOYER, ETAPE_ENVOYE, ETAPE_NA
 
 
 def setup_routes(app):
@@ -32,20 +32,19 @@ def setup_routes(app):
         dept_qs = db.session \
                     .query(Parlementaire.num_deptmt,
                            func.count(Parlementaire.id).label('total')) \
-                    .join(Etape, Parlementaire.etape_id==Etape.id)
-
+                    .join(Etape, Parlementaire.etape_id == Etape.id)
 
         # ...et par étape
         dept_qs = dept_qs.add_columns(*[
             func.sum(case([(Etape.ordre == e['ordre'], 1)], else_=0))
-                .label('nb_etape_%s' % e['ordre'])
+            .label('nb_etape_%s' % e['ordre'])
             for e in ETAPES
         ])
 
         # ...et qui sont dans une étape >= envoyé
         dept_qs = dept_qs.add_columns(
             func.sum(case([(Etape.ordre >= ETAPE_ENVOYE, 1)], else_=0))
-                .label('nb_envoyes')
+            .label('nb_envoyes')
         )
 
         dept_qs = dept_qs.group_by(Parlementaire.num_deptmt) \
@@ -60,7 +59,7 @@ def setup_routes(app):
                 'datasets': [{
                     'data': [e.nb for e in etapes_qs if e.nb > 0],
                     'backgroundColor': [e.Etape.couleur for e in etapes_qs
-                                         if e.nb > 0]
+                                        if e.nb > 0]
                 }]
             },
             departements=dept_qs
@@ -72,11 +71,8 @@ def setup_routes(app):
                                title='Foire aux Questions',
                                file='text/FAQ.md')
 
-
-
     @app.route('/historique', endpoint='historique')
     def historique():
         return render_template('markdown.html.j2',
                                title='Quel est l\'historique de l\'IRFM ?',
                                file='text/historique.md')
-

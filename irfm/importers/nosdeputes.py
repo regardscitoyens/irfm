@@ -1,24 +1,27 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 import re
+from datetime import datetime
 
 import dateparser
+
 import requests
+
 from sqlalchemy.inspection import inspect
 
 from .base import BaseImporter
-from ..models import db, Etape, Groupe, Parlementaire
-from ..models.constants import DEBUT_RELEVES, ETAPE_NA, ETAPE_A_ENVOYER
+
+from ..models import Etape, Groupe, Parlementaire, db
+from ..models.constants import DEBUT_RELEVES, ETAPE_A_ENVOYER, ETAPE_NA
 
 
 IGNORER = [
     # Remplace Corrine Erhel, député depuis 8 jours au lancement de
-    # l'opération, pas d'adresse sur le site de l'AN
+    # l'opération, pas d'adresse sur le site de l'AN
     "Eric Bothorel",
 
     # Remplace Henri Emmanuelli puis démissionne, députée pendant environ un
-    # mois, pas d'adresse sur le site de l'AN
+    # mois, pas d'adresse sur le site de l'AN
     "Monique Lubin"
 ]
 
@@ -85,7 +88,7 @@ class NosDeputesImporter(BaseImporter):
             'sexe': data['sexe'],
             'nom_complet': data['nom'],
             'emails': ','.join([e['email']
-                                for e in data_enmandat.get('emails',{})]),
+                                for e in data_enmandat.get('emails', {})]),
             'twitter': data['twitter'],
 
             'mandat_debut': parse_date(data['mandat_debut']),
@@ -163,19 +166,20 @@ class NosDeputesImporter(BaseImporter):
         try:
             data = requests.get(self.URL_DEPUTES).json()
         except Exception as e:
-            self.error('Téléchargement %s impossible: %s' % (self.URL_DEPUTES,
-                                                             e))
+            self.error('Téléchargement %s impossible: %s' %
+                       (self.URL_DEPUTES, e))
             return
 
         try:
             data_enmandat = requests.get(self.URL_ENMANDAT).json()
         except Exception as e:
-            self.error('Téléchargement %s impossible: %s' % (self.URL_ENMANDAT,
-                                                             e))
+            self.error('Téléchargement %s impossible: %s' %
+                       (self.URL_ENMANDAT, e))
             return
 
         self.info('%s députés trouvés' % len(data['deputes']))
-        self.info('%s députés en mandat trouvés' % len(data_enmandat['deputes']))
+        self.info('%s députés en mandat trouvés' %
+                  len(data_enmandat['deputes']))
 
         created = 0
         updated = 0
@@ -232,8 +236,8 @@ class NosDeputesImporter(BaseImporter):
         try:
             data = requests.get(self.URL_GROUPES).json()
         except Exception as e:
-            self.error('Téléchargement %s impossible: %s' % (self.URL_GROUPES,
-                                                             e))
+            self.error('Téléchargement %s impossible: %s' %
+                       (self.URL_GROUPES, e))
             return
 
         self.info('%s organismes trouvés' % len(data['organismes']))

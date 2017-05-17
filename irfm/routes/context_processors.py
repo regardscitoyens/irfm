@@ -2,9 +2,9 @@
 
 from flask import session, url_for
 
-from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE, ETAPE_NA,
-                                ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
-                                ETAPE_ENVOYE, ETAPE_AR_RECU)
+from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
+                                ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
+                                ETAPE_A_ENVOYER, ETAPE_ENVOYE, ETAPE_NA)
 
 
 def setup(app):

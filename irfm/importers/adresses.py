@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from bs4 import BeautifulSoup
+
 import requests
 
 from .base import BaseImporter
-from ..models import db, Etape, Parlementaire
+from ..models import Etape, Parlementaire, db
 from ..models.constants import ETAPE_NA
 
 
@@ -55,8 +56,8 @@ class AdressesImporter(BaseImporter):
 
             soup = BeautifulSoup(requests.get(parl.url_off).text, 'html5lib')
             adrs = [a for a in soup.select('dl.adr')
-                    if 'Assemblée nationale' in a.text
-                    or 'En circonscription' in a.text]
+                    if 'Assemblée nationale' in a.text or
+                    'En circonscription' in a.text]
 
             if not len(adrs):
                 return False
@@ -64,10 +65,10 @@ class AdressesImporter(BaseImporter):
             adr = adrs[-1]
 
             try:
-                lines = [e.text.strip() for e in adr.select('.street-address')] + [
-                    '%s %s' % (adr.select('.postal-code')[0].text.strip(),
-                               adr.select('.locality')[0].text.strip())
-                ]
+                lines = [e.text.strip()
+                         for e in adr.select('.street-address')] + \
+                        ['%s %s' % (adr.select('.postal-code')[0].text.strip(),
+                         adr.select('.locality')[0].text.strip())]
             except Exception as e:
                 self.error('Erreur sur %s: %s' % (parl.url_off, e))
                 return False
@@ -81,7 +82,7 @@ class AdressesImporter(BaseImporter):
         self.info('Début import adresses')
         qs = Parlementaire.query.join(Parlementaire.etape) \
                                 .filter(Etape.ordre > ETAPE_NA) \
-                                .filter(Parlementaire.adresse==None) \
+                                .filter(Parlementaire.adresse is None) \
                                 .order_by(Parlementaire.nom) \
                                 .all()
 

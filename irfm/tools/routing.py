@@ -21,7 +21,6 @@ def not_found():
     return redirect_back(error='Oups, la page demandée n\'existe pas')
 
 
-
 def require_user(f):
     def decorator(*args, **kwargs):
         if not session.get('user'):

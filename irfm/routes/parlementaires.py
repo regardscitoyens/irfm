@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 import os
+from datetime import datetime
 
-from flask import (flash, make_response, redirect, render_template, request,
-                   session, url_for)
+from flask import (flash, redirect, render_template, request, session, url_for)
+
 from flask_mail import Mail, Message
-from sqlalchemy.orm import joinedload, contains_eager
 
-from ..models import db, Action, Etape, Parlementaire
-from ..models.constants import (ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER,
+from sqlalchemy.orm import contains_eager, joinedload
+
+from ..models import Action, Etape, Parlementaire, db
+from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_ENVOYE)
 from ..tools.files import handle_upload
 from ..tools.routing import not_found, redirect_back, remote_addr, require_user
@@ -28,9 +29,9 @@ def pris_en_charge(parl, force=False):
                       if a.etape.ordre == ETAPE_A_CONFIRMER]
         else:
             action = [a for a in parl.actions
-                      if a.etape.ordre == ETAPE_A_CONFIRMER
-                      and a.nick == session.get('user')['nick']
-                      and a.email == session.get('user')['email']]
+                      if a.etape.ordre == ETAPE_A_CONFIRMER and
+                      a.nick == session.get('user')['nick'] and
+                      a.email == session.get('user')['email']]
 
         if len(action):
             return action[0]

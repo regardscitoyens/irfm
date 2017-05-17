@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from getpass import getpass
 import os
+from getpass import getpass
 
 from flask_migrate import Migrate, MigrateCommand
+
 from flask_script import Manager
 
 from .importers.adresses import AdressesImporter

@@ -3,7 +3,8 @@
 import re
 
 from flask import url_for
-from jinja2 import evalcontextfilter, Markup, escape
+
+from jinja2 import Markup, escape, evalcontextfilter
 
 
 def setup(app):
@@ -40,7 +41,7 @@ def setup(app):
                 '</a>' % data)
 
     @app.template_filter('lien_rc')
-    def lien_parl(parl):
+    def lien_rc(parl):
         if parl.chambre == 'AN':
             site = 'NosDéputés.fr'
             icon = 'nd'
@@ -85,8 +86,6 @@ def setup(app):
 
         return '<span data-toggle="tooltip"><i class="fa fa-%s"></i> ' \
             '%s</span>' % data
-
-
 
     _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 

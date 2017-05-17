@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from datetime import date
 import os
+from datetime import date
 
 from flask import render_template, request
+
 from xhtml2pdf import pisa
 
 from .text import slugify
@@ -51,15 +52,15 @@ def generer_demande(parl, directory, force=False):
     else:
         fin = DEBUT_ACTION
 
-    generer_pdf('courriers/demande.html.j2', {
-                    'parlementaire': parl,
-                    'date_courrier': DEBUT_ACTION.strftime('%d %B %Y'),
-                    'debut_releves': debut.strftime('%B %Y'),
-                    'fin_releves': fin.strftime('%B %Y'),
-                    'declaration': debut < date(2017, 1, 1)
-                },
-                path,
-                force)
+    data = {
+        'parlementaire': parl,
+        'date_courrier': DEBUT_ACTION.strftime('%d %B %Y'),
+        'debut_releves': debut.strftime('%B %Y'),
+        'fin_releves': fin.strftime('%B %Y'),
+        'declaration': debut < date(2017, 1, 1)
+    }
+
+    generer_pdf('courriers/demande.html.j2', data, path, force)
 
     return filename
 
@@ -91,5 +92,3 @@ def handle_upload(directory, basename, key='file'):
         file.save(os.path.join(directory, filename))
 
     return filename
-
-

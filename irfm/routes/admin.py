@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 import os
+from datetime import datetime
 
 from flask import (make_response, redirect, render_template, request, session,
                    url_for)
 from sqlalchemy.orm import joinedload
 
-from ..models import db, Action, Etape, Parlementaire
-from ..models.constants import ETAPE_A_ENVOYER, ETAPE_A_CONFIRMER
+from ..models import Action, Etape, Parlementaire, db
+from ..models.constants import ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER
 
-from ..tools.files import EXTENSIONS
+from ..tools.files import EXTENSIONS, handle_upload
 from ..tools.routing import (not_found, redirect_back, remote_addr,
                              require_admin)
 from ..tools.text import slugify
@@ -36,13 +36,13 @@ def setup_routes(app):
     @app.route('/admin/en-attente', endpoint='admin_en_attente')
     @require_admin
     def admin_en_attente():
-        # Sous requête des parlementaires à l'étape "à confirmer"
+        # Sous requête des parlementaires à l'étape "à confirmer"
         parls = db.session.query(Parlementaire.id) \
                           .join(Parlementaire.etape) \
                           .filter(Etape.ordre == ETAPE_A_CONFIRMER) \
                           .subquery()
 
-        # Actions "à confirmer" pour ces parlementaires
+        # Actions "à confirmer" pour ces parlementaires
         qs = Action.query.join(Action.etape) \
                          .filter(Action.parlementaire_id.in_(parls)) \
                          .filter(Etape.ordre == ETAPE_A_CONFIRMER) \

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from io import BytesIO
 import os
 
 from flask import redirect, send_from_directory, url_for
@@ -8,9 +7,8 @@ from flask import redirect, send_from_directory, url_for
 from ..models import Action, Etape, Parlementaire
 from ..models.constants import ETAPE_ENVOYE
 
-from ..tools.files import EXTENSIONS, generer_demande
+from ..tools.files import generer_demande
 from ..tools.routing import not_found
-from ..tools.text import slugify
 
 
 def setup_routes(app):

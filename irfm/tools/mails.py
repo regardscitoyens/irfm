@@ -3,9 +3,10 @@ import os
 import time
 
 from flask import render_template
+
 from flask_mail import Mail, Message
 
-from ..models import db, Etape, Parlementaire
+from ..models import Etape, Parlementaire, db
 from ..models.constants import ETAPE_NA
 
 from ..tools.files import generer_demande
@@ -70,9 +71,8 @@ def envoyer_emails(app, envoyer):
         with open(os.path.join(files_root, filename), 'rb') as f:
             msg.attach(filename, 'application/pdf', f.read())
 
-        print('[%s/%s] Envoi mail à %s (%s)' % (total, len(parls),
-                                                parl.nom_complet,
-                                                ', '.join(recipients)))
+        print('[%s/%s] Envoi mail à %s (%s)' %
+              (total, len(parls), parl.nom_complet, ', '.join(recipients)))
         mail.send(msg)
 
         if envoyer:

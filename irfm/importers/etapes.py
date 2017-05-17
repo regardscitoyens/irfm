@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from .base import BaseImporter
-from ..models import db, Etape
+from ..models import Etape, db
 from ..models.constants import ETAPES
 
 
