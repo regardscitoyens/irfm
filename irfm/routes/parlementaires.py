@@ -57,11 +57,12 @@ def setup_routes(app):
 
     @app.route('/parlementaires/<id>', endpoint='parlementaire')
     def parlementaire(id):
-        parl = Parlementaire.query.filter_by(id=id) \
-                                  .options(joinedload(Parlementaire.groupe)) \
-                                  .options(joinedload(Parlementaire.etape)) \
-                                  .options(joinedload(Parlementaire.actions)) \
-                                  .first()
+        parl = Parlementaire.query \
+                            .filter_by(id=id) \
+                            .options(joinedload(Parlementaire.groupe)) \
+                            .options(joinedload(Parlementaire.etape)) \
+                            .options(joinedload(Parlementaire.actions)) \
+                            .first()
 
         if not parl:
             return not_found()

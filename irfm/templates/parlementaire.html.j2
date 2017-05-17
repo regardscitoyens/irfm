@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block content %}
-  <div class="col-md-4">
+  <div class="col-md-3">
+
+    <!-- Card parlementaire -->
     <section class="panel panel-default">
       <article class="panel-body parl-card">
         <img class="parl-photo" src="{{ parlementaire.url_photo }}/120" align="left">
@@ -30,200 +32,180 @@
       </article>
     </section>
 
-    {% if parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER %}
-      {% if session.user %}
-            <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('envoi', id=parlementaire.id) }}">
-              <i class="fa fa-thumbs-up"></i>
-              Je prends en charge l'envoi !
-            </a>
-      {% endif %}
-    {% elif parlementaire.etape.ordre == ordres.ETAPE_A_CONFIRMER and (pris_en_charge or (session.user and session.user.admin)) %}
-      <section class="panel panel-default">
-        <header class="panel-heading">
-          <b>Confirmation d'envoi</b>
-        </header>
-        <article class="panel-body">
-          {% if pris_en_charge %}
-            Vous avez pris en charge l'envoi du courrier à ce parlementaire. Merci !<br><br>
-
-            <b>Revenez sur cette page une fois l'envoi effectué.</b><br><br>
-
-            Pour confirmer l'envoi, saisissez ci-dessous le numéro de suivi du recommandé.  Vous pouvez aussi joindre une photo ou un scan de la preuve de dépôt (format PDF, PNG ou JPG, 4 Mo maximum) si vous le souhaitez.
-          {% elif session.user.admin %}
-            <span class="admin">
-              Vous êtes administrateur&nbsp;: vous pouvez confirmer ou annuler à la place de l'utilisateur.
-            </span>
-          {% endif %}
-
-          <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
-            <div class="form-group">
-              <div class="col-md-4">
-                <label for="suivi">Numéro de suivi</label>
-              </div>
-              <div class="col-md-8">
-                <input name="suivi" type="text" placeholder="Ex: 1X12345678901" maxlength="13"> <b>*</b>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-4">
-                <label for="file">Preuve d'envoi</label>
-              </div>
-              <div class="col-md-8">
-                <input name="file" type="file" title="Choisissez un fichier...">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-md-offset-4 col-md-8">
-                <br>
-                <input class="btn btn-primary" type="submit" value="Confirmer !">
-                <a href="{{ url_for('annuler', id=parlementaire.id) }}" class="btn btn-danger">Annuler la prise en charge</a>
-              </div>
-            </div>
-          </form>
-        </article>
-      </section>
-    {% endif %}
-
-    {% if session.user and session.user.admin and next_etapes and parlementaire.etape.ordre > ordres.ETAPE_A_ENVOYER %}
-    <section class="panel panel-danger">
-      <header class="panel-heading">
-        <b>Ajout d'une étape (admin)</b>
-      </header>
-
-      <article class="panel-body">
-        <form method="POST" action="{{ url_for('admin_action', id_parl=parlementaire.id) }}" enctype="multipart/form-data">
-          <div class="form-group">
-            <div class="col-md-4">
-              <label for="etape">Étape</label>
-            </div>
-            <div class="col-md-8">
-              <select name="etape">
-                {% for etape in next_etapes %}
-                  <option value="{{ etape.id }}">{{ etape.label }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          <div class="form-group">
-            <div class="col-md-4">
-              <label for="suivi">Commentaire</label>
-            </div>
-            <div class="col-md-8">
-              <input name="suivi" type="text" placeholder="">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-4">
-              <label for="file">Document joint</label>
-            </div>
-            <div class="col-md-8">
-              <input name="file" type="file" title="Choisissez un fichier...">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-offset-4 col-md-8">
-              <br>
-              <input class="btn btn-primary" type="submit" value="Ajouter">
-            </div>
-          </div>
-        </form>
-      </article>
-    </section>
-    {% endif %}
   </div>
 
-  {% if parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER %}
-    {% if not session.user %}
-      <div class="col-md-8">
-        <div class="alert alert-warning" role="alert">
-          Pour envoyer une demande et assurer son suivi, il faut au préalable <a href="#" id="identify-link">vous identifier</a>.
-        </div>
-      </div>
-    {% endif %}
-  {% endif %}
+  <div class="col-md-9">
 
-  {% if parlementaire.etape.ordre > ordres.ETAPE_A_ENVOYER %}
-    <div class="col-md-8">
-      <section class="panel panel-default">
-        <header class="panel-heading">
-          <b>Avancement</b>
-        </header>
+    <!-- Tableau d'avancement -->
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Avancement</b>
+      </header>
 
-        <table class="table table-striped">
+      <table class="table table-striped">
+        <tr>
+          <th>Action</th>
+          <th>Utilisateur</th>
+          <th>Date</th>
+          <th></th>
+          <th></th>
+        </tr>
+
+        {% for act in parlementaire.actions %}
           <tr>
-            <th>Etape</th>
-            <th>Utilisateur</th>
-            <th>Date</th>
-            <th></th>
-            <th></th>
+            <td>{{ act.etape|label_etape }}</td>
+            <td>
+              {% if act.nick == '!rc' %}
+                <img class="rc-small" src="{{ url_for('static', filename='rc.png') }}">
+              {% else %}
+                {{ act.nick }}
+              {% endif %}
+            </td>
+            <td>{{ act.date.strftime("%c") }}</td>
+            <td>
+              {% if act.suivi and act.etape.ordre == ordres.ETAPE_ENVOYE %}
+                Suivi&nbsp;: <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ act.suivi }}" target="_blank">{{ act.suivi }}</a>
+              {% elif act.suivi %}
+                {{ act.suivi }}
+              {% endif %}
+            </td>
+            <td class="col-right">
+              {% if act.etape.ordre == ordres.ETAPE_A_CONFIRMER %}
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">Voir le courrier</a>
+              {% elif act.etape.ordre == ordres.ETAPE_ENVOYE and act.attachment %}
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('preuve_envoi', id=parlementaire.id) }}">Voir la preuve d'envoi</a>
+              {% elif act.attachment %}
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('attachment', id=act.id) }}">Voir le document joint</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+    </section>
+
+    <!-- Tableau des prochaines actions -->
+
+    <section class="panel panel-default">
+
+      <table class="table table-striped">
+
+        <tr>
+          <th colspan="5">Que faire ensuite ?</th>
+        </tr>
+
+        {% if parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER %}
+
+          <!-- ENVOI -->
+
+          <tr>
+            <td class="label-next">
+              <span class="label" title="Envoyer la demande par courrier recommandé avec avis de réception"
+                    data-toggle="tooltip" style="background-color: #8888dd;">
+                <i class="fa fa-envelope-o"></i>
+                Envoyer la demande
+              </span>
+            </td>
+            <td colspan="4">
+
+              {% filter markdown -%}
+                {% include "text/howto_envoi.md" %}
+              {% endfilter %}
+
+              <div class="btn-envoi-container">
+                <a class="btn btn-primary" href="{{ url_for('envoi', id=parlementaire.id) }}">
+                  <i class="fa fa-thumbs-up"></i>
+                  Je prends en charge l'envoi !
+                </a>
+              </div>
+
+              <div class="alert alert-warning">
+                  <b>Attention</b>, dès que vous cliquez sur le bouton de prise en charge, vous empêchez tout autre utilisateur de le faire.  N'oubliez pas de nous transmettre rapidement le numéro de suivi.  Sans nouvelles de votre part après quelques temps, nous considérerons que vous avez renoncé et rendrons à nouveau disponible l'envoi pour d'autres utilisateurs.
+              </div>
+
+              <div id="letter-container">
+                <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">
+                  <i class="fa fa-download"></i>
+                  Télécharger le courrier au format PDF
+                </a>
+                <br><br>
+                <iframe name="demande" id="demande" src="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">
+                </iframe>
+              </div>
+
+            </td>
           </tr>
 
-          {% for act in parlementaire.actions %}
-            <tr>
-              <td>{{ act.etape|label_etape }}</td>
-              <td>
-                {% if act.nick == '!rc' %}
-                  <img class="rc-small" src="{{ url_for('static', filename='rc.png') }}">
-                {% else %}
-                  {{ act.nick }}
-                {% endif %}
-              </td>
-              <td>{{ act.date.strftime("%c") }}</td>
-              <td>
-                {% if act.suivi and act.etape.ordre == ordres.ETAPE_ENVOYE %}
-                  Suivi&nbsp;: <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ act.suivi }}" target="_blank">{{ act.suivi }}</a>
-                {% elif act.suivi %}
-                  {{ act.suivi }}
-                {% endif %}
-              </td>
-              <td class="col-right">
-                {% if act.etape.ordre == ordres.ETAPE_A_CONFIRMER %}
-                  <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">Voir le courrier</a>
-                {% elif act.etape.ordre == ordres.ETAPE_ENVOYE and act.attachment %}
-                  <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('preuve_envoi', id=parlementaire.id) }}">Voir la preuve d'envoi</a>
-                {% elif act.attachment %}
-                  <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('attachment', id=act.id) }}">Voir le document joint</a>
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        </table>
-      </section>
-    </div>
-  {% endif %}
+        {% elif parlementaire.etape.ordre == ordres.ETAPE_A_CONFIRMER %}
 
-  {% if (parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER and session.user) or pris_en_charge %}
-    <div class="col-md-8">
-      <section class="panel panel-default">
-        <header class="panel-heading">
-          <b>Quelle est la marche à suivre ?</b>
-        </header>
-        <article class="panel-body">
-          {% filter markdown -%}
-            {% include "text/howto_envoi.md" %}
-          {% endfilter %}
-        </article>
-      </section>
-    </div>
+          <!-- CONFIRMATION / ANNULATION -->
 
-    <div class="col-md-12" id="letter-container">
-      <a class="btn btn-default btn-lg" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">
-        <i class="fa fa-download"></i>
-        Télécharger le courrier au format PDF
-      </a>
-      <br><br>
-      <iframe name="demande" id="demande" src="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">
-      </iframe>
-    </div>
-  {% endif %}
-{% endblock %}
+          <tr>
+            <td class="label-next">
+              <span class="label" title="Saisir le numéro de suivi de la lettre recommandée"
+                    data-toggle="tooltip" style="background-color: #8888dd;">
+                <i class="fa fa-envelope"></i>
+                Confirmer l'envoi
+              </span>
+            </td>
+            <td colspan="4">
 
-{% block scripts %}
-  <script src="{{ url_for('static', filename='bootstrap.file-input.js') }}"></script>
-  <script>
-    $('#identify-link').click(function() {
-      $('.login .dropdown-toggle').dropdown('toggle');
-    });
+              {% filter markdown -%}
+                {% include "text/howto_confirmer.md" %}
+              {% endfilter %}
 
-    $('input[type=file]').bootstrapFileInput();
-  </script>
+              <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
+                <div class="form-group">
+                  <div class="col-md-2">
+                    <label for="suivi">Numéro de suivi</label>
+                  </div>
+                  <div class="col-md-10">
+                    <input name="suivi" type="text" placeholder="Ex: 1X12345678901" maxlength="13"> <b>*</b>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-2">
+                    <label for="file">Preuve d'envoi</label>
+                  </div>
+                  <div class="col-md-10">
+                    <input name="file" type="file" title="Choisissez un fichier...">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-offset-2 col-md-10">
+                    <br>
+                    <input class="btn btn-primary" type="submit" value="Confirmer !">
+                    <a href="{{ url_for('annuler', id=parlementaire.id) }}" class="btn btn-danger">Annuler la prise en charge</a>
+                  </div>
+                </div>
+              </form>
+
+            </td>
+          </tr>
+
+        {% elif parlementaire.etape.ordre == ordres.ETAPE_ENVOYE %}
+
+          <!-- ATTENTE AR -->
+
+          <tr>
+            <td class="label-next">
+              <span class="label" title="Attente de l'avis de réception"
+                    data-toggle="tooltip" style="background-color: #bbbbbb;">
+                <i class="fa fa-clock-o"></i>
+                Attente de l'AR
+              </span>
+            </td>
+            <td colspan="4">
+
+              {% filter markdown -%}
+                {% include "text/howto_envoye.md" %}
+              {% endfilter %}
+
+            </td>
+          </tr>
+
+        {% endif %}
+
+      </table>
+    </section>
+  </div>
 {% endblock %}

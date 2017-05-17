@@ -168,3 +168,14 @@ th.col-right {
 
   font-size: 0.8em;
 }
+
+/* Outils page parlementaire */
+
+.btn-envoi-container {
+  text-align: center;
+  margin: 1em;
+}
+
+.label-next {
+  padding-top: 1.15em !important;
+}

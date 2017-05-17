@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime, time
+
 from ..models import Action, Etape, Parlementaire, db
 from ..models.constants import DEBUT_ACTION, ETAPE_COURRIEL
 
@@ -25,7 +27,7 @@ def fix_procedure(app):
         act = Action(
             parlementaire=parl,
             etape=etape_email,
-            date=DEBUT_ACTION,
+            date=datetime.combine(DEBUT_ACTION, time(23, 30)),
             nick='!rc',
             email=app.config['ADMIN_EMAIL'],
         )

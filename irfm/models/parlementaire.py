@@ -46,6 +46,7 @@ class Parlementaire(db.Model):
     etape_id = db.Column(db.Integer, db.ForeignKey('etapes.id'))
     etape = db.relationship('Etape', back_populates='parlementaires')
 
-    actions = db.relationship('Action', back_populates='parlementaire')
+    actions = db.relationship('Action', back_populates='parlementaire',
+                              order_by='Action.date')
 
     mails_envoyes = db.Column(db.Integer, default=0, server_default='0')
