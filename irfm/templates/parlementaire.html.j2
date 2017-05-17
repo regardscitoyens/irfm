@@ -111,16 +111,26 @@
                 {% include "text/howto_envoi.md" %}
               {% endfilter %}
 
-              <div class="btn-envoi-container">
-                <a class="btn btn-primary" href="{{ url_for('envoi', id=parlementaire.id) }}">
-                  <i class="fa fa-thumbs-up"></i>
-                  Je prends en charge l'envoi !
-                </a>
-              </div>
+              {% if session.user %}
 
-              <div class="alert alert-warning">
-                  <b>Attention</b>, dès que vous cliquez sur le bouton de prise en charge, vous empêchez tout autre utilisateur de le faire.  N'oubliez pas de nous transmettre rapidement le numéro de suivi.  Sans nouvelles de votre part après quelques temps, nous considérerons que vous avez renoncé et rendrons à nouveau disponible l'envoi pour d'autres utilisateurs.
-              </div>
+                <div class="alert alert-warning">
+                    <b>Attention</b>, dès que vous cliquez sur le bouton de prise en charge, vous empêchez tout autre utilisateur de le faire.  N'oubliez pas de nous transmettre rapidement le numéro de suivi.  Sans nouvelles de votre part après quelques temps, nous considérerons que vous avez renoncé et rendrons à nouveau disponible l'envoi pour d'autres utilisateurs.
+                </div>
+
+                <div class="btn-envoi-container">
+                  <a class="btn btn-primary" href="{{ url_for('envoi', id=parlementaire.id) }}">
+                    <i class="fa fa-thumbs-up"></i>
+                    Je prends en charge l'envoi !
+                  </a>
+                </div>
+
+              {% else %}
+
+                <div class="alert alert-warning">
+                    Pour nous permettre d'assurer le suivi de l'envoi des courriers aux parlementaires, vous devez <a href="#" id="identify-link">vous identifier</a> pour pouvoir le prendre en charge.
+                </div>
+
+              {% endif %}
 
               <div id="letter-container">
                 <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">
@@ -208,4 +218,17 @@
       </table>
     </section>
   </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='bootstrap.file-input.js') }}"></script>
+  <script>
+    $('#identify-link').click(function(e) {
+      $('.login .dropdown-toggle').dropdown('toggle');
+      $('.login [name="nick"]').focus();
+      return false;
+    });
+
+    $('input[type=file]').bootstrapFileInput();
+  </script>
 {% endblock %}
