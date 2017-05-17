@@ -7,7 +7,8 @@ from flask import render_template, request
 from xhtml2pdf import pisa
 
 from .text import slugify
-from ..models.constants import DEBUT_ACTION, DEBUT_RELEVES
+from ..models import Etape, Parlementaire
+from ..models.constants import DEBUT_ACTION, DEBUT_RELEVES, ETAPE_NA
 
 
 EXTENSIONS = {
@@ -16,6 +17,25 @@ EXTENSIONS = {
     'jpeg': 'image/jpeg',
     'png': 'image/png',
 }
+
+
+def generer_demandes(app):
+    files_root = os.path.join(app.config['DATA_DIR'], 'files')
+    parls = Parlementaire.query.join(Parlementaire.etape) \
+                               .filter(Etape.ordre > ETAPE_NA) \
+                               .order_by(Parlementaire.nom) \
+                               .all()
+
+    missed = []
+    for parl in parls:
+        if not parl.adresse:
+            missed.append(parl.nom_complet)
+            continue
+
+        print(parl.nom_complet)
+        generer_demande(parl, files_root, True)
+
+    return missed
 
 
 def generer_demande(parl, directory, force=False):
