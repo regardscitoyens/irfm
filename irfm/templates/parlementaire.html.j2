@@ -13,16 +13,18 @@
         <img class="parl-photo" src="{{ parlementaire.url_photo }}/120" align="left">
         <div class="parl-detail">
           <b>{{ parlementaire.nom_complet }}</b>
-            {{ parlementaire.groupe|label_groupe }}
+          <br>
 
-            {{ parlementaire|lien_rc }}
-
-            {{ parlementaire|lien_parl }}
+          {{ parlementaire.groupe|label_groupe }}
+          {{ parlementaire|lien_rc }}
+          {{ parlementaire|lien_parl }}
+          <br>
           <br>
 
           {{ parlementaire|fonc_parlementaire }}
             &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}
-          <br><br>
+          <br>
+          <br>
 
           {{ parlementaire.etape|label_etape }}
           {% if not parlementaire.adresse %}
@@ -108,7 +110,7 @@
             <td colspan="4">
 
               {% filter markdown -%}
-                {% include "text/howto_envoi.md" %}
+                {% include "text/etape_envoi.md" %}
               {% endfilter %}
 
               {% if session.user %}
@@ -159,35 +161,45 @@
             </td>
             <td colspan="4">
 
-              {% filter markdown -%}
-                {% include "text/howto_confirmer.md" %}
-              {% endfilter %}
+              {% if pris_en_charge %}
 
-              <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label for="suivi">Numéro de suivi</label>
+                {% filter markdown -%}
+                  {% include "text/etape_confirmer.md" %}
+                {% endfilter %}
+
+                <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <div class="col-md-2">
+                      <label for="suivi">Numéro de suivi</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input name="suivi" type="text" placeholder="Ex: 1X12345678901" maxlength="13"> <b>*</b>
+                    </div>
                   </div>
-                  <div class="col-md-10">
-                    <input name="suivi" type="text" placeholder="Ex: 1X12345678901" maxlength="13"> <b>*</b>
+                  <div class="form-group">
+                    <div class="col-md-2">
+                      <label for="file">Preuve d'envoi</label>
+                    </div>
+                    <div class="col-md-10">
+                      <input name="file" type="file" title="Choisissez un fichier...">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-md-2">
-                    <label for="file">Preuve d'envoi</label>
+                  <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                      <br>
+                      <input class="btn btn-primary" type="submit" value="Confirmer !">
+                      <a href="{{ url_for('annuler', id=parlementaire.id) }}" class="btn btn-danger">Annuler la prise en charge</a>
+                    </div>
                   </div>
-                  <div class="col-md-10">
-                    <input name="file" type="file" title="Choisissez un fichier...">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-md-offset-2 col-md-10">
-                    <br>
-                    <input class="btn btn-primary" type="submit" value="Confirmer !">
-                    <a href="{{ url_for('annuler', id=parlementaire.id) }}" class="btn btn-danger">Annuler la prise en charge</a>
-                  </div>
-                </div>
-              </form>
+                </form>
+
+              {% else %}
+
+                {% filter markdown -%}
+                  {% include "text/etape_confirmer_other.md" %}
+                {% endfilter %}
+
+              {% endif %}
 
             </td>
           </tr>
@@ -207,7 +219,7 @@
             <td colspan="4">
 
               {% filter markdown -%}
-                {% include "text/howto_envoye.md" %}
+                {% include "text/etape_envoye.md" %}
               {% endfilter %}
 
             </td>
