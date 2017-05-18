@@ -11,6 +11,7 @@ from sqlalchemy.orm import contains_eager, joinedload
 
 from ..models import Action, Etape, Parlementaire, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
+                                ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE,
                                 ETAPE_ENVOYE)
 from ..tools.files import handle_upload
 from ..tools.routing import not_found, redirect_back, remote_addr, require_user
@@ -216,4 +217,40 @@ def setup_routes(app):
         db.session.commit()
 
         flash('Confirmation reçue, merci beaucoup !', category='success')
+        return redirect(url_for('parlementaire', id=id))
+
+    @app.route('/parlementaires/<id>/interpeler', endpoint='interpeler',
+               methods=['POST'])
+    def interpeler(id):
+        parl = Parlementaire.query.filter_by(id=id).first()
+
+        if not parl:
+            return not_found()
+
+        if len(request.form['text'].strip()) < 10:
+            msg = 'Veuillez saisir la réponse du parlementaire'
+            return redirect_back(error=msg,
+                                 fallback=url_for('parlementaire', id=id))
+
+        if session.get('user') and session['user']['admin']:
+            ordre = ETAPE_COM_PUBLIE
+        else:
+            ordre = ETAPE_COM_A_MODERER
+
+        etape = Etape.query.filter(Etape.ordre == ordre).one()
+        action = Action(
+            date=datetime.now(),
+            nick=session['user']['nick'] if session.get('user') else '',
+            email=session['user']['email'] if session.get('user') else '',
+            ip=remote_addr(),
+            parlementaire=parl,
+            etape=etape,
+            suivi=request.form['text']
+        )
+
+        db.session.add(action)
+        db.session.commit()
+
+        flash('Votre contribution a bien été enregistrée, '
+              'elle sera publiée prochainement. Merci !', category='success')
         return redirect(url_for('parlementaire', id=id))

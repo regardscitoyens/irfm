@@ -36,6 +36,8 @@ SEXES = {
 # L'ordre est utilisé comme clé primaire lors de cet import.
 #
 
+ETAPE_COM_PUBLIE = -21
+ETAPE_COM_A_MODERER = -20
 ETAPE_COURRIEL = -10
 ETAPE_NA = 0
 ETAPE_A_ENVOYER = 10
@@ -44,6 +46,27 @@ ETAPE_ENVOYE = 20
 ETAPE_AR_RECU = 30
 
 ETAPES = [
+    {
+        'ordre': ETAPE_COM_PUBLIE,
+        'label': 'Commentaire',
+        'description': """
+            Un utilisateur a interpelé le parlementaire sur la transparence
+            de son indemnité.
+        """,
+        'couleur': '#bbbbbb',
+        'icone': 'commenting',
+    },
+    {
+        'ordre': ETAPE_COM_A_MODERER,
+        'label': 'Commentaire (non publié)',
+        'description': """
+            Un utilisateur a interpelé le parlementaire sur la transparence
+            de son indemnité.  Le commentaire doit être modéré avant
+            publication.
+        """,
+        'couleur': '#bb6666',
+        'icone': 'commenting',
+    },
     {
         'ordre': ETAPE_COURRIEL,
         'label': 'Courriel envoyé',

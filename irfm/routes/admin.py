@@ -8,7 +8,8 @@ from flask import (make_response, redirect, render_template, request, session,
 from sqlalchemy.orm import joinedload
 
 from ..models import Action, Etape, Parlementaire, db
-from ..models.constants import ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER
+from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
+                                ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE)
 
 from ..tools.files import EXTENSIONS, handle_upload
 from ..tools.routing import (not_found, redirect_back, remote_addr,
@@ -78,6 +79,23 @@ def setup_routes(app):
             parl = Parlementaire.query.filter_by(id=parl_id).first()
             parl.etape = etape
 
+            db.session.commit()
+
+        return redirect_back()
+
+    @app.route('/admin/publish/<id>', endpoint='admin_publish')
+    @require_admin
+    def admin_publish(id):
+        action = Action.query \
+                       .join(Action.etape) \
+                       .filter(Etape.ordre == ETAPE_COM_A_MODERER) \
+                       .filter(Action.id == id) \
+                       .first()
+
+        if action:
+            action.etape = Etape.query \
+                                .filter(Etape.ordre == ETAPE_COM_PUBLIE) \
+                                .one()
             db.session.commit()
 
         return redirect_back()

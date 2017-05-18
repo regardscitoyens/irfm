@@ -4,10 +4,18 @@ from flask import session, url_for
 
 from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
-                                ETAPE_A_ENVOYER, ETAPE_ENVOYE, ETAPE_NA)
+                                ETAPE_A_ENVOYER, ETAPE_COM_A_MODERER,
+                                ETAPE_ENVOYE, ETAPE_NA)
 
 
 def setup(app):
+
+    @app.context_processor
+    def inject_user_info():
+        return {
+            'is_logged': bool(session.get('user')),
+            'is_admin': session.get('user') and session['user']['admin']
+        }
 
     @app.context_processor
     def inject_piwik():
@@ -72,6 +80,7 @@ def setup(app):
                 'ETAPE_A_CONFIRMER': ETAPE_A_CONFIRMER,
                 'ETAPE_ENVOYE': ETAPE_ENVOYE,
                 'ETAPE_AR_RECU': ETAPE_AR_RECU,
+                'ETAPE_COM_A_MODERER': ETAPE_COM_A_MODERER
             },
             'chambres': CHAMBRES
         }

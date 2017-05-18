@@ -74,6 +74,11 @@ th.col-right {
   text-align: right;
 }
 
+td.col-nobreak,
+th.col-nobreak {
+  white-space: nowrap;
+}
+
 /* Login */
 
 
