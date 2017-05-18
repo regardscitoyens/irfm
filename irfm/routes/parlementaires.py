@@ -13,7 +13,7 @@ from ..models import Action, Etape, Parlementaire, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE,
                                 ETAPE_ENVOYE)
-from ..tools.files import handle_upload
+from ..tools.files import generer_demande, handle_upload
 from ..tools.routing import not_found, redirect_back, remote_addr, require_user
 from ..tools.text import check_suivi, slugify
 
@@ -42,6 +42,7 @@ def pris_en_charge(parl, force=False):
 
 def setup_routes(app):
     mail = Mail(app)
+    files_root = os.path.join(app.config['DATA_DIR'], 'files')
 
     @app.route('/parlementaires', endpoint='parlementaires')
     def parlementaires():
@@ -116,6 +117,8 @@ def setup_routes(app):
             db.session.add(action)
             db.session.commit()
 
+            filename = generer_demande(parl, files_root)
+
             subject = 'Transparence IRFM - Envoi d\'une demande de documents'
             body = render_template('courriers/mail_prise_en_charge.txt.j2',
                                    parlementaire=parl)
@@ -123,6 +126,10 @@ def setup_routes(app):
                           sender=('Regards Citoyens',
                                   app.config['ADMIN_EMAIL']),
                           recipients=[session['user']['email']])
+
+            with open(os.path.join(files_root, filename), 'rb') as f:
+                msg.attach(filename, 'application/pdf', f.read())
+
             mail.send(msg)
 
             return redirect(url_for('parlementaire', id=id))
