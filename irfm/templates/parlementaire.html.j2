@@ -251,14 +251,14 @@
                   {% include "text/tweet_parlementaire.txt" %}
                 {%- endset %}
 
-                <a class="btn btn-default" target="_blank" href="https://twitter.com/intent/tweet?text={{ tweet|urlencode }}">
+                <a class="btn btn-primary" target="_blank" href="https://twitter.com/intent/tweet?text={{ tweet|urlencode }}">
                   <i class="fa fa-twitter"></i>
                   Interpeler sur Twitter
                 </a>
               {% endif %}
 
               {% if parlementaire.emails %}
-                <a class="btn btn-default" href="mailto:{{ parlementaire.emails }}">
+                <a class="btn btn-primary" href="mailto:{{ parlementaire.emails }}">
                   <i class="fa fa-at"></i>
                   Interpeler par courriel
                 </a>
