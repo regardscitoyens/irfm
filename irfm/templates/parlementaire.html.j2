@@ -129,7 +129,7 @@
                     <b>Attention</b>, dès que vous cliquez sur le bouton de prise en charge, vous empêchez tout autre utilisateur de le faire.  N'oubliez pas de nous transmettre rapidement le numéro de suivi.  Sans nouvelles de votre part après quelques temps, nous considérerons que vous avez renoncé et rendrons à nouveau disponible l'envoi pour d'autres utilisateurs.
                 </div>
 
-                <div class="btn-envoi-container">
+                <div class="centered-buttons">
                   <a class="btn btn-primary" href="{{ url_for('envoi', id=parlementaire.id) }}">
                     <i class="fa fa-thumbs-up"></i>
                     Je prends en charge l'envoi !
@@ -250,6 +250,23 @@
             {% filter markdown -%}
               {% include "text/etape_interpeler.md" %}
             {% endfilter %}
+
+            <div class="centered-buttons">
+              {% if parlementaire.twitter %}
+                {% set tweet -%}
+                  {% include "text/tweet_parlementaire.txt" %}
+                {%- endset %}
+
+                <a class="btn btn-info" target="_blank" href="https://twitter.com/intent/tweet?text={{ tweet|urlencode }}">
+                  <i class="fa fa-twitter"></i>
+                  Interpeler sur Twitter
+                </a>
+              {% endif %}
+            </div>
+
+            <div class="alert alert-warning">
+                Si vous obtenez une réponse, positive ou négative, utilisez le formulaire ci-dessous pour nous la communiquer.  N'hésitez pas à inclure un lien si nécessaire.
+            </div>
 
             <form method="POST" action="{{ url_for('interpeler', id=parlementaire.id) }}">
               <div class="form-group">

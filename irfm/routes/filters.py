@@ -56,6 +56,10 @@ def setup(app):
                 '<img class="chamber-icon" src="%s">'
                 '</a>' % data)
 
+    @app.template_filter('hashtag_circo')
+    def hashtag_circo(parl):
+        return '#Circo%s' % parl.num_deptmt
+
     @app.template_filter('label_groupe')
     def label_groupe(groupe):
         return '<span title="%s" class="label" ' \

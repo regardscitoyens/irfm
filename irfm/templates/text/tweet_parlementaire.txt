@@ -1,0 +1,1 @@
+Agissez pour la transparence de l'#IRFM @{{ parlementaire.twitter }} ! {{ url_for('parlementaire', id=parlementaire.id, _external=True) }} {{ parlementaire|hashtag_circo }}
