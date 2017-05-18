@@ -82,7 +82,7 @@ def setup_routes(app):
                                 .order_by(Etape.ordre.desc()) \
                                 .first()
 
-            if last_action:
+            if last_action and last_action.etape.ordre > ETAPE_A_ENVOYER:
                 etape = last_action.etape
             else:
                 etape = Etape.query.filter_by(ordre=ETAPE_A_ENVOYER).first()
@@ -144,7 +144,7 @@ def setup_routes(app):
         try:
             filename = handle_upload(
                 os.path.join(app.config['DATA_DIR'], 'uploads'),
-                'etape-%s-%s.%s' % (etape.ordre, slugify(parl.nom_complet))
+                'etape-%s-%s' % (etape.ordre, slugify(parl.nom_complet))
             )
         except Exception as e:
             return redirect_back(error=str(e),
