@@ -134,6 +134,11 @@
                     <i class="fa fa-thumbs-up"></i>
                     Je prends en charge l'envoi !
                   </a>
+
+                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">
+                    <i class="fa fa-download"></i>
+                    Télécharger le courrier au format PDF
+                  </a>
                 </div>
 
               {% else %}
@@ -143,17 +148,6 @@
                 </div>
 
               {% endif %}
-
-              <div id="letter-container">
-                <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">
-                  <i class="fa fa-download"></i>
-                  Télécharger le courrier au format PDF
-                </a>
-                <br><br>
-                <iframe name="demande" id="demande" src="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">
-                </iframe>
-              </div>
-
             </td>
           </tr>
 
