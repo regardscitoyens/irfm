@@ -3,7 +3,7 @@
 from flask import request, session
 
 from ..tools.routing import redirect_back
-from ..tools.text import check_email, check_password, sanitize
+from ..tools.text import check_email, check_password, sanitize_hard
 
 
 def setup_routes(app):
@@ -22,7 +22,7 @@ def setup_routes(app):
 
                 return redirect_back()
 
-        nick = sanitize(request.form['nick'])
+        nick = sanitize_hard(request.form['nick'])
 
         if nick != request.form['nick']:
             msg = 'Seuls les caractères suivants sont autorisés: ' \

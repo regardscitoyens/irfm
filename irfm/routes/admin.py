@@ -54,6 +54,17 @@ def setup_routes(app):
                                titre='Actions en attente',
                                actions=qs)
 
+    @app.route('/admin/commentaires', endpoint='admin_commentaires')
+    @require_admin
+    def admin_commentaires():
+        qs = Action.query.join(Action.etape) \
+                         .filter(Etape.ordre == ETAPE_COM_A_MODERER) \
+                         .options(joinedload(Action.parlementaire)) \
+                         .order_by(Action.date) \
+                         .all()
+
+        return render_template('admin_commentaires.html.j2', actions=qs)
+
     @app.route('/admin/delete/<id>', endpoint='admin_delete')
     @require_admin
     def admin_delete(id):

@@ -3,18 +3,16 @@
 {% block content %}
   <section class="panel panel-default">
     <header class="panel-heading">
-      <b>{{ titre }}</b>
+      <b>Commentaires à modérer</b>
     </header>
 
     <table class="table table-condensed table-striped">
       <thead>
         <tr>
           <th>Parlementaire</th>
-          <th>Etape</th>
           <th>Date</th>
           <th>Utilisateur</th>
           <th>Suivi</th>
-          <th>Fichier joint</th>
           <th></th>
         </tr>
       </thead>
@@ -25,7 +23,6 @@
               <a class="btn btn-default btn-sm" href="{{ url_for('parlementaire', id=action.parlementaire_id) }}">Voir</a>
               {{ action.parlementaire.nom_complet }}
             </td>
-            <td>{{ action.etape|label_etape }}</td>
             <td>{{ action.date.strftime('%c') }}</td>
             <td>
               {% if action.nick == '!rc' %}
@@ -41,22 +38,10 @@
                 {{ action.suivi }}
               {% endif %}
             </td>
-            <td>
-              {% if action.attachment %}
-                <a class="btn btn-default btn-sm" href="{{ url_for('attachment', id=action.id) }}" target="_blank">Voir</a>
-                {{ action.attachment }}
-              {% endif %}
-            </td>
             <td class="col-right">
-              {% if action.etape.ordre == ordres.ETAPE_COM_A_MODERER %}
-                <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=action.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-check"></i></a>
-              {% endif %}
+              <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=action.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-check"></i></a>
 
-              {% if action.etape.ordre == ordres.ETAPE_COM_A_MODERER or
-                    action.etape.ordre == ordres.ETAPE_COM_PUBLIE or
-                    action.etape.ordre == action.parlementaire.etape.ordre %}
-                <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=action.id) }}" title="Supprimer" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
-              {% endif %}
+              <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=action.id) }}" title="Supprimer" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
             </td>
           </tr>
 

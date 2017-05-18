@@ -2,10 +2,11 @@
 
 from flask import session, url_for
 
+from ..models import Action, Etape
 from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
                                 ETAPE_A_ENVOYER, ETAPE_COM_A_MODERER,
-                                ETAPE_ENVOYE, ETAPE_NA)
+                                ETAPE_COM_PUBLIE, ETAPE_ENVOYE, ETAPE_NA)
 
 
 def setup(app):
@@ -62,10 +63,25 @@ def setup(app):
                 },
                 {
                     'url': url_for('admin_en_attente'),
-                    'label': '<span class="admin">Actions en attente</span>',
+                    'label': '<span class="admin">À confirmer</span>',
                     'endpoint': 'admin_en_attente"'
-                },
+                }
             ]
+
+            nb_moderer = Action.query \
+                               .join(Action.etape) \
+                               .filter(Etape.ordre == ETAPE_COM_A_MODERER) \
+                               .count()
+
+            if nb_moderer > 0:
+                menu += [
+                    {
+                        'url': url_for('admin_commentaires'),
+                        'label': '<span class="admin">À modérer (%s)</span>'
+                                 % nb_moderer,
+                        'endpoint': 'admin_commentaires'
+                    }
+                ]
 
         return {'menu': menu}
 
@@ -80,7 +96,8 @@ def setup(app):
                 'ETAPE_A_CONFIRMER': ETAPE_A_CONFIRMER,
                 'ETAPE_ENVOYE': ETAPE_ENVOYE,
                 'ETAPE_AR_RECU': ETAPE_AR_RECU,
-                'ETAPE_COM_A_MODERER': ETAPE_COM_A_MODERER
+                'ETAPE_COM_A_MODERER': ETAPE_COM_A_MODERER,
+                'ETAPE_COM_PUBLIE': ETAPE_COM_PUBLIE
             },
             'chambres': CHAMBRES
         }

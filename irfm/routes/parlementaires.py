@@ -15,7 +15,7 @@ from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_ENVOYE)
 from ..tools.files import handle_upload
 from ..tools.routing import not_found, redirect_back, remote_addr, require_user
-from ..tools.text import check_suivi, slugify
+from ..tools.text import check_suivi, sanitize_html, slugify
 
 
 def pris_en_charge(parl, force=False):
@@ -245,7 +245,7 @@ def setup_routes(app):
             ip=remote_addr(),
             parlementaire=parl,
             etape=etape,
-            suivi=request.form['text']
+            suivi=sanitize_html(request.form['text'])
         )
 
         db.session.add(action)

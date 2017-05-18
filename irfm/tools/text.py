@@ -38,8 +38,12 @@ def is_safe_url(target):
         ref_url.netloc == test_url.netloc
 
 
-def sanitize(text):
+def sanitize_hard(text):
     return re.sub(r'[^@A-Za-z0-9_.-]', '', text)
+
+
+def sanitize_html(text):
+    return re.sub(r'<', '&lt;', re.sub(r'>', '&gt;', text))
 
 
 def slugify(value):
