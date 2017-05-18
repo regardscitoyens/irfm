@@ -44,6 +44,7 @@ ETAPE_A_ENVOYER = 10
 ETAPE_A_CONFIRMER = 15
 ETAPE_ENVOYE = 20
 ETAPE_AR_RECU = 30
+ETAPE_REPONSE_POSITIVE = 40
 
 ETAPES = [
     {
@@ -124,7 +125,7 @@ ETAPES = [
         'icone': 'check'
     },
     {
-        'ordre': 40,
+        'ordre': ETAPE_REPONSE_POSITIVE,
         'label': 'Réponse positive',
         'description': """
             Le parlementaire nous a transmis les relevés de compte demandés.

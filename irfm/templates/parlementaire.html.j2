@@ -231,64 +231,92 @@
 
         {% endif %}
 
-        <tr>
-          <td class="label-next">
-            <span class="label" title="Interpeler le parlementaire"
-                  data-toggle="tooltip" style="background-color: #eebb44;">
-              <i class="fa fa-comments-o"></i>
-              Interpeler
-            </span>
-          </td>
-          <td colspan="4">
+        {% if parlementaire.etape.ordre != ordres.ETAPE_REPONSE_POSITIVE or is_admin %}
 
-            {% filter markdown -%}
-              {% include "text/etape_interpeler.md" %}
-            {% endfilter %}
+          <tr>
+            <td class="label-next">
+              <span class="label" title="Interpeler le parlementaire"
+                    data-toggle="tooltip" style="background-color: #eebb44;">
+                <i class="fa fa-comments-o"></i>
+                Interpeler
+              </span>
+            </td>
+            <td colspan="4">
+              {% if not is_admin %}
+                {% filter markdown -%}
+                  {% include "text/etape_interpeler.md" %}
+                {% endfilter %}
 
-            <div class="centered-buttons">
-              {% if parlementaire.twitter %}
-                {% set tweet -%}
-                  {% include "text/tweet_parlementaire.txt" %}
-                {%- endset %}
+                <div class="centered-buttons">
+                  {% if parlementaire.twitter %}
+                    {% set tweet -%}
+                      {% include "text/tweet_parlementaire.txt" %}
+                    {%- endset %}
 
-                <a class="btn btn-primary" target="_blank" href="https://twitter.com/intent/tweet?text={{ tweet|urlencode }}">
-                  <i class="fa fa-twitter"></i>
-                  Interpeler sur Twitter
-                </a>
+                    <a class="btn btn-primary" target="_blank" href="https://twitter.com/intent/tweet?text={{ tweet|urlencode }}">
+                      <i class="fa fa-twitter"></i>
+                      Interpeler sur Twitter
+                    </a>
+                  {% endif %}
+
+                  {% if parlementaire.emails %}
+                    <a class="btn btn-primary" href="mailto:{{ parlementaire.emails }}">
+                      <i class="fa fa-at"></i>
+                      Interpeler par courriel
+                    </a>
+                  {% endif %}
+                </div>
+
+                <div class="alert alert-warning">
+                    Si vous obtenez une réponse, positive ou négative, utilisez le formulaire ci-dessous pour nous la communiquer.  N'hésitez pas à inclure un lien si nécessaire.
+                </div>
+
               {% endif %}
 
-              {% if parlementaire.emails %}
-                <a class="btn btn-primary" href="mailto:{{ parlementaire.emails }}">
-                  <i class="fa fa-at"></i>
-                  Interpeler par courriel
-                </a>
-              {% endif %}
-            </div>
-
-            <div class="alert alert-warning">
-                Si vous obtenez une réponse, positive ou négative, utilisez le formulaire ci-dessous pour nous la communiquer.  N'hésitez pas à inclure un lien si nécessaire.
-            </div>
-
-            <form method="POST" action="{{ url_for('interpeler', id=parlementaire.id) }}">
-              <div class="form-group">
-                <div class="col-md-2">
-                  <label for="text">Réponse du parlementaire</label>
+              <form method="POST" action="{{ url_for('interpeler', id=parlementaire.id) }}">
+                <div class="form-group">
+                  <div class="col-md-2">
+                    <label for="text">Réponse du parlementaire</label>
+                  </div>
+                  <div class="col-md-10">
+                    <textarea name="text" class="form-control" maxlength="8192" rows="3"></textarea>
+                    <small>
+                      {% if is_admin %}
+                        Administrateur &ndash; la contribution sera publiée immédiatement.
+                      {% else %}
+                        Note: votre contribution pourra être modérée avant publication
+                      {% endif %}
+                    </small>
+                  </div>
                 </div>
-                <div class="col-md-10">
-                  <textarea name="text" class="form-control" maxlength="8192" rows="3"></textarea>
-                  <small>Note: votre contribution pourra être modérée avant publication</small>
+                <div class="form-group">
+                  <div class="col-md-offset-2 col-md-10">
+                    <br>
+                    <input class="btn btn-primary" type="submit" value="Valider">
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                  <br>
-                  <input class="btn btn-primary" type="submit" value="Valider">
-                </div>
-              </div>
-            </form>
+              </form>
 
-          </td>
-        </tr>
+            </td>
+          </tr>
+
+        {% else %}
+
+           <tr>
+            <td class="label-next">
+              <span class="label" style="background-color: #66bb66;">
+                <i class="fa fa-smile-o"></i>
+                Réponse positive
+              </span>
+            </td>
+            <td colspan="4">
+              <h4>Le parlementaire a répondu favorablement à notre demande.</h4>
+
+              Il n'y a plus rien à faire !
+            </td>
+          </tr>
+
+        {% endif %}
 
         {% if is_admin %}
 
