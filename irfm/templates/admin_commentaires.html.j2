@@ -35,7 +35,7 @@
               {% if action.suivi and action.etape.ordre == ordres.ETAPE_ENVOYE %}
                 <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ action.suivi }}" target="_blank">{{ action.suivi }}</a>
               {% elif action.suivi %}
-                {{ action.suivi }}
+                {{ action.suivi|e }}
               {% endif %}
             </td>
             <td class="col-right">

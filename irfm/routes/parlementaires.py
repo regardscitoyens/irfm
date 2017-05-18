@@ -15,7 +15,7 @@ from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_ENVOYE)
 from ..tools.files import handle_upload
 from ..tools.routing import not_found, redirect_back, remote_addr, require_user
-from ..tools.text import check_suivi, sanitize_html, slugify
+from ..tools.text import check_suivi, slugify
 
 
 def pris_en_charge(parl, force=False):
@@ -245,12 +245,12 @@ def setup_routes(app):
             ip=remote_addr(),
             parlementaire=parl,
             etape=etape,
-            suivi=sanitize_html(request.form['text'])
+            suivi=request.form['text']
         )
 
         db.session.add(action)
         db.session.commit()
 
-        flash('Votre contribution a bien été enregistrée, '
-              'elle sera publiée prochainement. Merci !', category='success')
+        flash('Votre contribution a bien été enregistrée, elle sera publiée '
+              'dès que nous l\'avons vérifiée. Merci !', category='success')
         return redirect(url_for('parlementaire', id=id))

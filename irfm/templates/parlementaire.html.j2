@@ -68,7 +68,7 @@
               {% if act.suivi and act.etape.ordre == ordres.ETAPE_ENVOYE %}
                 Suivi&nbsp;: <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ act.suivi }}" target="_blank">{{ act.suivi }}</a>
               {% elif act.suivi %}
-                {{ act.suivi }}
+                {{ act.suivi|e }}
               {% endif %}
             </td>
             <td class="col-right col-nobreak">
