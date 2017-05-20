@@ -45,6 +45,7 @@ ETAPE_A_CONFIRMER = 15
 ETAPE_ENVOYE = 20
 ETAPE_AR_RECU = 30
 ETAPE_REPONSE_POSITIVE = 40
+ETAPE_REPONSE_NEGATIVE = 50
 
 ETAPES = [
     {
@@ -131,20 +132,10 @@ ETAPES = [
             Le parlementaire nous a transmis les relevés de compte demandés.
         """,
         'couleur': '#66bb66',
-        'icone': 'smile-o',
+        'icone': 'heart',
     },
     {
-        'ordre': 45,
-        'label': 'Réponse partielle',
-        'description': """
-            Le parlementaire accepté de nous transmettre une partie des
-            documents demandés.
-        """,
-        'couleur': '#ddbb66',
-        'icone': 'meh-o',
-    },
-    {
-        'ordre': 50,
+        'ordre': ETAPE_REPONSE_NEGATIVE,
         'label': 'Réponse négative',
         'description': """
             Le parlementaire a refusé de nous transmettre ses relevés de
@@ -152,7 +143,7 @@ ETAPES = [
             l'expiration d'un délai de 2 mois après réception de la demande.
         """,
         'couleur': '#bb6666',
-        'icone': 'frown-o',
+        'icone': 'thumbs-down',
     },
 ]
 

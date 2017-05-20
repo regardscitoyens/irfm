@@ -59,7 +59,10 @@ def setup_routes(app):
                 'datasets': [{
                     'data': [e.nb for e in etapes_qs if e.nb > 0],
                     'backgroundColor': [e.Etape.couleur for e in etapes_qs
-                                        if e.nb > 0]
+                                        if e.nb > 0],
+                    'hoverBackgroundColor': [e.Etape.couleur for e in etapes_qs
+                                             if e.nb > 0],
+                    'borderWidth': [0 for e in etapes_qs if e.nb > 0]
                 }]
             },
             departements=dept_qs

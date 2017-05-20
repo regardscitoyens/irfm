@@ -59,7 +59,7 @@
       </header>
       <article class="panel-body" id="pie-container">
         <div id="pie">
-          <canvas id="pie-canvas" height="200" width="200"></canvas>
+          <canvas id="pie-canvas" height="200" width="300"></canvas>
         </div>
         <div id="pie-legend">
           {% for etape in etapes %}
@@ -115,7 +115,6 @@
     $(document).ready(function () {
 
       /* Camembert */
-
       var chart = new Chart($('#pie-canvas'), {
         type: 'pie',
         data: {{ etapes_data|tojson }},
