@@ -15,14 +15,15 @@
           <b>{{ parlementaire.nom_complet }}</b>
           <br>
 
-          {{ parlementaire.groupe|label_groupe }}
+          {{ parlementaire|fonc_parlementaire }} {{ parlementaire.groupe|label_groupe }}
           {{ parlementaire|lien_rc }}
           {{ parlementaire|lien_parl }}
           <br>
           <br>
 
-          {{ parlementaire|fonc_parlementaire }}
-            &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}
+
+          {{ parlementaire.nom_circo }} &ndash;
+          Circonscription n°{{ parlementaire.num_circo }}
           <br>
           <br>
 

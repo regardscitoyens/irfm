@@ -24,24 +24,6 @@
       </article>
     </section>
 
-    <!--
-    <section class="panel panel-default">
-      <header class="panel-heading">
-        <b>Les étapes de l'opération</b>
-      </header>
-      <article class="panel-body">
-        {% for etape in etapes %}
-          {% if etape.ordre > 0 %}
-            <p>
-              {{ etape|label_etape }}
-              <small>{{ etape.description }}</small>
-            </p>
-          {% endif %}
-        {% endfor %}
-      </article>
-    </section>
-    -->
-
     <section class="panel panel-default">
       <header class="panel-heading">
         <b>Quelles sont les étapes suivantes pour arriver à la transparence de l'IRFM ?</b>
@@ -78,8 +60,10 @@
       <article class="panel-body parl-card">
         <img class="parl-photo" src="{{ parlementaire.url_photo }}/120" align="left">
         <div class="parl-detail">
-          <b>{{ parlementaire.nom_complet }}</b> {{ parlementaire.groupe|label_groupe }}<br>
-          {{ parlementaire|fonc_parlementaire }} &ndash; {{ parlementaire.nom_circo }} n°{{ parlementaire.num_circo }}<br><br>
+          <b>{{ parlementaire.nom_complet }}</b><br>
+          {{ parlementaire|fonc_parlementaire }} {{ parlementaire.groupe|label_groupe }}<br>
+          {{ parlementaire.nom_circo }} &ndash;
+          Circonscription n°{{ parlementaire.num_circo }}<br><br>
 
           <a class="btn btn-primary btn-sm" href="{{ url_for('parlementaire', id=parlementaire.id) }}" role="button">Envoyer la demande</a>
         </div>
