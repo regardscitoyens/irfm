@@ -2,7 +2,8 @@
 
 from flask import flash, render_template, request, session
 
-from ..models import User, db
+from ..models import Action, Etape, User, db
+from ..models.constants import ETAPE_ENVOYE
 
 from ..tools.routing import not_found, redirect_back, require_user
 from ..tools.text import check_email, check_password, sanitize_hard
@@ -95,6 +96,11 @@ def setup_routes(app):
         if not user:
             return not_found()
 
+        envois = Action.query.join(Action.etape) \
+                             .filter(Action.user == user) \
+                             .filter(Etape.ordre == ETAPE_ENVOYE) \
+                             .count()
+
         if request.method == 'POST':
             changed = False
             for field in ['abo_rc', 'abo_irfm', 'abo_membres']:
@@ -110,4 +116,4 @@ def setup_routes(app):
 
             return redirect_back()
 
-        return render_template('profil.html.j2', user=user)
+        return render_template('profil.html.j2', user=user, envois=envois)

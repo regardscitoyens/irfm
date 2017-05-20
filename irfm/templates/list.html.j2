@@ -41,7 +41,7 @@
               <span class="search-vector">{{ parl.nom_complet }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }}</span>
             </td>
             <td data-value="{{ parl.nom }} {{ parl.prenom }}">
-              {{ parl.nom_complet }}
+              <a href="{{ url_for('parlementaire', id=parl.id) }}">{{ parl.nom_complet }}</a>
               {% if not parl.adresse %}
                 <span class="label label-danger">Adresse manquante !</span>
               {% endif %}
@@ -55,7 +55,7 @@
               {% if parl.etape.ordre == 10 %}
                 <a class="btn btn-primary btn-sm" href="{{ url_for('parlementaire', id=parl.id) }}" role="button">Envoyer la demande</a>
               {% else %}
-                <a class="btn btn-default btn-sm" href="{{ url_for('parlementaire', id=parl.id) }}" role="button">Informations</a>
+                <a class="btn btn-default btn-sm" href="{{ url_for('parlementaire', id=parl.id) }}" role="button">Voir</a>
               {% endif %}
             </td>
           </tr>

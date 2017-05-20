@@ -14,7 +14,9 @@ C'est normal, nous avons décidé de commencer l'opération uniquement avec les 
 
 L'identification nous permet de mieux répartir les efforts, en nous assurant que personne d'autre n'envoie un courrier au même parlementaire lorsque vous décidez de le faire vous-même.
 
-Si vous avez saisi votre adresse e-mail et que vous le regrettez, [contactez-nous](mailto:{{ config.ADMIN_EMAIL }}) ! Nous supprimerons votre adresse au plus vite, conformément à la loi informatique et libertés.
+Par ailleurs, lorsque vous envoyez un courrier au nom de l'association Regards Citoyens, vous en devenez membre (c'est une obligation juridique : nous ne pouvons pas mandater toute personne pour agir au nom de l'association).  Si vous le souhaitez, vous pourrez alors vous inscrire à la liste de discussion des membres de l'association.  L'adhésion est *gratuite* et n'implique *aucune obligation*.  Si vous le souhaitez, vous pourrez y renoncer par la suite en nous contactant.
+
+Conformément à la loi Informatique et Libertés, vous disposez d'un droit d'accès et de rectification sur les données que nous détenons à votre sujet.  N'hésitez pas à [nous contacter par e-mail](mailto:{{ config.ADMIN_EMAIL }}) si vous souhaitez exercer ce droit.
 
 ##### Que me conseillez-vous pour approfondir le sujet de l'IRFM ?
 

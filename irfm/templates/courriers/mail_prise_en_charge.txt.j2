@@ -11,17 +11,25 @@ Voici la marche à suivre :
    recevions l'avis de réception.
 
    Vous pouvez envoyer le recommandé au format papier depuis un bureau de Poste,
-   ou bien en ligne depuis <https://boutique.laposte.fr/envoi-de-courrier-en-ligne/lettre-recommandee-en-ligne>.
+   ou bien en ligne :
+   <https://boutique.laposte.fr/envoi-de-courrier-en-ligne/lettre-recommandee-en-ligne>.
 
-2. Prenez une photo, une capture d'écran, ou scannez la preuve de dépôt du
-   recommandé.  Retournez sur la page du parlementaire pour nous l'envoyer :
+2. Retournez sur la page du parlementaire pour nous envoyer le numéro de suivi
+   du courrier et ansi confirmer l'envoi :
    <{{ url_for('parlementaire', id=parlementaire.id, _external=True) }}>.
 
    N'oubliez pas cette étape pour que nous puissions suivre l'avancement de
-   l'opération !
+   l'opération !  Vous pourrez si vous le souhaitez joindre une photo ou un
+   scan de la preuve d'envoi.
 
-Note: pour pouvoir envoyer la preuve de dépôt, vous devrez vous identifier avec
-les mêmes identifiants, à savoir :
+   Lorsque vous confirmez l'envoi au nom de l'association Regards Citoyens,
+   vous en devenez automatiquement membre. L'adhésion est gratuite et sans
+   aucune obligation.  Vous pouvez si vous le souhaitez vous abonner à la liste
+   de discussion des membres de l'association depuis la page de votre profil:
+   <{{ url_for('profil', _external=True) }}>.
+
+Note: pour pouvoir confirmer l'envoi, vous devrez vous identifier avec les
+mêmes identifiants, à savoir :
 
   Pseudo: {{ session.user.nick }}
   E-mail: {{ session.user.email }}

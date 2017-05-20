@@ -14,7 +14,7 @@ def get_secret_key(data_dir):
         chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
 
         rnd = SystemRandom()
-        key = ''.join([chars[rnd.randint(1, len(chars))-1]
+        key = ''.join([chars[rnd.randint(1, len(chars)) - 1]
                        for i in range(1, 50)])
 
         with open(secret_file, 'w+') as f:
@@ -48,6 +48,8 @@ class DefaultConfig(object):
     MAIL_USERNAME = None
     MAIL_PASSWORD = None
     MAIL_SUPPRESS_SEND = False
+
+    PERMANENT_SESSION_LIFETIME = 6 * 31 * 24 * 60 * 60
 
 
 class DebugConfig(DefaultConfig):

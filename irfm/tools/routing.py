@@ -10,7 +10,8 @@ def redirect_back(fallback=None, error=None):
     if error:
         flash(error, category='error')
 
-    if request.referrer and is_safe_url(request.referrer):
+    if request.referrer and is_safe_url(request.referrer) and \
+       request.referrer != request.url:
         return redirect(request.referrer)
     elif fallback and is_safe_url(fallback):
         return redirect(fallback)

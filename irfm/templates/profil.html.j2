@@ -22,13 +22,16 @@
               Reçoit un message à chaque billet ou communiqué publié sur le site <a href="https://www.regardscitoyens.org" target="_blank">RegardsCitoyens.org</a> (une fois tous les 1 à 3 mois).
             </div>
           </div>
-          <div class="form-group">
-            <input name="abo_membres" id="abo_membres" type="checkbox" value="abo_membres" {% if user.abo_membres %}checked="checked"{% endif %} />
-            <div class="abo-desc">
-              <label for="abo_membres">Mailing-list Membres</label><br>
-              Liste de discussion des membres de l'association.  Reçoit les billets et communiqués, les résumés hebdomadaires des discussions IRC, les appels à contributions et compte-rendus de rendez-vous de la part du Conseil d'Administration, et héberge des discussions entre membres (trafic très variable, 1 à 3 messages par semaine hors actualité spécifique).
+          {% if envois > 0 %}
+            <div class="form-group">
+              <input name="abo_membres" id="abo_membres" type="checkbox" value="abo_membres" {% if user.abo_membres %}checked="checked"{% endif %} />
+              <div class="abo-desc">
+                <label for="abo_membres">Mailing-list Membres</label><br>
+                <b>Vous avez envoyé une demande au nom de l'association, vous êtes donc désormais membre.</b>  L'adhésion est gratuite et sans aucune obligation.<br>
+                Vous pouvez si vous le souhaitez vous abonner à la liste de discussion des membres de l'association.  Elle reçoit les billets et communiqués, les résumés hebdomadaires des discussions IRC, les appels à contributions et compte-rendus de rendez-vous de la part du Conseil d'Administration, et héberge des discussions entre membres (trafic très variable, 1 à 3 messages par semaine hors actualité spécifique).
+              </div>
             </div>
-          </div>
+          {% endif %}
           <div class="centered-buttons">
             <input class="btn btn-primary" type="submit" value="Enregistrer">
           </div>
