@@ -3,6 +3,14 @@
 from .database import db
 
 
+abonnements = db.Table(
+    'abonnements',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('parlementaire_id', db.Integer,
+              db.ForeignKey('parlementaires.id'))
+)
+
+
 class User(db.Model):
     __tablename__ = 'users'
 
@@ -18,3 +26,7 @@ class User(db.Model):
 
     actions = db.relationship('Action', back_populates='user',
                               order_by='Action.date')
+
+    abonnements = db.relationship('Parlementaire',
+                                  secondary=abonnements,
+                                  backref='abonnes')

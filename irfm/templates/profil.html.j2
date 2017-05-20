@@ -38,5 +38,54 @@
         </form>
       </article>
     </section>
+
+    {% if user.abonnements %}
+      <section class="panel panel-default">
+        <header class="panel-heading">
+          <b>Mes alertes</b>
+        </header>
+
+        <table class="table table-condensed table-striped">
+          <tr>
+            <th colspan="2" data-defaultsort="asc" data-mainsort="1">Parlementaire</th>
+            <th class="col-center">Groupe</th>
+            <th>Circonscription</th>
+            <th class="col-center">Etape</th>
+            <th class="col-right">
+              <a class="btn btn-sm btn-danger" href="{{ url_for('abo_clear') }}">
+                <i class="fa fa-trash"></i>
+                Tout supprimer
+              </a>
+            </th>
+          </tr>
+          {% for parl in user.abonnements %}
+            <tr>
+              <td class="col-center">
+                <a data-toggle="tooltip" title="Accéder à la page du parlementaire ({{ chambres[parl.chambre] }})" target="_blank" href="{{ parl.url_off }}">
+                  <img class="chamber-icon" src="{{ url_for('static', filename=parl.chambre|lower+'.png') }}">
+                </a>
+              </td>
+              <td>
+                <a href="{{ url_for('parlementaire', id=parl.id) }}">{{ parl.nom_complet }}</a>
+                {% if not parl.adresse %}
+                  <span class="label label-danger">Adresse manquante !</span>
+                {% endif %}
+              </td>
+              <td class="col-center">{{ parl.groupe|label_groupe }}</td>
+              <td>{{ parl.nom_circo }} n°{{ parl.num_circo }}</td>
+              <td class="col-center">
+                {{ parl.etape|label_etape }}
+              </td>
+              <td class="col-right">
+                <a class="btn btn-sm btn-danger" href="{{ url_for('abo_parlementaire', id=parl.id, action='off') }}">
+                  <i class="fa fa-bell"></i>
+                  Ne plus m'alerter
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </section>
+    {% endif %}
   </div>
 {% endblock %}

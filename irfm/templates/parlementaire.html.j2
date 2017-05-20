@@ -34,6 +34,61 @@
       </article>
     </section>
 
+    <!-- Abonnements -->
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Alertes</b>
+      </header>
+
+      <article class="panel-body">
+        Vous pouvez recevoir une alerte par e-mail lorsque la situation change pour ce parlementaire ou pour tout parlementaire de ce département.
+
+        {% if not session.user %}
+          <br><br>
+          Pour cela, vous devez d'abord <a href="#" class="identify-link">vous identifier</a>.
+        {% endif %}
+      </article>
+
+      {% if session.user %}
+
+        <table class="table table-responsive">
+          <tr>
+            <td class="col-right">{{ parlementaire.nom_complet }}</td>
+            <td class="col-center">
+              {% if abonne %}
+                <a class="btn btn-sm btn-danger" href="{{ url_for('abo_parlementaire', id=parlementaire.id, action='off') }}">
+                  <i class="fa fa-bell"></i>
+                  Ne plus m'alerter
+                </a>
+              {% else %}
+                <a class="btn btn-sm btn-primary" href="{{ url_for('abo_parlementaire', id=parlementaire.id, action='on') }}">
+                  <i class="fa fa-bell"></i>
+                  M'alerter
+                </a>
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            <td class="col-right">{{ parlementaire.nom_circo }}</td>
+            <td class="col-center">
+              {% if abonne_dept %}
+                <a class="btn btn-sm btn-danger" href="{{ url_for('abo_departement', deptmt=parlementaire.num_deptmt, action='off') }}">
+                  <i class="fa fa-bell"></i>
+                  Ne plus m'alerter
+                </a>
+              {% else %}
+                <a class="btn btn-sm btn-primary" href="{{ url_for('abo_departement', deptmt=parlementaire.num_deptmt, action='on') }}">
+                  <i class="fa fa-bell"></i>
+                  M'alerter
+                </a>
+              {% endif %}
+            </td>
+          </tr>
+        </table>
+
+      {% endif %}
+    </section>
+
   </div>
 
   <div class="col-md-9">
@@ -146,7 +201,7 @@
               {% else %}
 
                 <div class="alert alert-warning">
-                    Pour nous permettre d'assurer le suivi de l'envoi des courriers aux parlementaires, vous devez <a href="#" id="identify-link">vous identifier</a> pour pouvoir le prendre en charge.
+                    Pour nous permettre d'assurer le suivi de l'envoi des courriers aux parlementaires, vous devez <a href="#" class="identify-link">vous identifier</a> pour pouvoir le prendre en charge.
                 </div>
 
               {% endif %}
@@ -383,7 +438,7 @@
 {% block scripts %}
   <script src="{{ url_for('static', filename='bootstrap.file-input.js') }}"></script>
   <script>
-    $('#identify-link').click(function(e) {
+    $('.identify-link').click(function(e) {
       $('.login .dropdown-toggle').dropdown('toggle');
       $('.login [name="nick"]').focus();
       return false;

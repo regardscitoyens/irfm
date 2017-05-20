@@ -69,8 +69,26 @@ def setup_routes(app):
         if not parl:
             return not_found()
 
+        abonne = False
+        abonne_dept = False
+
+        if session.get('user'):
+            user = User.query.filter(User.id == session['user']['id']) \
+                             .options(joinedload(User.abonnements)) \
+                             .first()
+            abonne = parl in user.abonnements
+
+            dept = Parlementaire.query.join(Parlementaire.etape) \
+                                      .filter(Parlementaire.num_deptmt ==
+                                              parl.num_deptmt) \
+                                      .filter(Etape.ordre > 0) \
+                                      .all()
+            abonne_dept = all([p in user.abonnements for p in dept])
+
         data = {
             'parlementaire': parl,
+            'abonne': abonne,
+            'abonne_dept': abonne_dept,
             'pris_en_charge': bool(pris_en_charge(parl))
         }
 
