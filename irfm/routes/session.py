@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from flask import flash, request, session
+from flask import flash, render_template, request, session
 
 from ..models import User, db
 
-from ..tools.routing import redirect_back
+from ..tools.routing import not_found, redirect_back, require_user
 from ..tools.text import check_email, check_password, sanitize_hard
 
 
@@ -66,11 +66,12 @@ def setup_routes(app):
             return redirect_back(error=msg)
 
         if not user:
-            user = User(nick=nick, email=email, admin=False, abo_rc=False,
-                        abo_membres=False, abo_irfm=False)
+            user = User(nick=nick, email=email, admin=False)
             db.session.add(user)
             db.session.commit()
-            flash('Bienvenue %s !' % nick, category='success')
+            flash('Bienvenue %s ! Vous pouvez gérer vos abonnements et vos '
+                  'alertes en cliquant sur votre pseudo en haut à droite de '
+                  'cette page.' % nick, category='success')
 
         session['user'] = {
             'id': user.id,
@@ -86,3 +87,27 @@ def setup_routes(app):
         session.pop('user', None)
 
         return redirect_back()
+
+    @app.route('/profil', endpoint='profil', methods=['GET', 'POST'])
+    @require_user
+    def profil():
+        user = User.query.filter(User.id == session['user']['id']).first()
+        if not user:
+            return not_found()
+
+        if request.method == 'POST':
+            changed = False
+            for field in ['abo_rc', 'abo_irfm', 'abo_membres']:
+                val = request.form.get(field) == field
+                if getattr(user, field) != val:
+                    changed = True
+                    setattr(user, field, val)
+
+            if changed:
+                db.session.commit()
+                flash('Vos préférences ont bien été modifiées.',
+                      category='success')
+
+            return redirect_back()
+
+        return render_template('profil.html.j2', user=user)

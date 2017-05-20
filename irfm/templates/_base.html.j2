@@ -48,18 +48,25 @@
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu dropdown-menu-right">
-                <li>
-                  {% if session.user %}
+                {% if session.user %}
+                  {% if not is_admin %}
+                    <li>
+                      <a href="{{ url_for('profil') }}">Profil et abonnements</a>
+                    </li>
+                  {% endif %}
+                  <li>
                     <a href="{{ url_for('logout') }}">Se déconnecter</a>
-                  {% else %}
+                  </li>
+                {% else %}
+                  <li>
                     <form class="form-horizontal login-form" method="POST" action="{{ url_for('login') }}">
                       <input name="nick" type="text" class="form-control" placeholder="Pseudo">
                       <input name="email" type="text" class="form-control" placeholder="Adresse e-mail (facultatif)">
                       <br>
                       <input type="submit" class="btn btn-primary" value="Valider">
                     </form>
-                  {% endif %}
-                </li>
+                  </li>
+                {% endif %}
               </ul>
             </div>
 

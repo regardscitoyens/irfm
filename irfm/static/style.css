@@ -171,3 +171,20 @@ th.col-nobreak {
 .label-next {
   padding-top: 1.15em !important;
 }
+
+/* Formulaire abonnements */
+
+.abo-form .form-group {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.abo-form .form-group input[type=checkbox] {
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+
+.abo-form .form-group .abo-desc {
+  flex-grow: 1;
+  margin-left: 1em;
+}
