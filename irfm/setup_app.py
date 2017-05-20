@@ -4,6 +4,7 @@ import locale
 import os
 
 from flask import Flask
+
 from flaskext.markdown import Markdown
 
 from .config import get_secret_key

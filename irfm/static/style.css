@@ -58,6 +58,10 @@ img.rc-small {
   font-weight: bold;
 }
 
+.anon {
+  color: #ccc;
+}
+
 /* Tableaux */
 
 .search-vector {

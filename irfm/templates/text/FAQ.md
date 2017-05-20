@@ -12,11 +12,7 @@ C'est normal, nous avons décidé de commencer l'opération uniquement avec les 
 
 ##### Pourquoi dois-je m'identifier et donner une adresse e-mail ?
 
-Vous n'êtes pas obligé de saisir une adresse e-mail ; vous pouvez vous identifier en tapant simplement un pseudonyme et en laissant le second champ vide.  Dans tous les cas, vos informations ne sont sauvegardées dans notre base de données que si vous prenez en charge l'envoi pour un parlementaire. Si vous vous rétractez, tout est supprimé.
-
 L'identification nous permet de mieux répartir les efforts, en nous assurant que personne d'autre n'envoie un courrier au même parlementaire lorsque vous décidez de le faire vous-même.
-
-Si vous saisissez une adresse e-mail, vous serez notifié de l'avancement de l'opération.
 
 Si vous avez saisi votre adresse e-mail et que vous le regrettez, [contactez-nous](mailto:{{ config.ADMIN_EMAIL }}) ! Nous supprimerons votre adresse au plus vite, conformément à la loi informatique et libertés.
 

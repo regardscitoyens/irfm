@@ -3,3 +3,4 @@
 from .database import db  # noqa
 from .parlementaire import Groupe, Parlementaire  # noqa
 from .procedure import Action, Etape  # noqa
+from .user import User  # noqa

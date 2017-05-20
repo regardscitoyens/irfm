@@ -57,10 +57,12 @@
           <tr>
             <td>{{ act.etape|label_etape }}</td>
             <td>
-              {% if act.nick == '!rc' %}
+              {% if act.user.nick == '!rc' %}
                 <img class="rc-small" src="{{ url_for('static', filename='rc.png') }}">
+              {% elif act.user %}
+                {{ act.user.nick }}
               {% else %}
-                {{ act.nick }}
+                <span class="anon">anonyme</span>
               {% endif %}
             </td>
             <td>{{ act.date.strftime("%c") }}</td>

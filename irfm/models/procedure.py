@@ -23,8 +23,6 @@ class Action(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     date = db.Column(db.DateTime)
-    nick = db.Column(db.Unicode)
-    email = db.Column(db.Unicode)
     ip = db.Column(db.Unicode)
 
     suivi = db.Column(db.Unicode)
@@ -36,3 +34,6 @@ class Action(db.Model):
     parlementaire_id = db.Column(db.Integer,
                                  db.ForeignKey('parlementaires.id'))
     parlementaire = db.relationship('Parlementaire', back_populates='actions')
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='actions')

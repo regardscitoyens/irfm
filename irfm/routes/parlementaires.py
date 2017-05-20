@@ -9,7 +9,7 @@ from flask_mail import Mail, Message
 
 from sqlalchemy.orm import contains_eager, joinedload
 
-from ..models import Action, Etape, Parlementaire, db
+from ..models import Action, Etape, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE,
                                 ETAPE_ENVOYE)
@@ -31,8 +31,7 @@ def pris_en_charge(parl, force=False):
         else:
             action = [a for a in parl.actions
                       if a.etape.ordre == ETAPE_A_CONFIRMER and
-                      a.nick == session.get('user')['nick'] and
-                      a.email == session.get('user')['email']]
+                      a.user_id == session.get('user')['id']]
 
         if len(action):
             return action[0]
@@ -63,7 +62,8 @@ def setup_routes(app):
                             .filter_by(id=id) \
                             .options(joinedload(Parlementaire.groupe)) \
                             .options(joinedload(Parlementaire.etape)) \
-                            .options(joinedload(Parlementaire.actions)) \
+                            .options(joinedload(Parlementaire.actions)
+                                     .joinedload(Action.user)) \
                             .first()
 
         if not parl:
@@ -107,8 +107,7 @@ def setup_routes(app):
 
             action = Action(
                 date=datetime.now(),
-                nick=session['user']['nick'],
-                email=session['user']['email'],
+                user=User.query.filter(User.id == session['user']['id']).one(),
                 ip=remote_addr(),
                 parlementaire=parl,
                 etape=parl.etape
@@ -211,8 +210,7 @@ def setup_routes(app):
 
         action = Action(
             date=datetime.now(),
-            nick=session['user']['nick'],
-            email=session['user']['email'],
+            user=User.query.filter(User.id == session['user']['id']).one(),
             ip=remote_addr(),
             parlementaire=parl,
             etape=parl.etape,
@@ -247,8 +245,8 @@ def setup_routes(app):
         etape = Etape.query.filter(Etape.ordre == ordre).one()
         action = Action(
             date=datetime.now(),
-            nick=session['user']['nick'] if session.get('user') else '',
-            email=session['user']['email'] if session.get('user') else '',
+            user=User.query.filter(User.id == session['user']['id'])
+                           .one() if session.get('user') else None,
             ip=remote_addr(),
             parlementaire=parl,
             etape=etape,

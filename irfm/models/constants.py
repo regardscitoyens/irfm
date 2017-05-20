@@ -97,7 +97,7 @@ ETAPES = [
     },
     {
         'ordre': ETAPE_A_CONFIRMER,
-        'label': 'À confirmer',
+        'label': 'Pris en charge',
         'description': """
             Un utilisateur a souhaité se charger de l'envoi de la demande, mais
             nous n'avons pas encore confirmation de cet envoi.

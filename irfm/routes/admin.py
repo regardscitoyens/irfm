@@ -7,7 +7,7 @@ from flask import (make_response, redirect, render_template, request, session,
                    url_for)
 from sqlalchemy.orm import joinedload
 
-from ..models import Action, Etape, Parlementaire, db
+from ..models import Action, Etape, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE)
 
@@ -26,6 +26,7 @@ def setup_routes(app):
         qs = Action.query.options(joinedload(Action.parlementaire)
                                   .joinedload(Parlementaire.etape)) \
                          .options(joinedload(Action.etape)) \
+                         .options(joinedload(Action.user)) \
                          .order_by(Action.date.desc()) \
                          .limit(500) \
                          .all()
@@ -47,6 +48,7 @@ def setup_routes(app):
         qs = Action.query.join(Action.etape) \
                          .filter(Action.parlementaire_id.in_(parls)) \
                          .filter(Etape.ordre == ETAPE_A_CONFIRMER) \
+                         .options(joinedload(Action.user)) \
                          .order_by(Action.date) \
                          .all()
 
@@ -60,6 +62,7 @@ def setup_routes(app):
         qs = Action.query.join(Action.etape) \
                          .filter(Etape.ordre == ETAPE_COM_A_MODERER) \
                          .options(joinedload(Action.parlementaire)) \
+                         .options(joinedload(Action.user)) \
                          .order_by(Action.date) \
                          .all()
 
@@ -154,8 +157,7 @@ def setup_routes(app):
 
         action = Action(
             date=datetime.now(),
-            nick=session['user']['nick'],
-            email=session['user']['email'],
+            user=User.query.filter(User.id == session['user']['id']).one(),
             ip=remote_addr(),
             parlementaire=parl,
             etape=etape,

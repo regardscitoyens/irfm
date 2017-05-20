@@ -25,10 +25,16 @@
             </td>
             <td>{{ action.date.strftime('%c') }}</td>
             <td>
-              {% if action.nick == '!rc' %}
+              {% if not action.user %}
+                <span class="anon">anonyme</span>
+              {% elif action.user.nick == '!rc' %}
                 <img class="rc-small" src="{{ url_for('static', filename='rc.png') }}">
               {% else %}
-                {{ action.nick }} ({{ action.email }}) depuis {{ action.ip }}
+                {{ action.user.nick }} ({{ action.user.email }})
+              {% endif %}
+
+              {% if action.ip %}
+                depuis {{ action.ip }}
               {% endif %}
             </td>
             <td>
