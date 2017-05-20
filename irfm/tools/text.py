@@ -12,8 +12,8 @@ SLUG_STRIP_RE = re.compile(r'[^\w\s-]')
 SLUG_HYP_RE = re.compile(r'[-\s]+')
 
 
-def check_email(text, allow_empty=True):
-    return not text or re.search(r'^[^@]+@[^@]+\.[^@]+$', text)
+def check_email(text):
+    return re.search(r'^[^@]+@[^@]+\.[^@]+$', text)
 
 
 def check_password(candidate, hashed_password, secret):
