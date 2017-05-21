@@ -109,7 +109,7 @@
           <th></th>
         </tr>
 
-        {% for act in parlementaire.actions if (act.etape.ordre != ordres.ETAPE_COM_A_MODERER or is_admin) %}
+        {% for act in parlementaire.actions if (act.etape != ordres.ETAPE_COM_A_MODERER or is_admin) %}
           <tr>
             <td>{{ act.etape|label_etape }}</td>
             <td>
@@ -123,27 +123,27 @@
             </td>
             <td>{{ act.date.strftime("%c") }}</td>
             <td>
-              {% if act.suivi and act.etape.ordre == ordres.ETAPE_ENVOYE %}
+              {% if act.suivi and act.etape == ordres.ETAPE_ENVOYE %}
                 Suivi&nbsp;: <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ act.suivi }}" target="_blank">{{ act.suivi }}</a>
               {% elif act.suivi %}
                 {{ act.suivi|e }}
               {% endif %}
             </td>
             <td class="col-right col-nobreak">
-              {% if act.etape.ordre == ordres.ETAPE_A_CONFIRMER %}
+              {% if act.etape == ordres.ETAPE_A_CONFIRMER %}
                 <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">Voir le courrier</a>
-              {% elif act.etape.ordre == ordres.ETAPE_ENVOYE and act.attachment %}
+              {% elif act.etape == ordres.ETAPE_ENVOYE and act.attachment %}
                 <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('preuve_envoi', id=parlementaire.id) }}">Voir la preuve d'envoi</a>
-              {% elif act.etape.ordre == ordres.ETAPE_COM_A_MODERER and is_admin %}
+              {% elif act.etape == ordres.ETAPE_COM_A_MODERER and is_admin %}
                 <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=act.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-check"></i></a>
               {% elif act.attachment %}
                 <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('attachment', id=act.id) }}">Voir le document joint</a>
               {% endif %}
 
               {% if is_admin %}
-                {% if act.etape.ordre == ordres.ETAPE_COM_A_MODERER or
-                      act.etape.ordre == ordres.ETAPE_COM_PUBLIE or
-                      act.etape.ordre == act.parlementaire.etape.ordre %}
+                {% if act.etape == ordres.ETAPE_COM_A_MODERER or
+                      act.etape == ordres.ETAPE_COM_PUBLIE or
+                      act.etape == act.parlementaire.etape %}
                   <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=act.id) }}" title="Supprimer" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
                 {% endif %}
               {% endif %}
@@ -163,7 +163,7 @@
           <th colspan="5">Que faire ensuite ?</th>
         </tr>
 
-        {% if parlementaire.etape.ordre == ordres.ETAPE_A_ENVOYER %}
+        {% if parlementaire.etape == ordres.ETAPE_A_ENVOYER %}
 
           <!-- ENVOI -->
 
@@ -209,7 +209,7 @@
             </td>
           </tr>
 
-        {% elif parlementaire.etape.ordre == ordres.ETAPE_A_CONFIRMER %}
+        {% elif parlementaire.etape == ordres.ETAPE_A_CONFIRMER %}
 
           <!-- CONFIRMATION / ANNULATION -->
 
@@ -266,7 +266,7 @@
             </td>
           </tr>
 
-        {% elif parlementaire.etape.ordre == ordres.ETAPE_ENVOYE %}
+        {% elif parlementaire.etape == ordres.ETAPE_ENVOYE %}
 
           <!-- ATTENTE AR -->
 
@@ -289,7 +289,9 @@
 
         {% endif %}
 
-        {% if parlementaire.etape.ordre != ordres.ETAPE_REPONSE_POSITIVE or is_admin %}
+        {% if parlementaire.etape != ordres.ETAPE_REPONSE_POSITIVE or is_admin %}
+
+          <!-- Interpeler -->
 
           <tr>
             <td class="label-next">
@@ -397,8 +399,8 @@
                   </div>
                   <div class="col-md-10">
                     <select name="etape">
-                      {% for etape in next_etapes %}
-                        <option value="{{ etape.id }}">{{ etape.label }}</option>
+                      {% for etape in etapes if etape.ordre > parlementaire.etape %}
+                        <option value="{{ etape.ordre }}">{{ etape.label }}</option>
                       {% endfor %}
                     </select>
                   </div>

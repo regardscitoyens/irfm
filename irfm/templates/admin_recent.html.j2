@@ -41,7 +41,7 @@
               {% endif %}
             </td>
             <td>
-              {% if action.suivi and action.etape.ordre == ordres.ETAPE_ENVOYE %}
+              {% if action.suivi and action.etape == ordres.ETAPE_ENVOYE %}
                 <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ action.suivi }}" target="_blank">{{ action.suivi }}</a>
               {% elif action.suivi %}
                 {{ action.suivi|e }}
@@ -54,13 +54,13 @@
               {% endif %}
             </td>
             <td class="col-right">
-              {% if action.etape.ordre == ordres.ETAPE_COM_A_MODERER %}
+              {% if action.etape == ordres.ETAPE_COM_A_MODERER %}
                 <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=action.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-check"></i></a>
               {% endif %}
 
-              {% if action.etape.ordre == ordres.ETAPE_COM_A_MODERER or
-                    action.etape.ordre == ordres.ETAPE_COM_PUBLIE or
-                    action.etape.ordre == action.parlementaire.etape.ordre %}
+              {% if action.etape == ordres.ETAPE_COM_A_MODERER or
+                    action.etape == ordres.ETAPE_COM_PUBLIE or
+                    action.etape == action.parlementaire.etape %}
                 <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=action.id) }}" title="Supprimer" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
               {% endif %}
             </td>

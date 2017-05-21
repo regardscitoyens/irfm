@@ -2,7 +2,7 @@
 
 from flask import session, url_for
 
-from ..models import Action, Etape
+from ..models import Action
 from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
                                 ETAPE_A_ENVOYER, ETAPE_COM_A_MODERER,
@@ -70,8 +70,7 @@ def setup(app):
             ]
 
             nb_moderer = Action.query \
-                               .join(Action.etape) \
-                               .filter(Etape.ordre == ETAPE_COM_A_MODERER) \
+                               .filter(Action.etape == ETAPE_COM_A_MODERER) \
                                .count()
 
             if nb_moderer > 0:

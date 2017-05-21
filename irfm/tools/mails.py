@@ -7,7 +7,7 @@ from flask import render_template
 
 from flask_mail import Mail, Message
 
-from ..models import Etape, Parlementaire, db
+from ..models import Parlementaire, db
 from ..models.constants import ETAPE_NA
 
 from ..tools.files import generer_demande
@@ -17,8 +17,7 @@ def envoyer_emails(app, envoyer):
     files_root = os.path.join(app.config['DATA_DIR'], 'files')
 
     mail = Mail(app)
-    parls = Parlementaire.query.join(Parlementaire.etape) \
-                               .filter(Etape.ordre > ETAPE_NA) \
+    parls = Parlementaire.query.filter(Parlementaire.etape > ETAPE_NA) \
                                .filter(Parlementaire.mails_envoyes == 0) \
                                .order_by(Parlementaire.nom) \
                                .all()

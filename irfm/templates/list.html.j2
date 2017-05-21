@@ -48,11 +48,11 @@
             </td>
             <td class="col-center">{{ parl.groupe|label_groupe }}</td>
             <td data-value="{{ parl.num_deptmt }} {{ parl.num_circo }}">{{ parl.nom_circo }} n°{{ parl.num_circo }}</td>
-            <td class="col-center">
+            <td data-value="{{ parl.etape }}" class="col-center">
               {{ parl.etape|label_etape }}
             </td>
             <td class="col-right">
-              {% if parl.etape.ordre == 10 %}
+              {% if parl.etape == 10 %}
                 <a class="btn btn-primary btn-sm" href="{{ url_for('parlementaire', id=parl.id) }}" role="button">Envoyer la demande</a>
               {% else %}
                 <a class="btn btn-default btn-sm" href="{{ url_for('parlementaire', id=parl.id) }}" role="button">Voir</a>

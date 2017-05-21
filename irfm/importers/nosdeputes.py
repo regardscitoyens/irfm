@@ -11,7 +11,7 @@ from sqlalchemy.inspection import inspect
 
 from .base import BaseImporter
 
-from ..models import Etape, Groupe, Parlementaire, db
+from ..models import Groupe, Parlementaire, db
 from ..models.constants import DEBUT_RELEVES, ETAPE_A_ENVOYER, ETAPE_NA
 
 
@@ -79,7 +79,7 @@ class NosDeputesImporter(BaseImporter):
         depute = Parlementaire.query.filter_by(**id_data).first()
 
         if not depute:
-            id_data.update({'etape': self.etape_ae})
+            id_data.update({'etape': ETAPE_A_ENVOYER})
             depute = Parlementaire(**id_data)
             db.session.add(depute)
             created = True
@@ -106,7 +106,7 @@ class NosDeputesImporter(BaseImporter):
         }
 
         if fields['nom_complet'] in IGNORER:
-            fields['etape'] = self.etape_na
+            fields['etape'] = ETAPE_NA
 
         if fields['mandat_fin']:
             fin = fields['mandat_fin']
@@ -115,7 +115,7 @@ class NosDeputesImporter(BaseImporter):
 
             if fin < DEBUT_RELEVES:
                 # Mandat terminé avant T - 6 mois => député non concerné
-                fields['etape'] = self.etape_na
+                fields['etape'] = ETAPE_NA
             else:
                 self.info('Vérification décès pour %s' % fields['nom_complet'])
                 try:
@@ -132,12 +132,12 @@ class NosDeputesImporter(BaseImporter):
 
                 if deces:
                     self.info('%s est décédé(e)' % fields['nom_complet'])
-                    fields['etape'] = self.etape_na
-                elif not created and depute.etape == self.etape_na:
+                    fields['etape'] = ETAPE_NA
+                elif not created and depute.etape == ETAPE_A_ENVOYER:
                     # Gestion des députés précédemment marqués comme non
                     # concernés
                     self.info('Député concerné : %s' % fields['nom_complet'])
-                    fields['etape'] = self.etape_ae
+                    fields['etape'] = ETAPE_A_ENVOYER
 
         for key, newvalue in fields.items():
             curvalue = getattr(depute, key)
@@ -153,16 +153,6 @@ class NosDeputesImporter(BaseImporter):
         return created, updated
 
     def import_deputes(self):
-        self.etape_na = Etape.query.filter_by(ordre=ETAPE_NA).first()
-        if not self.etape_na:
-            self.error('Etape N/A introuvable, exécuter import_etapes ?')
-            return
-
-        self.etape_ae = Etape.query.filter_by(ordre=ETAPE_A_ENVOYER).first()
-        if not self.etape_ae:
-            self.error('Etape À envoyer introuvable, exécuter import_etapes ?')
-            return
-
         try:
             data = requests.get(self.URL_DEPUTES).json()
         except Exception as e:

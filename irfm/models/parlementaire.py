@@ -43,9 +43,7 @@ class Parlementaire(db.Model):
     url_rc = db.Column(db.Unicode)
     url_off = db.Column(db.Unicode)
 
-    etape_id = db.Column(db.Integer, db.ForeignKey('etapes.id'))
-    etape = db.relationship('Etape', back_populates='parlementaires')
-
+    etape = db.Column(db.Integer)
     actions = db.relationship('Action', back_populates='parlementaire',
                               order_by='Action.date')
 

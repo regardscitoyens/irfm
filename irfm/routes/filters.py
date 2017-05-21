@@ -6,6 +6,8 @@ from flask import url_for
 
 from jinja2 import Markup, escape, evalcontextfilter
 
+from ..models.constants import ETAPES_BY_ORDRE
+
 
 def setup(app):
 
@@ -70,26 +72,20 @@ def setup(app):
 
     @app.template_filter('label_etape')
     def label_etape(etape):
-        if isinstance(etape, dict):
-            data = (etape['description'], etape['couleur'], etape['icone'],
-                    etape['label'])
-        else:
-            data = (etape.description, etape.couleur, etape.icone, etape.label)
+        if isinstance(etape, int):
+            etape = ETAPES_BY_ORDRE[etape]
 
-        return '<span class="label" title="%s" ' \
-            'data-toggle="tooltip" ' \
-            'style="background-color: %s;"><i class="fa fa-%s"></i> ' \
-            '%s</span>' % data
+        return ('<span class="label" title="%(description)s" '
+                'data-toggle="tooltip" style="background-color: %(couleur)s;">'
+                '<i class="fa fa-%(icone)s"></i> %(label)s</span>') % etape
 
     @app.template_filter('label_etape_text')
     def label_etape_text(etape):
-        if isinstance(etape, dict):
-            data = (etape['icone'], etape['label'])
-        else:
-            data = (etape.icone, etape.label)
+        if isinstance(etape, int):
+            etape = ETAPES_BY_ORDRE[etape]
 
-        return '<span data-toggle="tooltip"><i class="fa fa-%s"></i> ' \
-            '%s</span>' % data
+        return ('<span data-toggle="tooltip"><i class="fa fa-%(icone)s"></i> '
+                '%(label)s</span>') % etape
 
     _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 

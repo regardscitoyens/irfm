@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 import requests
 
 from .base import BaseImporter
-from ..models import Etape, Parlementaire, db
+from ..models import Parlementaire, db
 from ..models.constants import ETAPE_NA
 
 
@@ -80,8 +80,7 @@ class AdressesImporter(BaseImporter):
 
     def run(self):
         self.info('Début import adresses')
-        qs = Parlementaire.query.join(Parlementaire.etape) \
-                                .filter(Etape.ordre > ETAPE_NA) \
+        qs = Parlementaire.query.filter(Parlementaire.etape > ETAPE_NA) \
                                 .filter(Parlementaire.adresse is None) \
                                 .order_by(Parlementaire.nom) \
                                 .all()

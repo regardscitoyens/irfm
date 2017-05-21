@@ -8,7 +8,6 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from .importers.adresses import AdressesImporter
-from .importers.etapes import EtapesImporter
 from .importers.nosdeputes import NosDeputesImporter
 
 from .irfm import app
@@ -78,13 +77,6 @@ def generer_demandes():
         print('\n'.join(missed))
     else:
         print('Aucun parlementaire sans adresse :)')
-
-
-@manager.command
-def import_etapes():
-    """Crée ou met à jour la liste des étapes"""
-    app.config.update(SQLALCHEMY_ECHO=False)
-    EtapesImporter(app).run()
 
 
 @manager.command

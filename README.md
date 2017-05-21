@@ -16,7 +16,6 @@ $ pip install -e .
 $ sudo -u postgres psql -c "create user irfm with password 'irfm';"
 $ sudo -u postgres psql -c "create database irfm with owner irfm;"
 $ irfm db upgrade
-$ irfm import_etapes
 $ irfm import_nd
 $ irfm import_adresses
 ```

@@ -4,7 +4,7 @@ import os
 
 from flask import redirect, send_from_directory, url_for
 
-from ..models import Action, Etape, Parlementaire
+from ..models import Action, Parlementaire
 from ..models.constants import ETAPE_ENVOYE
 
 from ..tools.files import generer_demande
@@ -32,9 +32,8 @@ def setup_routes(app):
 
     @app.route('/parlementaire/<id>/preuve-envoi', endpoint='preuve_envoi')
     def preuve_envoi(id):
-        act = Action.query.join(Action.etape) \
-                          .filter(Etape.ordre == ETAPE_ENVOYE,
-                                  Action.parlementaire_id == id) \
+        act = Action.query.filter(Action.etape == ETAPE_ENVOYE) \
+                          .filter(Action.parlementaire_id == id) \
                           .first()
 
         if not act or not act.attachment:

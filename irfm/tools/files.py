@@ -8,7 +8,7 @@ from flask import render_template, request
 from xhtml2pdf import pisa
 
 from .text import slugify
-from ..models import Etape, Parlementaire
+from ..models import Parlementaire
 from ..models.constants import DEBUT_ACTION, DEBUT_RELEVES, ETAPE_NA
 
 
@@ -22,8 +22,7 @@ EXTENSIONS = {
 
 def generer_demandes(app):
     files_root = os.path.join(app.config['DATA_DIR'], 'files')
-    parls = Parlementaire.query.join(Parlementaire.etape) \
-                               .filter(Etape.ordre > ETAPE_NA) \
+    parls = Parlementaire.query.filter(Parlementaire.etape > ETAPE_NA) \
                                .order_by(Parlementaire.nom) \
                                .all()
 

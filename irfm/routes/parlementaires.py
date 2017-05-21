@@ -7,9 +7,9 @@ from flask import (flash, redirect, render_template, request, session, url_for)
 
 from flask_mail import Mail, Message
 
-from sqlalchemy.orm import contains_eager, joinedload
+from sqlalchemy.orm import joinedload
 
-from ..models import Action, Etape, Parlementaire, User, db
+from ..models import Action, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE,
                                 ETAPE_ENVOYE)
@@ -24,13 +24,13 @@ def pris_en_charge(parl, force=False):
     bien à l'étape "à confirmer".
     Renvoie l'action correspondante ou None
     """
-    if session.get('user') and parl.etape.ordre == ETAPE_A_CONFIRMER:
+    if session.get('user') and parl.etape == ETAPE_A_CONFIRMER:
         if force:
             action = [a for a in parl.actions
-                      if a.etape.ordre == ETAPE_A_CONFIRMER]
+                      if a.etape == ETAPE_A_CONFIRMER]
         else:
             action = [a for a in parl.actions
-                      if a.etape.ordre == ETAPE_A_CONFIRMER and
+                      if a.etape == ETAPE_A_CONFIRMER and
                       a.user_id == session.get('user')['id']]
 
         if len(action):
@@ -45,10 +45,8 @@ def setup_routes(app):
 
     @app.route('/parlementaires', endpoint='parlementaires')
     def parlementaires():
-        qs = Parlementaire.query.join(Parlementaire.etape) \
-                                .options(joinedload(Parlementaire.groupe)) \
-                                .options(contains_eager(Parlementaire.etape)) \
-                                .filter(Etape.ordre > 0) \
+        qs = Parlementaire.query.options(joinedload(Parlementaire.groupe)) \
+                                .filter(Parlementaire.etape > 0) \
                                 .all()
 
         return render_template(
@@ -61,7 +59,6 @@ def setup_routes(app):
         parl = Parlementaire.query \
                             .filter_by(id=id) \
                             .options(joinedload(Parlementaire.groupe)) \
-                            .options(joinedload(Parlementaire.etape)) \
                             .options(joinedload(Parlementaire.actions)
                                      .joinedload(Action.user)) \
                             .first()
@@ -78,10 +75,9 @@ def setup_routes(app):
                              .first()
             abonne = parl in user.abonnements
 
-            dept = Parlementaire.query.join(Parlementaire.etape) \
-                                      .filter(Parlementaire.num_deptmt ==
+            dept = Parlementaire.query.filter(Parlementaire.num_deptmt ==
                                               parl.num_deptmt) \
-                                      .filter(Etape.ordre > 0) \
+                                      .filter(Parlementaire.etape > 0) \
                                       .all()
             abonne_dept = all([p in user.abonnements for p in dept])
 
@@ -91,13 +87,6 @@ def setup_routes(app):
             'abonne_dept': abonne_dept,
             'pris_en_charge': bool(pris_en_charge(parl))
         }
-
-        if session.get('user') and session['user']['admin']:
-            etapes = Etape.query.filter(Etape.ordre > parl.etape.ordre) \
-                                .order_by(Etape.ordre) \
-                                .all()
-
-            data['next_etapes'] = etapes
 
         return render_template('parlementaire.html.j2', **data)
 
@@ -116,12 +105,12 @@ def setup_routes(app):
             if not parl:
                 return not_found()
 
-            if parl.etape.ordre != ETAPE_A_ENVOYER:
+            if parl.etape != ETAPE_A_ENVOYER:
                 msg = 'Oups, la situation a changé pour ce parlementaire...'
                 return redirect_back(error=msg,
                                      fallback=url_for('parlementaire', id=id))
 
-            parl.etape = Etape.query.filter_by(ordre=ETAPE_A_CONFIRMER).first()
+            parl.etape = ETAPE_A_CONFIRMER
 
             action = Action(
                 date=datetime.now(),
@@ -158,7 +147,6 @@ def setup_routes(app):
     def annuler(id):
         parl = Parlementaire.query.filter_by(id=id) \
                                   .options(joinedload(Parlementaire.groupe)) \
-                                  .options(joinedload(Parlementaire.etape)) \
                                   .options(joinedload(Parlementaire.actions)) \
                                   .first()
 
@@ -178,7 +166,7 @@ def setup_routes(app):
                 return redirect_back(error=msg,
                                      fallback=url_for('parlementaire', id=id))
 
-        parl.etape = Etape.query.filter_by(ordre=ETAPE_A_ENVOYER).first()
+        parl.etape = ETAPE_A_ENVOYER
         db.session.delete(action)
         db.session.commit()
 
@@ -190,7 +178,6 @@ def setup_routes(app):
     def confirmer(id):
         parl = Parlementaire.query.filter_by(id=id) \
                                   .options(joinedload(Parlementaire.groupe)) \
-                                  .options(joinedload(Parlementaire.etape)) \
                                   .options(joinedload(Parlementaire.actions)) \
                                   .first()
 
@@ -224,7 +211,7 @@ def setup_routes(app):
             return redirect_back(error=str(e),
                                  fallback=url_for('parlementaire', id=id))
 
-        parl.etape = Etape.query.filter_by(ordre=ETAPE_ENVOYE).first()
+        parl.etape = ETAPE_ENVOYE
 
         action = Action(
             date=datetime.now(),
@@ -256,11 +243,10 @@ def setup_routes(app):
                                  fallback=url_for('parlementaire', id=id))
 
         if session.get('user') and session['user']['admin']:
-            ordre = ETAPE_COM_PUBLIE
+            etape = ETAPE_COM_PUBLIE
         else:
-            ordre = ETAPE_COM_A_MODERER
+            etape = ETAPE_COM_A_MODERER
 
-        etape = Etape.query.filter(Etape.ordre == ordre).one()
         action = Action(
             date=datetime.now(),
             user=User.query.filter(User.id == session['user']['id'])

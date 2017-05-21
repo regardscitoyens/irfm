@@ -7,9 +7,10 @@ from flask import (make_response, redirect, render_template, request, session,
                    url_for)
 from sqlalchemy.orm import joinedload
 
-from ..models import Action, Etape, Parlementaire, User, db
+from ..models import Action, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
-                                ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE)
+                                ETAPES_BY_ORDRE, ETAPE_COM_A_MODERER,
+                                ETAPE_COM_PUBLIE)
 
 from ..tools.files import EXTENSIONS, handle_upload
 from ..tools.routing import (not_found, redirect_back, remote_addr,
@@ -23,9 +24,7 @@ def setup_routes(app):
     @require_admin
     def admin_recent():
         # Les 500 actions les plus récentes
-        qs = Action.query.options(joinedload(Action.parlementaire)
-                                  .joinedload(Parlementaire.etape)) \
-                         .options(joinedload(Action.etape)) \
+        qs = Action.query.options(joinedload(Action.parlementaire)) \
                          .options(joinedload(Action.user)) \
                          .order_by(Action.date.desc()) \
                          .limit(500) \
@@ -40,14 +39,12 @@ def setup_routes(app):
     def admin_en_attente():
         # Sous requête des parlementaires à l'étape "à confirmer"
         parls = db.session.query(Parlementaire.id) \
-                          .join(Parlementaire.etape) \
-                          .filter(Etape.ordre == ETAPE_A_CONFIRMER) \
+                          .filter(Parlementaire.etape == ETAPE_A_CONFIRMER) \
                           .subquery()
 
         # Actions "à confirmer" pour ces parlementaires
-        qs = Action.query.join(Action.etape) \
-                         .filter(Action.parlementaire_id.in_(parls)) \
-                         .filter(Etape.ordre == ETAPE_A_CONFIRMER) \
+        qs = Action.query.filter(Action.parlementaire_id.in_(parls)) \
+                         .filter(Action.etape == ETAPE_A_CONFIRMER) \
                          .options(joinedload(Action.user)) \
                          .order_by(Action.date) \
                          .all()
@@ -59,8 +56,7 @@ def setup_routes(app):
     @app.route('/admin/commentaires', endpoint='admin_commentaires')
     @require_admin
     def admin_commentaires():
-        qs = Action.query.join(Action.etape) \
-                         .filter(Etape.ordre == ETAPE_COM_A_MODERER) \
+        qs = Action.query.filter(Action.etape == ETAPE_COM_A_MODERER) \
                          .options(joinedload(Action.parlementaire)) \
                          .options(joinedload(Action.user)) \
                          .order_by(Action.date) \
@@ -80,15 +76,14 @@ def setup_routes(app):
             db.session.flush()
 
             last_action = Action.query \
-                                .join(Action.etape) \
                                 .filter(Action.parlementaire_id == parl_id) \
-                                .order_by(Etape.ordre.desc()) \
+                                .order_by(Action.etape.desc()) \
                                 .first()
 
-            if last_action and last_action.etape.ordre > ETAPE_A_ENVOYER:
+            if last_action and last_action.etape > ETAPE_A_ENVOYER:
                 etape = last_action.etape
             else:
-                etape = Etape.query.filter_by(ordre=ETAPE_A_ENVOYER).first()
+                etape = ETAPE_A_ENVOYER
 
             parl = Parlementaire.query.filter_by(id=parl_id).first()
             parl.etape = etape
@@ -101,15 +96,12 @@ def setup_routes(app):
     @require_admin
     def admin_publish(id):
         action = Action.query \
-                       .join(Action.etape) \
-                       .filter(Etape.ordre == ETAPE_COM_A_MODERER) \
+                       .filter(Action.etape == ETAPE_COM_A_MODERER) \
                        .filter(Action.id == id) \
                        .first()
 
         if action:
-            action.etape = Etape.query \
-                                .filter(Etape.ordre == ETAPE_COM_PUBLIE) \
-                                .one()
+            action.etape = ETAPE_COM_PUBLIE
             db.session.commit()
 
         return redirect_back()
@@ -138,16 +130,20 @@ def setup_routes(app):
         if not parl:
             return not_found()
 
-        etape = Etape.query.filter_by(id=request.form['etape']).first()
-        if not etape:
-            msg = 'Etape inconnue !?'
+        try:
+            etape = int(request.form['etape'])
+        except ValueError:
+            etape = None
+
+        if etape is None or etape not in ETAPES_BY_ORDRE:
+            msg = 'Etape inconnue.'
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id_parl))
 
         try:
             filename = handle_upload(
                 os.path.join(app.config['DATA_DIR'], 'uploads'),
-                'etape-%s-%s' % (etape.ordre, slugify(parl.nom_complet))
+                'etape-%s-%s' % (etape, slugify(parl.nom_complet))
             )
         except Exception as e:
             return redirect_back(error=str(e),

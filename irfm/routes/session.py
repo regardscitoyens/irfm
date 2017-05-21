@@ -4,7 +4,7 @@ from flask import flash, render_template, request, session
 
 from sqlalchemy.orm import joinedload
 
-from ..models import Action, Etape, Parlementaire, User, db
+from ..models import Action, Parlementaire, User, db
 from ..models.constants import ETAPE_ENVOYE
 
 from ..tools.routing import not_found, redirect_back, require_user, url_for
@@ -100,9 +100,8 @@ def setup_routes(app):
         if not user:
             return not_found()
 
-        envois = Action.query.join(Action.etape) \
-                             .filter(Action.user == user) \
-                             .filter(Etape.ordre == ETAPE_ENVOYE) \
+        envois = Action.query.filter(Action.user == user) \
+                             .filter(Action.etape == ETAPE_ENVOYE) \
                              .count()
 
         if request.method == 'POST':
@@ -146,9 +145,8 @@ def setup_routes(app):
     @require_user
     def abo_departement(deptmt, action):
         user = User.query.filter(User.id == session['user']['id']).first()
-        parl = Parlementaire.query.join(Parlementaire.etape) \
-                                  .filter(Parlementaire.num_deptmt == deptmt) \
-                                  .filter(Etape.ordre > 0) \
+        parl = Parlementaire.query.filter(Parlementaire.num_deptmt == deptmt) \
+                                  .filter(Parlementaire.etape > 0) \
                                   .all()
 
         if not user:

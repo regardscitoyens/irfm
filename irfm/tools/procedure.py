@@ -2,18 +2,15 @@
 
 from datetime import datetime, time
 
-from ..models import Action, Etape, Parlementaire, db
+from ..models import Action, Parlementaire, db
 from ..models.constants import DEBUT_ACTION, ETAPE_COURRIEL
 
 
 def fix_procedure(app):
 
     # Ajout étape "email" aux parlementaires qui ne l'ont pas
-    etape_email = Etape.query.filter(Etape.ordre == ETAPE_COURRIEL).one()
-
-    acts = Action.query.join(Action.etape) \
-                       .filter(Parlementaire.id == Action.parlementaire_id) \
-                       .filter(Etape.ordre == ETAPE_COURRIEL) \
+    acts = Action.query.filter(Parlementaire.id == Action.parlementaire_id) \
+                       .filter(Action.etape == ETAPE_COURRIEL) \
                        .exists()
 
     parls = Parlementaire.query.filter(Parlementaire.mails_envoyes == 1) \
@@ -26,7 +23,7 @@ def fix_procedure(app):
 
         act = Action(
             parlementaire=parl,
-            etape=etape_email,
+            etape=ETAPE_COURRIEL,
             date=datetime.combine(DEBUT_ACTION, time(23, 30)),
             nick='!rc',
             email=app.config['ADMIN_EMAIL'],
