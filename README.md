@@ -28,7 +28,6 @@ $ workon irfm
 $ git pull
 $ pip install -e .
 $ irfm db upgrade
-$ irfm import_etapes
 $ irfm import_nd
 $ irfm import_adresses
 $ irfm clear_cache

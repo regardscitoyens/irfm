@@ -13,6 +13,31 @@ from ..models.constants import ETAPE_NA
 from ..tools.files import generer_demande
 
 
+def envoyer_alerte(app, etape, parl, commentaire):
+    mail = Mail(app)
+
+    sender = ('Regards Citoyens', app.config['ADMIN_EMAIL'])
+    subject = 'Transparence IRFM: "%s" pour %s' % (etape['label'],
+                                                   parl.nom_complet)
+
+    messages = []
+    for user in parl.abonnes:
+        body = render_template('courriers/mail_alerte.txt.j2',
+                               user=user,
+                               etape=etape,
+                               parl=parl,
+                               commentaire=commentaire)
+
+        messages.append(Message(subject=subject, body=body, sender=sender,
+                                recipients=[user.email]))
+
+    with mail.connect() as conn:
+        for msg in messages:
+            conn.send(msg)
+
+    return len(messages)
+
+
 def envoyer_emails(app, envoyer):
     files_root = os.path.join(app.config['DATA_DIR'], 'files')
 

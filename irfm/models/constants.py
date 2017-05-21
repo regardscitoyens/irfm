@@ -57,6 +57,7 @@ ETAPES = [
         """,
         'couleur': '#bbbbbb',
         'icone': 'commenting',
+        'alerte': False,
     },
     {
         'ordre': ETAPE_COM_A_MODERER,
@@ -68,6 +69,7 @@ ETAPES = [
         """,
         'couleur': '#bb6666',
         'icone': 'commenting',
+        'alerte': False,
     },
     {
         'ordre': ETAPE_COURRIEL,
@@ -77,6 +79,7 @@ ETAPES = [
         """,
         'couleur': '#66aadd',
         'icone': 'at',
+        'alerte': False,
     },
     {
         'ordre': ETAPE_NA,
@@ -84,6 +87,7 @@ ETAPES = [
         'description': '',
         'couleur': '',
         'icone': '',
+        'alerte': False,
     },
     {
         'ordre': ETAPE_A_ENVOYER,
@@ -94,6 +98,7 @@ ETAPES = [
         """,
         'couleur': '#bbbbbb',
         'icone': 'envelope-open',
+        'alerte': False,
     },
     {
         'ordre': ETAPE_A_CONFIRMER,
@@ -104,6 +109,7 @@ ETAPES = [
         """,
         'couleur': '#aaaaff',
         'icone': 'clock-o',
+        'alerte': False,
     },
     {
         'ordre': ETAPE_ENVOYE,
@@ -113,7 +119,8 @@ ETAPES = [
             envoyée, mais nous n'avons pas encore d'avis de réception.
         """,
         'couleur': '#8888dd',
-        'icone': 'envelope'
+        'icone': 'envelope',
+        'alerte': False,
     },
     {
         'ordre': ETAPE_AR_RECU,
@@ -123,7 +130,8 @@ ETAPES = [
             comptes.
         """,
         'couleur': '#4444bb',
-        'icone': 'check'
+        'icone': 'check',
+        'alerte': False,
     },
     {
         'ordre': ETAPE_REPONSE_POSITIVE,
@@ -133,6 +141,7 @@ ETAPES = [
         """,
         'couleur': '#66bb66',
         'icone': 'heart',
+        'alerte': True,
     },
     {
         'ordre': ETAPE_REPONSE_NEGATIVE,
@@ -144,6 +153,7 @@ ETAPES = [
         """,
         'couleur': '#bb6666',
         'icone': 'thumbs-down',
+        'alerte': True,
     },
 ]
 

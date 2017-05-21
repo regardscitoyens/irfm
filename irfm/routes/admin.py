@@ -3,8 +3,8 @@
 import os
 from datetime import datetime
 
-from flask import (make_response, redirect, render_template, request, session,
-                   url_for)
+from flask import (flash, make_response, redirect, render_template, request,
+                   session, url_for)
 from sqlalchemy.orm import joinedload
 
 from ..models import Action, Parlementaire, User, db
@@ -13,6 +13,7 @@ from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_COM_PUBLIE)
 
 from ..tools.files import EXTENSIONS, handle_upload
+from ..tools.mails import envoyer_alerte
 from ..tools.routing import (not_found, redirect_back, remote_addr,
                              require_admin)
 from ..tools.text import slugify
@@ -149,6 +150,7 @@ def setup_routes(app):
             return redirect_back(error=str(e),
                                  fallback=url_for('parlementaire', id=id_parl))
 
+        etape_data = ETAPES_BY_ORDRE[etape]
         parl.etape = etape
 
         action = Action(
@@ -163,5 +165,10 @@ def setup_routes(app):
 
         db.session.add(action)
         db.session.commit()
+
+        if etape_data['alerte']:
+            cnt = envoyer_alerte(app, etape_data, parl, request.form['suivi'])
+            if cnt:
+                flash('%s e-mails d\'alerte envoyés' % cnt, category='success')
 
         return redirect(url_for('parlementaire', id=id_parl))

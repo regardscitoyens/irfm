@@ -1,0 +1,27 @@
+Bonjour {{ user.nick }},
+
+Vous avez demandé à recevoir des alertes lorsque la situation relative à l'IRFM
+change pour {{ parl.nom_complet }}.
+
+Une nouvelle étape a été atteinte : {{ etape.label }}
+
+{{ commentaire }}
+
+Vous pouvez consulter la page du parlementaire ici :
+<{{ url_for('parlementaire', id=parl.id, _external=True) }}>
+
+Vous pouvez modifier vos préférences concernant les alertes en accédant à la
+page "Abonnements et alertes" (accessible en cliquant sur votre pseudo en haut
+à droite du site). Vous devrez vous connecter avec les identifiants suivants:
+
+  Pseudo: {{ user.nick }}
+  E-mail: {{ user.email }}
+
+À bientôt !
+
+--
+
+Regards Citoyens
+
+Ce message a été envoyé automatiquement.  Si vous pensez l'avoir reçu par
+erreur, merci de nous contacter par retour de mail.
