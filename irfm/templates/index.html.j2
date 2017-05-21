@@ -99,6 +99,8 @@
     $(document).ready(function () {
 
       /* Camembert */
+      var circleRatio = 0.52;
+
       var chart = new Chart($('#pie-canvas'), {
         type: 'pie',
         data: {{ etapes_data|tojson }},
@@ -106,7 +108,10 @@
           legend: {
             display: false
           },
-          responsive: false
+          responsive: false,
+          rotation: Math.PI * (1 - (circleRatio - 0.5)),
+          circumference: 2 * Math.PI * circleRatio,
+          cutoutPercentage: 25
         }
       });
 
