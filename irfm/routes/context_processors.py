@@ -2,7 +2,7 @@
 
 from flask import session, url_for
 
-from ..models import Action
+from ..models import Action, Parlementaire
 from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
                                 ETAPE_A_ENVOYER, ETAPE_COM_A_MODERER,
@@ -61,13 +61,21 @@ def setup(app):
                     'url': url_for('admin_recent'),
                     'label': '<span class="admin">Actions récentes</span>',
                     'endpoint': 'admin_recent"'
-                },
-                {
-                    'url': url_for('admin_en_attente'),
-                    'label': '<span class="admin">À confirmer</span>',
-                    'endpoint': 'admin_en_attente"'
                 }
             ]
+
+            nb_aconfirmer = Parlementaire.query \
+                .filter(Parlementaire.etape == ETAPE_A_CONFIRMER).count()
+
+            if nb_aconfirmer > 0:
+                menu += [
+                    {
+                        'url': url_for('admin_en_attente'),
+                        'label': '<span class="admin">À confirmer (%s)</span>'
+                                 % nb_aconfirmer,
+                        'endpoint': 'admin_en_attente"'
+                    }
+                ]
 
             nb_moderer = Action.query \
                                .filter(Action.etape == ETAPE_COM_A_MODERER) \
