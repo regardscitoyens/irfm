@@ -137,7 +137,7 @@ def setup_routes(app):
             etape = None
 
         if etape is None or etape not in ETAPES_BY_ORDRE:
-            msg = 'Etape inconnue.'
+            msg = 'Étape inconnue.'
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id_parl))
 
