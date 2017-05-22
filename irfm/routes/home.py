@@ -82,3 +82,9 @@ def setup_routes(app):
         return render_template('markdown.html.j2',
                                title='Quel est l\'historique de l\'IRFM ?',
                                file='text/historique.md')
+
+    @app.route('/derives', endpoint='derives')
+    def derives():
+        return render_template('markdown.html.j2',
+                               title='Dérives de l\'IRFM',
+                               file='text/derives.md')

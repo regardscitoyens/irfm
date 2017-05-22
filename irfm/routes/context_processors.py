@@ -52,6 +52,11 @@ def setup(app):
                 'endpoint': 'historique',
             },
             {
+                'url': url_for('derives'),
+                'label': 'Les dérives de l\'IRFM',
+                'endpoint': 'derives',
+            },
+            {
                 'url': url_for('faq'),
                 'label': 'FAQ',
                 'endpoint': 'faq',
