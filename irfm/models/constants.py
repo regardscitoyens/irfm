@@ -52,7 +52,7 @@ ETAPES = [
         'ordre': ETAPE_COM_PUBLIE,
         'label': 'Commentaire',
         'description': """
-            Un utilisateur a interpelé le parlementaire sur la transparence
+            Un citoyen a interpelé le parlementaire sur la transparence
             de son indemnité.
         """,
         'couleur': '#bbbbbb',
@@ -63,8 +63,8 @@ ETAPES = [
         'ordre': ETAPE_COM_A_MODERER,
         'label': 'Commentaire (non publié)',
         'description': """
-            Un utilisateur a interpelé le parlementaire sur la transparence
-            de son indemnité.  Le commentaire doit être modéré avant
+            Un citoyen a interpelé le parlementaire sur la transparence
+            de son indemnité. Le commentaire doit être modéré avant
             publication.
         """,
         'couleur': '#bb6666',
@@ -75,7 +75,8 @@ ETAPES = [
         'ordre': ETAPE_COURRIEL,
         'label': 'Courriel envoyé',
         'description': """
-            La demande a été envoyée par courriel au parlementaire.
+            La demande a été envoyée par Regards Citoyens au parlementaire
+            par courriel.
         """,
         'couleur': '#66aadd',
         'icone': 'at',
@@ -93,8 +94,8 @@ ETAPES = [
         'ordre': ETAPE_A_ENVOYER,
         'label': 'À envoyer',
         'description': """
-            La demande d'accès aux relevés de comptes du parlementaire n'a pas
-            encore été envoyée.
+            Aucun citoyen n'a encore pris en charge l'envoi d'une demande
+            d'accès aux relevés de comptes du parlementaire.
         """,
         'couleur': '#bbbbbb',
         'icone': 'envelope-open',
@@ -104,7 +105,7 @@ ETAPES = [
         'ordre': ETAPE_A_CONFIRMER,
         'label': 'Pris en charge',
         'description': """
-            Un utilisateur a souhaité se charger de l'envoi de la demande, mais
+            Un citoyen a souhaité se charger de l'envoi de la demande, mais
             nous n'avons pas encore confirmation de cet envoi.
         """,
         'couleur': '#aaaaff',
@@ -126,8 +127,8 @@ ETAPES = [
         'ordre': ETAPE_AR_RECU,
         'label': 'AR reçu',
         'description': """
-            Le parlementaire a reçu la demande d'accès à ses relevés de
-            comptes.
+            Le parlementaire a bien reçu la demande d'accès à ses relevés de
+            comptes, nous avons reçu son accusé de réception.
         """,
         'couleur': '#4444bb',
         'icone': 'check',
@@ -137,7 +138,7 @@ ETAPES = [
         'ordre': ETAPE_REPONSE_POSITIVE,
         'label': 'Réponse positive',
         'description': """
-            Le parlementaire nous a transmis les relevés de compte demandés ou
+            Le parlementaire nous a transmis les relevés de compte demandés
             nous a annoncé son intention de le faire.
         """,
         'couleur': '#66bb66',
@@ -150,7 +151,7 @@ ETAPES = [
         'description': """
             Le parlementaire a refusé de nous transmettre ses relevés de
             compte, soit explicitement, soit par voie de presse, soit à
-            l'expiration d'un délai de 2 mois après réception de la demande.
+            l'expiration d'un délai d'un mois après réception de la demande.
         """,
         'couleur': '#bb6666',
         'icone': 'thumbs-down',
