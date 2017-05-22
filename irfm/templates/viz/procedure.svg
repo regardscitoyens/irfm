@@ -651,11 +651,14 @@
          x="647.7417"
         ><tspan
            id="tspan5723-6"
-           y="72.024933"
-           x="647.7417">Cour d'Appel</tspan><tspan
+           y="65.024933"
+           x="647.7417">Cour</tspan><tspan
            id="tspan5754"
-           y="86.087433"
-           x="647.7417">Administrative</tspan></text>
+           y="79.087433"
+           x="647.7417">Administrative</tspan><tspan
+           id="tspan5754"
+           y="93.087433"
+           x="647.7417">d'Appel</tspan></text>
     </g>
     <g class="arrow negative"
        id="rejet_cada">
