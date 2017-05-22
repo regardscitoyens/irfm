@@ -1,14 +1,14 @@
 ##### Pourquoi ne pas envoyer vous-mêmes les demandes aux parlementaires ?
 
-Envoyer 577 lettres recommandées nécessite du temps et des moyens financiers dont notre petite équipe bénévole ne dispose malheureusement pas. Nous pensons que votre implication donnera à cette action une portée supplémentaire, en démontrant l'intérêt des citoyens pour la transparence, et leur capacité à agir en sa faveur.
+Envoyer 577 lettres recommandées nécessite du temps et des moyens financiers dont notre petite équipe entièrement bénévole ne dispose malheureusement pas. De plus, nous pensons que votre implication donnera une portée supplémentaire à cette action, en démontrant l'intérêt des citoyens pour la transparence, et leur capacité à agir en sa faveur.
 
 ##### Je voulais participer, mais quelqu'un a déjà envoyé le courrier au parlementaire de ma circonscription…
 
-Ce n'est pas grave : en France, les parlementaires sont des élus de la Nation et à ce titre vous êtes en droit d’interpeler n'importe lequel d'entre eux.  Vous pouvez donc envoyer le courrier à un autre parlementaire.
+Ce n'est pas grave : en France, les parlementaires sont des élus de la Nation et à ce titre vous êtes en droit d’interpeler n'importe lequel d'entre eux. Vous pouvez donc envoyer le courrier à un autre parlementaire.
 
 ##### Je ne trouve aucun sénateur !
 
-C'est normal, nous avons décidé de commencer l'opération uniquement avec les députés, profitant ainsi du calendrier électoral pour inciter chaque candidat à prendre position sur le sujet de l'IRFM.  Le tour du Sénat viendra ensuite.
+C'est normal, nous avons décidé de commencer l'opération uniquement avec les députés, profitant du calendrier électoral pour inciter chaque candidat à prendre position sur le sujet de l'IRFM. Le tour du Sénat viendra ensuite.
 
 ##### Pourquoi dois-je m'identifier et donner une adresse e-mail ?
 

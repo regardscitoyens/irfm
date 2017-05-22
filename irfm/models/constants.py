@@ -117,7 +117,7 @@ ETAPES = [
         'label': 'Envoyé',
         'description': """
             La demande d'accès aux relevés de comptes du parlementaire a été
-            envoyée, mais nous n'avons pas encore d'avis de réception.
+            envoyée, mais nous n'avons pas encore d'accusé de réception.
         """,
         'couleur': '#8888dd',
         'icone': 'envelope',
