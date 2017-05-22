@@ -37,8 +37,8 @@ def setup(app):
         data = (site, parl.url_off,
                 url_for('static', filename=parl.chambre.lower() + '.png'))
 
-        return ('<a title="Accéder à la page du parlementaire sur le %s" '
-                'data-toggle="tooltip" target="_blank" href="%s">'
+        return ('<a title="Accéder à la page du parlementaire sur le site '
+                ' %s" data-toggle="tooltip" target="_blank" href="%s">'
                 '<img class="chamber-icon" src="%s">'
                 '</a>' % data)
 
