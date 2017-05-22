@@ -132,6 +132,29 @@ th.col-nobreak {
   text-align: center;
 }
 
+#carte-legend {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+#carte-legend-title {
+  flex-basis: 100%;
+  font-weight: bold;
+}
+
+#carte-legend-gradient {
+  border: 1px solid #aaa;
+  height: .7em;
+  flex-basis: 100%;
+
+  background: linear-gradient(to right, #fff, #4444bb);
+}
+
+#carte-legend small {
+}
+
 #carte .land {
   fill: white;
   fill-opacity: 1;
