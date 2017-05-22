@@ -1,14 +1,15 @@
 Bonjour {{ session.user.nick }},
 
 Vous avez indiqué vouloir prendre en charge l'envoi d'une demande de documents
-à {{ parlementaire.nom_complet }}.  Merci beaucoup !
+à {{ parlementaire.nom_complet }}. Merci beaucoup !
 
 Voici la marche à suivre :
 
-1. Envoyez le courrier en recommandé avec avis de réception au parlementaire.
-   Son adresse figure en tête du courrier.  Pensez bien à indiquer l'adresse de
+1. Envoyez le courrier en lettre recommandée avec accusé de réception au
+   parlementaire.
+   Son adresse figure en tête du courrier. Pensez bien à indiquer l'adresse de
    Regards Citoyens, elle aussi sur le courrier, comme expéditeur afin que nous
-   recevions l'accusé de réception.
+   recevions l'avis de réception.
 
    Vous pouvez envoyer le recommandé au format papier depuis un bureau de Poste,
    ou bien en ligne :
@@ -19,12 +20,12 @@ Voici la marche à suivre :
    <{{ url_for('parlementaire', id=parlementaire.id, _external=True) }}>.
 
    N'oubliez pas cette étape pour que nous puissions suivre l'avancement de
-   l'opération !  Vous pourrez si vous le souhaitez joindre une photo ou un
+   l'opération ! Vous pourrez si vous le souhaitez joindre une photo ou un
    scan de la preuve d'envoi.
 
    Lorsque vous confirmez l'envoi au nom de l'association Regards Citoyens,
    vous en devenez automatiquement membre. L'adhésion est gratuite et sans
-   aucune obligation.  Vous pouvez si vous le souhaitez vous abonner à la liste
+   aucune obligation. Vous pouvez si vous le souhaitez vous abonner à la liste
    de discussion des membres de l'association depuis la page de votre profil:
    <{{ url_for('profil', _external=True) }}>.
 
@@ -43,5 +44,5 @@ N'hésitez pas à nous contacter par e-mail en cas de souci.
 
 Regards Citoyens
 
-Ce message a été envoyé automatiquement.  Si vous pensez l'avoir reçu par
+Ce message a été envoyé automatiquement. Si vous pensez l'avoir reçu par
 erreur, merci de nous contacter par retour de mail.

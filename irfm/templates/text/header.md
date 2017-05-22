@@ -1,3 +1,3 @@
 # Transparence IRFM
 
-Aidez-nous à améliorer la transparence sur l'Indemnité Représentative de Frais de Mandat !
+Aidez-nous à obtenir la transparence sur l'Indemnité Représentative de Frais de Mandat !
