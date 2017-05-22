@@ -174,6 +174,10 @@ th.col-nobreak {
   padding-top: 1.15em !important;
 }
 
+#pie-legend a:hover {
+  text-decoration: none !important;
+}
+
 /* Formulaire abonnements */
 
 .abo-form .form-group {

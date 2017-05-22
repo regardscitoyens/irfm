@@ -17,8 +17,7 @@ def envoyer_alerte(app, etape, parl, commentaire):
     mail = Mail(app)
 
     sender = ('Regards Citoyens', app.config['ADMIN_EMAIL'])
-    subject = 'Transparence IRFM: "%s" pour %s' % (etape['label'],
-                                                   parl.nom_complet)
+    subject = 'Transparence IRFM - Alerte pour %s' % parl.nom_complet
 
     messages = []
     for user in parl.abonnes:

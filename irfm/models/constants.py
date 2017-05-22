@@ -137,7 +137,8 @@ ETAPES = [
         'ordre': ETAPE_REPONSE_POSITIVE,
         'label': 'Réponse positive',
         'description': """
-            Le parlementaire nous a transmis les relevés de compte demandés.
+            Le parlementaire nous a transmis les relevés de compte demandés ou
+            nous a annoncé son intention de le faire.
         """,
         'couleur': '#66bb66',
         'icone': 'heart',

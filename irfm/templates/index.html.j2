@@ -46,7 +46,9 @@
         <div id="pie-legend">
           {% for etape in etapes %}
             {% if etape.label in etapes_data.labels %}
-              <p>{{ etape|label_etape }}</p>
+              <p>
+                <a href="{{ url_for('parlementaires') }}?q={{ etape.label }}">{{ etape|label_etape }}</a>
+              </p>
             {% endif %}
           {% endfor %}
         </div>
