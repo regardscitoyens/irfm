@@ -77,6 +77,13 @@
         <b>Avancement par département</b>
       </header>
       <article class="panel-body" id="carte-container">
+        <div id="carte-legend">
+          <div id="carte-legend-title"><small>Taux d'envoi des demandes de documents aux parlementaires</small></div>
+          <div id="carte-legend-gradient">
+          </div>
+          <small>Aucun</small>
+          <small>Tous</small>
+        </div>
         {% include "viz/carte.html.j2" %}
       </article>
     </section>
@@ -122,11 +129,13 @@
       {% for dep in departements %}
         $('.departement{{ dep.num_deptmt }}')
           .attr('data-content',
-            {% for ordre in [ordres.ETAPE_A_ENVOYER, ordres.ETAPE_A_CONFIRMER, ordres.ETAPE_ENVOYE] %}
+            {% for ordre in [ordres.ETAPE_A_ENVOYER, ordres.ETAPE_A_CONFIRMER] %}
               {{ etapes_by_ordre[ordre]|label_etape_text|tojson }} +
               "&nbsp;: {{ dep['nb_etape_%s' % ordre] }} <br>" +
             {% endfor %}
-            ''
+
+            {{ etapes_by_ordre[ordres.ETAPE_ENVOYE]|label_etape_text|tojson }} +
+            "&nbsp;: {{ dep.nb_envoyes }} <br>"
           )
           .click(function() {
             location.href = '{{ url_for('parlementaires') }}?q={{ dep.num_deptmt }}';
