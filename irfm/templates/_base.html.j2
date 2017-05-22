@@ -11,13 +11,27 @@
     {% block subtitle %}Aidez-nous à obtenir la transparence sur l'Indemnité Représentative de Frais de Mandat !{% endblock %}
   {%- endset %}
 
+  {% set page_image -%}
+    http://manet.regardscitoyens.org/?url={{ request.url|urlencode }}&delay=100&width=1024&zoom=0.75&format=jpg&clipRect=0,0,1024,768&t={{ manet_timestamp }}
+  {%- endset %}
+
   <!-- Twitter card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@RegardsCitoyens" />
   <meta name="twitter:title" content="{{ page_title }}" />
-  <meta name="twitter:description" content="Aidez-nous à obtenir la transparence sur l'Indemnité Représentative de Frais de Mandat !" />
-  <meta name="twitter:image" content="http://manet.regardscitoyens.org/?url={{ request.url|urlencode }}&delay=100&width=1024&zoom=0.75&format=jpg&clipRect=0,0,1024,768&t={{ manet_timestamp }}" />
+  <meta name="twitter:description" content="{{ page_subtitle }}" />
+  <meta name="twitter:image" content="{{ page_image }}" />
   <meta name="title" content="{{ page_title }}" />
+
+  <!-- Facebook metas -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ page_title }}" />
+  <meta property="og:site_name" content="Transparence IRFM" />
+  <meta property="og:description" content="{{ page_subtitle }}" />
+  <meta property="og:url" content="{{ request.url }}" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:image" content="{{ page_image }}" />
+  <meta property="og:image:type" content="image/jpeg" />
 
   <title>{{ page_title }}</title>
 
