@@ -38,7 +38,7 @@
               <a data-toggle="tooltip" title="Accéder à la page du parlementaire ({{ chambres[parl.chambre] }})" target="_blank" href="{{ parl.url_off }}">
                 <img class="chamber-icon" src="{{ url_for('static', filename=parl.chambre|lower+'.png') }}">
               </a>
-              <span class="search-vector">{{ parl.nom_complet }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }}</span>
+              <span class="search-vector">{{ parl.nom_complet }} {{ parl.nom_circo }} {{ parl.num_deptmt }} {{ parl.groupe.sigle }} {{ parl.groupe.nom }} {{ parl.etape|label_etape }}</span>
             </td>
             <td data-value="{{ parl.nom }} {{ parl.prenom }}">
               <a href="{{ url_for('parlementaire', id=parl.id) }}">{{ parl.nom_complet }}</a>
@@ -84,6 +84,8 @@
       var clear = $('#search-clear');
 
       clear.hide();
+
+      search.val(decodeURIComponent((location.hash+'').replace(/\+/g, '%20')).substr(1));
 
       function filterRows() {
         if (search.val()) {
