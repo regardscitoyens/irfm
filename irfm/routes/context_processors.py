@@ -17,7 +17,7 @@ def setup(app):
     @app.context_processor
     def inject_timestamp():
         return {
-            'timestamp60': int(datetime.now().timestamp() / 60)
+            'manet_timestamp': int(datetime.now().timestamp() / 3600)
         }
 
     @app.context_processor
