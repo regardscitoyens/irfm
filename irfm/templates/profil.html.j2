@@ -12,14 +12,14 @@
             <input name="abo_irfm" id="abo_irfm" type="checkbox" value="abo_irfm" {% if user.abo_irfm %}checked="checked"{% endif %} />
             <div class="abo-desc">
               <label for="abo_irfm">Newsletter Transparence IRFM</label><br>
-              Recevra un message à chaque avancée importante de l'opération de transparence IRFM (au maximum un message par mois).
+              Recevoir un message à chaque avancée importante de l'opération pour la transparence de l'IRFM (au maximum un message par mois).
             </div>
           </div>
           <div class="form-group">
             <input name="abo_rc" id="abo_rc" type="checkbox" value="abo_rc" {% if user.abo_rc %}checked="checked"{% endif %} />
             <div class="abo-desc">
               <label for="abo_rc">Newsletter Regards Citoyens</label><br>
-              Reçoit un message à chaque billet ou communiqué publié sur le site <a href="https://www.regardscitoyens.org" target="_blank">RegardsCitoyens.org</a> (une fois tous les 1 à 3 mois).
+              Recevoir un message à chaque billet ou communiqué publié sur le site <a href="https://www.regardscitoyens.org" target="_blank">RegardsCitoyens.org</a> (une fois tous les 1 à 3 mois).
             </div>
           </div>
           {% if envois > 0 %}
@@ -27,8 +27,8 @@
               <input name="abo_membres" id="abo_membres" type="checkbox" value="abo_membres" {% if user.abo_membres %}checked="checked"{% endif %} />
               <div class="abo-desc">
                 <label for="abo_membres">Mailing-list Membres</label><br>
-                <b>Vous avez envoyé une demande au nom de l'association, vous êtes donc désormais membre.</b>  L'adhésion est gratuite et sans aucune obligation.<br>
-                Vous pouvez si vous le souhaitez vous abonner à la liste de discussion des membres de l'association.  Elle reçoit les billets et communiqués, les résumés hebdomadaires des discussions IRC, les appels à contributions et compte-rendus de rendez-vous de la part du Conseil d'Administration, et héberge des discussions entre membres (trafic très variable, 1 à 3 messages par semaine hors actualité spécifique).
+                <b>Vous avez envoyé une demande au nom de l'association, vous êtes donc désormais membre.</b> L'adhésion est gratuite et sans aucune obligation.<br>
+                Vous pouvez si vous le souhaitez vous abonner à la liste de discussion des membres de l'association. Elle reçoit les billets et communiqués, les résumés hebdomadaires des discussions IRC, les appels à contributions et compte-rendus de rendez-vous de la part du Conseil d'Administration, et héberge des discussions entre membres (trafic très variable, 1 à 3 messages par semaine hors actualité spécifique).
               </div>
             </div>
           {% endif %}
@@ -50,7 +50,7 @@
             <th colspan="2" data-defaultsort="asc" data-mainsort="1">Parlementaire</th>
             <th class="col-center">Groupe</th>
             <th>Circonscription</th>
-            <th class="col-center">Etape</th>
+            <th class="col-center">Étape</th>
             <th class="col-right">
               <a class="btn btn-sm btn-danger" href="{{ url_for('abo_clear') }}">
                 <i class="fa fa-trash"></i>
