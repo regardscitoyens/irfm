@@ -55,6 +55,10 @@ L'inviolabilité, d'autre part, est décrite de la facon suivante : « *depuis l
 
 En 2016, les dépenses liées à l'IRFM représentaient 38,89 millions d'euros d'après le [Règlement des comptes de l'Assemblée pour l'exercice 2016](http://www2.assemblee-nationale.fr/static/comptes/comptes_2016_rapport_questeurs.pdf#page=57?).
 
+##### Vous demandez de la transparence aux députés, mais vous même êtes vous transparent ?
+
+Nous nous efforçons de nous appliquer à nous même les desirs de transparence que nous adressons aux parlementaires. Ainsi, tous les administrateurs de l'association [déclarent publiquement leurs intérêts](https://www.regardscitoyens.org/nos-declarations-dinterets/). De même le [compte bancaire de l'association est public](https://github.com/regardscitoyens/banque/blob/master/data/history.csv). Enfin, tous les logiciels que nous produisons sont [diffusés en Logiciel Libre](https://github.com/regardscitoyens/) et nous rendons [disponibles en Open Data](http://www.nosdonnees.fr/) les données publiques sur lesquelles nous travaillons.
+
 ##### J'ai un problème et je ne trouve pas la réponse ici…
 
 N'hésitez pas à [nous contacter par e-mail](mailto:{{ config.ADMIN_EMAIL }}) !
