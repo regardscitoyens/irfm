@@ -3,7 +3,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Transparence IRFM</title>
+  {% set page_title -%}
+    {% block title %}Transparence IRFM par Regards Citoyens{% endblock %}
+  {%- endset %}
+
+  {% set page_subtitle -%}
+    {% block subtitle %}Aidez-nous à obtenir la transparence sur l'Indemnité Représentative de Frais de Mandat !{% endblock %}
+  {%- endset %}
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@RegardsCitoyens" />
+  <meta name="twitter:title" content="{{ page_title }}" />
+  <meta name="twitter:description" content="Aidez-nous à obtenir la transparence sur l'Indemnité Représentative de Frais de Mandat !" />
+  <meta name="twitter:image" content="http://manet.regardscitoyens.org/?url={{ request.url|urlencode }}&delay=500&width=1024&zoom=0.75&format=jpg&clipRect=0,0,1024,768&t={{ timestamp60 }}" />
+  <meta name="title" content="{{ page_title }}" />
+
+  <title>{{ page_title }}</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous" />

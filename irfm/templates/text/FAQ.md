@@ -14,7 +14,11 @@ C'est normal, nous avons décidé de commencer l'opération uniquement avec les 
 
 L'identification nous permet de mieux répartir les efforts, en nous assurant que deux contributeurs n'envoient pas un courrier a un même parlementaire.
 
+<<<<<<< HEAD
+Par ailleurs, lorsque vous envoyez un courrier au nom de l'association Regards Citoyens, vous en devenez membre (c'est une obligation juridique : nous ne pouvons [mandater que nos membres pour agir au nom de l'association](https://www.regardscitoyens.org/documents/association/20170514_RegardsCitoyens_PVConseilAdministration_mandat.pdf)).  Si vous le souhaitez, vous pourrez alors vous inscrire à la liste de discussion des membres de l'association.  L'adhésion est *gratuite* et n'implique *aucune obligation* autre que le respect de [nos statuts](https://www.regardscitoyens.org/documents/RegardsCitoyens-Statuts-v2.pdf).  Si vous le souhaitez, vous pourrez y renoncer par la suite en nous contactant.
+=======
 Par ailleurs, lorsque vous envoyez un courrier au nom de l'association Regards Citoyens, vous en devenez membre (c'est une obligation juridique : nous ne pouvons pas mandater toute personne pour agir au nom de l'association). Si vous le souhaitez, vous pourrez alors vous inscrire à la liste de discussion des membres de l'association. L'adhésion est *gratuite* et n'implique *aucune obligation*. Si vous le souhaitez, vous pourrez y renoncer par la suite en nous contactant.
+>>>>>>> b04985ef3b5554176303da9ddadfee310c205467
 
 Conformément à la loi Informatique et Libertés, vous disposez d'un droit d'accès et de rectification sur les données que nous détenons à votre sujet. N'hésitez pas à [nous contacter par e-mail](mailto:{{ config.ADMIN_EMAIL }}) si vous souhaitez exercer ce droit.
 
@@ -49,12 +53,20 @@ Dans sa [fiche pédagogique sur le statut des députés l'Assemblée nationale](
 
 L'irresponsabilité, d'une part, couverte par l'article 26 de la Constitution : « *aucun membre du Parlement ne peut être poursuivi, recherché, arrêté, détenu ou jugé à l'occasion des opinions ou votes émis par lui dans l'exercice de ses fonctions* ». Notre action ne porte ni sur les opinions ni sur les avis émis par les parlementaires dans l'exercice de leurs fonctions, mais sur l'utilisation des moyens alloués aux frais de campagne. Notre demande n'est donc pas couverte par l'irresponsabilité.
 
-L'inviolabilité, d'autre part, est décrite de la facon suivante : « depuis la réforme du 4 août 1995, le régime de l'inviolabilité ne protège plus le député contre l'engagement de poursuites (mise en examen), en revanche, le député ne peut faire l'objet d'une arrestation ou de toute autre mesure privative ou restrictive de liberté (contrôle judiciaire) sans l'autorisation du Bureau, sauf les cas de crime ou délit flagrant, ou de condamnation définitive ». Notre démarche ne porte aucunement sur une mesure privative ou restrictive de liberté. Elle respecte donc également ce principe d'inviolabilité.
+L'inviolabilité, d'autre part, est décrite de la facon suivante : « *depuis la réforme du 4 août 1995, le régime de l'inviolabilité ne protège plus le député contre l'engagement de poursuites (mise en examen), en revanche, le député ne peut faire l'objet d'une arrestation ou de toute autre mesure privative ou restrictive de liberté (contrôle judiciaire) sans l'autorisation du Bureau, sauf les cas de crime ou délit flagrant, ou de condamnation définitive* ». Notre démarche ne porte aucunement sur une mesure privative ou restrictive de liberté. Elle respecte donc également ce principe d'inviolabilité.
 
 ##### Combien représente le budget global annuel alloué pour l'ensemble de l'IRFM ?
 
 En 2016, les dépenses liées à l'IRFM pour l'ensemble des députés représentaient 38,89 millions d'euros d'après le [Règlement des comptes de l'Assemblée pour l'exercice 2016](http://www2.assemblee-nationale.fr/static/comptes/comptes_2016_rapport_questeurs.pdf#page=57).
 
+<<<<<<< HEAD
+##### Vous demandez de la transparence aux députés, mais vous même êtes vous transparent ?
+
+Nous nous efforçons de nous appliquer à nous même les desirs de transparence que nous adressons aux parlementaires. Ainsi, tous les administrateurs de l'association [déclarent publiquement leurs intérêts](https://www.regardscitoyens.org/nos-declarations-dinterets/). De même le [compte bancaire de l'association est public](https://github.com/regardscitoyens/banque/blob/master/data/history.csv). Enfin, tous les logiciels que nous produisons sont [diffusés en Logiciel Libre](https://github.com/regardscitoyens/) et nous rendons [disponibles en Open Data](http://www.nosdonnees.fr/) les données publiques sur lesquelles nous travaillons.
+
+##### J'ai un problème et je ne trouve pas la réponse ici…
+=======
 ##### Je ne trouve pas de réponse à mes questions ici…
+>>>>>>> b04985ef3b5554176303da9ddadfee310c205467
 
 N'hésitez pas à [nous contacter par e-mail](mailto:{{ config.ADMIN_EMAIL }}) !

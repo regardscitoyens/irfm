@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
 from flask import session, url_for
 
 from ..models import Action, Parlementaire
@@ -11,6 +13,12 @@ from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
 
 
 def setup(app):
+
+    @app.context_processor
+    def inject_timestamp():
+        return {
+            'timestamp60': int(datetime.now().timestamp() / 60)
+        }
 
     @app.context_processor
     def inject_user_info():
