@@ -8,7 +8,7 @@ L'usage de l'indemnité est strictement encadré par l'[article 32 bis de l'Inst
 
 #### Quel est le problème avec l'IRFM ?
 
-Sans aucune transparence sur l'utilisation de cet argent public, les parlementaires sont libres de son utilisation. En l'absence de transparence et de contrôle, les restrictions formulées par les règlements du Sénat et de l'Assemblée nationale restent souvent lettre morte. Par le passé, certains l'ont par exemple utilisée pour rembourser l'emprunt utilisé pour acquérir les locaux de leur permanence, locaux ensuite revendus sans que l'argent ne revienne à l'État.
+Sans aucune transparence sur l'utilisation de cet argent public, les parlementaires sont libres de son utilisation. En l'absence de transparence et de contrôle, les restrictions formulées par les règlements du Sénat et de l'Assemblée nationale restent souvent lettre morte. Par le passé, certains l'ont par exemple utilisée pour rembourser l'emprunt utilisé pour acquérir les locaux de leur permanence, locaux ensuite revendus sans que l'argent ne revienne à l'État. Pour en savoir plus, consultez notre [liste des dérives connues de l'IRFM]({{ url_for('derives')}}).
 
 #### Plus de transparence ?
 
