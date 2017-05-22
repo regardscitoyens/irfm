@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from .abonnements import setup_routes as setup_abo
 from .admin import setup_routes as setup_admin
 from .context_processors import setup as setup_cp
 from .files import setup_routes as setup_files
@@ -17,3 +18,4 @@ def setup_routes(app):
     setup_parl(app)
     setup_files(app)
     setup_admin(app)
+    setup_abo(app)

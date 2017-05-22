@@ -1,4 +1,4 @@
-Bonjour {{ user.nick }},
+Bonjour{% if not anon_id %} {{ user.nick }}{% endif %},
 
 Vous avez demandé à recevoir des alertes lorsque la situation relative à la
 transparence de l'IRFM change pour {{ parl.nom_complet }}.
@@ -10,12 +10,22 @@ Une nouvelle étape a été atteinte : {{ etape.label }}
 Vous pouvez consulter la page du parlementaire ici :
 <{{ url_for('parlementaire', id=parl.id, _external=True) }}>
 
+{% if anon_id %}
+Si vous ne souhaitez plus recevoir des alertes pour ce parlementaire, cliquez
+sur le lien suivant :
+<{{ url_for('desabo_anon_parl', id=parl.id, anon_id=anon_id, _external=True) }}>
+
+Si vous ne souhaitez plus recevoir *aucune* alerte de notre part, cliquez sur
+le lien suivant :
+<{{ url_for('desabo_anon_all', anon_id=anon_id, _external=True) }}>
+{% else %}
 Vous pouvez modifier vos préférences concernant les alertes en accédant à la
 page "Abonnements et alertes" (accessible en cliquant sur votre pseudo en haut
 à droite du site). Vous devrez vous connecter avec les identifiants suivants:
 
   Pseudo: {{ user.nick }}
   E-mail: {{ user.email }}
+{% endif %}
 
 À bientôt !
 

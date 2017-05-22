@@ -43,11 +43,6 @@
 
       <article class="panel-body">
         Vous pouvez recevoir une alerte par e-mail lorsque la situation change pour ce parlementaire ou pour tout parlementaire de ce département.
-
-        {% if not session.user %}
-          <br><br>
-          Pour cela, vous devez d'abord <a href="#" class="identify-link">vous identifier</a>.
-        {% endif %}
       </article>
 
       {% if session.user %}
@@ -86,6 +81,39 @@
             </td>
           </tr>
         </table>
+
+      {% else %}
+
+        <article class="panel-body">
+          <form class="form" method="POST" action="{{ url_for('abo_anon') }}">
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label for="email">Adresse e-mail</label>
+              </div>
+              <div class="col-md-8">
+                <input class="form-control" type="email" id="email" name="email">
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-md-4">
+                <label>Concernant</label>
+              </div>
+              <div class="col-md-8">
+                <label>
+                  <input type="radio" name="abonnement" value="parl-{{ parlementaire.id }}" checked="checked"> {{ parlementaire.nom_complet }}
+                </label><br>
+                <label>
+                  <input type="radio" name="abonnement" value="dept-{{ parlementaire.num_deptmt }}"> {{ parlementaire.nom_circo }}
+                </label>
+              </div>
+            </div>
+            <div class="row form-group">
+              <div class="col-md-offset-4 col-md-8">
+                <input class="btn btn-primary" type="submit" value="M'abonner">
+              </div>
+            </div>
+          </form>
+        </article>
 
       {% endif %}
     </section>
