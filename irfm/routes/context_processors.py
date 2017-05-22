@@ -9,7 +9,7 @@ from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
                                 ETAPE_A_ENVOYER, ETAPE_COM_A_MODERER,
                                 ETAPE_COM_PUBLIE, ETAPE_ENVOYE, ETAPE_NA,
-                                ETAPE_REPONSE_POSITIVE)
+                                ETAPE_REPONSE_NEGATIVE, ETAPE_REPONSE_POSITIVE)
 
 
 def setup(app):
@@ -17,7 +17,7 @@ def setup(app):
     @app.context_processor
     def inject_timestamp():
         return {
-            'timestamp60': int(datetime.now().timestamp() / 60)
+            'manet_timestamp': int(datetime.now().timestamp() / 3600)
         }
 
     @app.context_processor
@@ -119,7 +119,8 @@ def setup(app):
                 'ETAPE_AR_RECU': ETAPE_AR_RECU,
                 'ETAPE_COM_A_MODERER': ETAPE_COM_A_MODERER,
                 'ETAPE_COM_PUBLIE': ETAPE_COM_PUBLIE,
-                'ETAPE_REPONSE_POSITIVE': ETAPE_REPONSE_POSITIVE
+                'ETAPE_REPONSE_POSITIVE': ETAPE_REPONSE_POSITIVE,
+                'ETAPE_REPONSE_NEGATIVE': ETAPE_REPONSE_NEGATIVE
             },
             'chambres': CHAMBRES
         }

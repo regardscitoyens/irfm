@@ -315,6 +315,49 @@
             </td>
           </tr>
 
+        {% elif parlementaire.etape == ordres.ETAPE_AR_RECU %}
+
+          <!-- AR RECU -->
+
+          <tr>
+            <td class="label-next">
+              <span class="label" title="Nous avons reçu l'avis de réception"
+                    data-toggle="tooltip" style="background-color: #4444bb;">
+                <i class="fa fa-check"></i>
+                AR Reçu
+              </span>
+            </td>
+            <td colspan="4">
+
+              {% filter markdown -%}
+                {% include "text/etape_ar_recu.md" %}
+              {% endfilter %}
+
+            </td>
+          </tr>
+
+        {% elif parlementaire.etape == ordres.ETAPE_REPONSE_NEGATIVE %}
+
+          <!-- REPONSE NEGATIVE -->
+
+          <tr>
+            <td class="label-next">
+              <span class="label" title="Le parlementaire nous a refusé l'accès aux documents"
+                    data-toggle="tooltip" style="background-color: #bb6666;">
+                <i class="fa fa-thumbs-down"></i>
+                Réponse négative
+              </span>
+            </td>
+            <td colspan="4">
+
+              {% filter markdown -%}
+                {% include "text/etape_rep_negative.md" %}
+              {% endfilter %}
+
+            </td>
+          </tr>
+
+
         {% endif %}
 
         {% if parlementaire.etape != ordres.ETAPE_REPONSE_POSITIVE or is_admin %}
@@ -393,14 +436,16 @@
            <tr>
             <td class="label-next">
               <span class="label" style="background-color: #66bb66;">
-                <i class="fa fa-smile-o"></i>
+                <i class="fa fa-heart"></i>
                 Réponse positive
               </span>
             </td>
             <td colspan="4">
-              <h4>Le parlementaire a répondu favorablement à notre demande.</h4>
 
-              Il n'y a plus rien à faire !
+              {% filter markdown -%}
+                {% include "text/etape_rep_positive.md" %}
+              {% endfilter %}
+
             </td>
           </tr>
 
