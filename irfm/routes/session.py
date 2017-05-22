@@ -4,10 +4,10 @@ from flask import flash, render_template, request, session
 
 from sqlalchemy.orm import joinedload
 
-from ..models import Action, Parlementaire, User, db
+from ..models import Action, User, db
 from ..models.constants import ETAPE_ENVOYE
 
-from ..tools.routing import not_found, redirect_back, require_user, url_for
+from ..tools.routing import not_found, redirect_back, require_user
 from ..tools.text import check_email, check_password, sanitize_hard
 
 
@@ -120,52 +120,3 @@ def setup_routes(app):
             return redirect_back()
 
         return render_template('profil.html.j2', user=user, envois=envois)
-
-    @app.route('/abonnement/parlementaire/<id>/<action>',
-               endpoint='abo_parlementaire')
-    @require_user
-    def abo_parlementaire(id, action):
-        user = User.query.filter(User.id == session['user']['id']).first()
-        parl = Parlementaire.query.filter(Parlementaire.id == id).first()
-
-        if not user or not parl:
-            return not_found()
-
-        if action == 'on':
-            user.abonnements.append(parl)
-        else:
-            user.abonnements.remove(parl)
-
-        db.session.commit()
-
-        return redirect_back(fallback=url_for('parlementaire', id=id))
-
-    @app.route('/abonnement/departement/<deptmt>/<action>',
-               endpoint='abo_departement')
-    @require_user
-    def abo_departement(deptmt, action):
-        user = User.query.filter(User.id == session['user']['id']).first()
-        parl = Parlementaire.query.filter(Parlementaire.num_deptmt == deptmt) \
-                                  .filter(Parlementaire.etape > 0) \
-                                  .all()
-
-        if not user:
-            return not_found()
-
-        if action == 'on':
-            [user.abonnements.append(p) for p in parl]
-        else:
-            [user.abonnements.remove(p) for p in parl]
-
-        db.session.commit()
-
-        return redirect_back(fallback=url_for('parlementaire', id=id))
-
-    @app.route('/abonnement/clear', endpoint='abo_clear')
-    @require_user
-    def abo_clear():
-        user = User.query.filter(User.id == session['user']['id']).first()
-        user.abonnements.clear()
-        db.session.commit()
-
-        return redirect_back()

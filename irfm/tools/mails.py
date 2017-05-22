@@ -21,8 +21,10 @@ def envoyer_alerte(app, etape, parl, commentaire):
 
     messages = []
     for user in parl.abonnes:
+        anon_id = user.nick[8:] if user.nick.startswith('anonyme!') else None
         body = render_template('courriers/mail_alerte.txt.j2',
                                user=user,
+                               anon_id=anon_id,
                                etape=etape,
                                parl=parl,
                                commentaire=commentaire)
