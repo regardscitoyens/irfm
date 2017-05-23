@@ -48,7 +48,7 @@ def setup(app):
             },
             {
                 'url': url_for('historique'),
-                'label': 'Historique de l\'IRFM',
+                'label': 'Qu\'est-ce que l\'IRFM ?',
                 'endpoint': 'historique',
             },
             {
