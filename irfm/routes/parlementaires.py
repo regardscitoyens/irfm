@@ -52,6 +52,7 @@ def setup_routes(app):
                             .first()
         if not parl:
             parl = Parlementaire.query \
+                                .filter(Parlementaire.etape > ETAPE_NA) \
                                 .order_by(func.random()) \
                                 .first()
 
