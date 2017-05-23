@@ -230,7 +230,7 @@
               {% else %}
 
               <div class="well">
-                <form action={{ url_for('envoi', id=parlementaire.id) }}>
+                <form method="POST" action={{ url_for('login', id=parlementaire.id) }}>
                   <div class="form-group row">
                     <label for="envoiNick" class="col-sm-3 col-form-label">Votre pseudo</label>
                     <div class="col-sm-9">
