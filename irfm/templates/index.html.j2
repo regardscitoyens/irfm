@@ -2,6 +2,21 @@
 
 {% block content %}
   <div class="col-md-8">
+    <div class="well lead">
+        <p>Nous souhaitons demander à chaque parlementaire de nous fournir les éléments permettant aux citoyens de contrôler l'utilisation de leur indemnité :</p><ul><li>les relevés bancaires (sur les 6 derniers mois)</li><li>la dernière déclaration attestant sur l'honneur d'utilisation conforme de l'IRFM<br><small>(qu'il doit transmettre chaque année au Bureau de l'Assemblée nationale).</small></li></ul>
+    </div>
+
+    <section class="panel panel-primary">
+      <header class="panel-heading">
+        <b>Comment nous aider ?</b>
+      </header>
+      <article class="panel-body">
+        {% filter markdown -%}
+          {% include "text/howto_help.md" %}
+        {% endfilter %}
+      </article>
+    </section>
+
     <section class="panel panel-default">
       <header class="panel-heading">
         <b>Présentation de l'opération</b>
@@ -9,17 +24,6 @@
       <article class="panel-body">
         {% filter markdown -%}
           {% include "text/presentation.md" %}
-        {% endfilter %}
-      </article>
-    </section>
-
-    <section class="panel panel-default">
-      <header class="panel-heading">
-        <b>Comment nous aider ?</b>
-      </header>
-      <article class="panel-body">
-        {% filter markdown -%}
-          {% include "text/howto_help.md" %}
         {% endfilter %}
       </article>
     </section>
