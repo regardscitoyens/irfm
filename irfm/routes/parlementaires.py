@@ -8,6 +8,7 @@ from flask import (flash, redirect, render_template, request, session, url_for)
 from flask_mail import Mail, Message
 
 from sqlalchemy.orm import joinedload
+from sqlalchemy.sql.expression import case, func
 
 from ..models import Action, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
@@ -42,6 +43,19 @@ def pris_en_charge(parl, force=False):
 def setup_routes(app):
     mail = Mail(app)
     files_root = os.path.join(app.config['DATA_DIR'], 'files')
+
+    @app.route('/hasard', endpoint='hasard')
+    def hasard():
+        parl = Parlementaire.query \
+                            .filter(Parlementaire.etape == ETAPE_A_ENVOYER) \
+                            .order_by(func.random()) \
+                            .first()
+        if not parl:
+            parl = Parlementaire.query \
+                                .order_by(func.random()) \
+                                .first()
+
+        return redirect(url_for('parlementaire', id=parl.id))
 
     @app.route('/parlementaires', endpoint='parlementaires')
     def parlementaires():
