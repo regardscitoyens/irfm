@@ -152,7 +152,8 @@
             <td>{{ act.date.strftime("%c") }}</td>
             <td>
               {% if act.suivi and act.etape == ordres.ETAPE_ENVOYE %}
-                Suivi&nbsp;: <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ act.suivi }}" target="_blank">{{ act.suivi }}</a>
+                Suivi&nbsp;: <a href="http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={{ act.suivi }}" target="_blank">{{ act.suivi }}</a><br>
+                <small>Attention, le suivi peut ne pas fonctionner avant 24 heures.</small>
               {% elif act.suivi %}
                 {{ act.suivi|e }}
               {% endif %}
