@@ -29,6 +29,10 @@
   text-decoration: none;
 }
 
+.lead {
+  font-size: 16px;
+}
+
 /* Composants génériques */
 
 .chamber-icon {
