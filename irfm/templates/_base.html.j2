@@ -46,7 +46,7 @@
   <header class="jumbotron">
     <div class="container-fluid">
       <div class="header-container">
-        <img class="header-logo" src="{{ url_for('static', filename='rc-big.png') }}">
+        <a href="{{ url_for('home') }}"><img class="header-logo" src="{{ url_for('static', filename='rc-big.png') }}"></a>
         <div class="header-text">
           {% filter markdown -%}
             {% include "text/header.md" %}
