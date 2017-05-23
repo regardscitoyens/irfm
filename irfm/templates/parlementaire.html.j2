@@ -270,10 +270,10 @@
 
           <tr>
             <td class="label-next">
-              <span class="label" title="Saisir le numéro de suivi de la lettre recommandée"
+              <span class="label" title="Envoyer le courrier au parlementaire"
                     data-toggle="tooltip" style="background-color: #8888dd;">
-                <i class="fa fa-envelope"></i>
-                Confirmer l'envoi
+                <i class="fa fa-envelope-o"></i>
+                Envoyer le courrier
               </span>
             </td>
             <td colspan="4">
@@ -290,6 +290,32 @@
                     Télécharger le courrier au format PDF
                   </a>
                 </div>
+
+              {% else %}
+
+                {% filter markdown -%}
+                  {% include "text/etape_confirmer_other.md" %}
+                {% endfilter %}
+
+              {% endif %}
+
+            </td>
+          </tr>
+
+          {% if pris_en_charge %}
+            <tr>
+              <td class="label-next">
+                <span class="label" title="Saisir le numéro de suivi de la lettre recommandée"
+                      data-toggle="tooltip" style="background-color: #8888dd;">
+                  <i class="fa fa-envelope"></i>
+                  Confirmer l'envoi
+                </span>
+              </td>
+              <td colspan="4">
+
+                {% filter markdown -%}
+                  {% include "text/etape_confirmer_form.md" %}
+                {% endfilter %}
 
                 <div class="well">
                   <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
@@ -319,16 +345,9 @@
                   </form>
                 </div>
 
-              {% else %}
-
-                {% filter markdown -%}
-                  {% include "text/etape_confirmer_other.md" %}
-                {% endfilter %}
-
-              {% endif %}
-
-            </td>
-          </tr>
+              </td>
+            </tr>
+          {% endif %}
 
         {% elif parlementaire.etape == ordres.ETAPE_ENVOYE %}
 
