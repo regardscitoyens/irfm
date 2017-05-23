@@ -84,7 +84,8 @@ def setup_routes(app):
         }
 
         if request.form.get('prendre_en_charge'):
-            redirect(url_for('envoi', id=request.form['prendre_en_charge']))
+            return redirect(url_for('envoi',
+                                    id=request.form['prendre_en_charge']))
 
         return redirect_back()
 
