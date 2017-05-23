@@ -2,7 +2,7 @@ L'Indemnité Représentative de Frais de Mandat (IRFM) est une indemnité versé
 
 D'objectif comparable au remboursement de frais professionnels dans le monde de l'entreprise, elle vise à couvrir les « diverses dépenses liées à l'exercice de leur mandat qui ne sont pas directement prises en charge ou remboursées par l'Assemblée ». Cette indemnité évite aux parlementaires de devoir établir des notes de frais. En général cette indemnité sert à payer le loyer d'une permanence ou d'un bureau, l'essence nécessaire pour parcourir sa circonscription, des gerbes de fleurs pour les cérémonies officielles, des coupes pour les tournois sportifs, un site internet, etc.
 
-L'usage de l'indemnité est strictement encadré par l'[article 32 bis de l'Instruction Générale](http://www.assemblee-nationale.fr/connaissance/instruction.asp#igb_32bis) du Bureau de l'Assemblée nationale. Elle est versée sur un compte bancaire dédié.
+L'usage de l'indemnité est strictement encadré par l'[article 32 bis de l'Instruction Générale](http://www.assemblee-nationale.fr/connaissance/instruction.asp#igb_32bis) du Bureau de l'Assemblée nationale. Elle est versée sur un compte bancaire dédié. Les parlementaires sont censés restituer les sommes non utilisées en fin de mandat.
 
 #### Historique de l'IRFM
 
