@@ -159,7 +159,9 @@
             </td>
             <td class="col-right col-nobreak">
               {% if act.etape == ordres.ETAPE_A_CONFIRMER %}
-                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">Voir le courrier</a>
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">
+                  <i class="fa fa-download"></i> Télécharger le courrier (PDF)
+                </a>
               {% elif act.etape == ordres.ETAPE_ENVOYE and act.attachment %}
                 <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('preuve_envoi', id=parlementaire.id) }}">Voir la preuve d'envoi</a>
               {% elif act.etape == ordres.ETAPE_COM_A_MODERER and is_admin %}
@@ -221,7 +223,7 @@
                     Je prends en charge l'envoi !
                   </a>
 
-                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}">
+                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}" target="_blank">
                     <i class="fa fa-download"></i>
                     Télécharger le courrier au format PDF
                   </a>
@@ -230,28 +232,34 @@
               {% else %}
 
               <div class="well">
-                <form method="POST" action={{ url_for('login', id=parlementaire.id) }}>
+                <form method="POST" action="{{ url_for('login') }}">
                   <div class="form-group row">
                     <label for="envoiNick" class="col-sm-3 col-form-label">Votre pseudo</label>
                     <div class="col-sm-9">
-                      <input type="text" name="nick" class="form-control" id="envoiNick" placeholder="un nickname">
+                      <input type="text" name="nick" class="form-control" id="envoiNick" placeholder="Un pseudonyme">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="envoiEmail" class="col-sm-3 col-form-label">Email address</label>
+                    <label for="envoiEmail" class="col-sm-3 col-form-label">Votre adresse e-mail</label>
                     <div class="col-sm-9">
-                      <input type="email" class="form-control" id="envoiEmail" aria-describedby="emailHelp" placeholder="un email">
+                      <input type="email" name="email" class="form-control" id="envoiEmail" aria-describedby="emailHelp" placeholder="Une adresse e-mail">
                       <small id="emailHelp" class="form-text text-muted">Votre email ne sera utilisé que pour vous identifier et vous envoyer la procédure de prise en charge </small>
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-offset-3 col-sm-9">
+                      <input type="hidden" name="prendre_en_charge" value="{{ parlementaire.id }}">
                       <button type="submit" class="btn btn-primary"><i class="fa fa-thumbs-up"></i>
                       Je prends en charge l'envoi !</button>
+
+                      <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}" target="_blank">
+                        <i class="fa fa-download"></i>
+                        Télécharger le courrier au format PDF
+                      </a>
                     </div>
                   </div>
                 </form>
-            </div>
+              </div>
             {% endif %}
             </td>
           </tr>
@@ -262,10 +270,10 @@
 
           <tr>
             <td class="label-next">
-              <span class="label" title="Saisir le numéro de suivi de la lettre recommandée"
+              <span class="label" title="Envoyer le courrier au parlementaire"
                     data-toggle="tooltip" style="background-color: #8888dd;">
-                <i class="fa fa-envelope"></i>
-                Confirmer l'envoi
+                <i class="fa fa-envelope-o"></i>
+                Envoyer le courrier
               </span>
             </td>
             <td colspan="4">
@@ -276,31 +284,12 @@
                   {% include "text/etape_confirmer.md" %}
                 {% endfilter %}
 
-                <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
-                  <div class="form-group">
-                    <div class="col-md-2">
-                      <label for="suivi">Numéro de suivi</label>
-                    </div>
-                    <div class="col-md-10">
-                      <input name="suivi" type="text" placeholder="Ex: 1X12345678901" maxlength="13"> <b>*</b>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-md-2">
-                      <label for="file">Preuve d'envoi</label>
-                    </div>
-                    <div class="col-md-10">
-                      <input name="file" type="file" title="Choisissez un fichier...">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                      <br>
-                      <input class="btn btn-primary" type="submit" value="Confirmer !">
-                      <a href="{{ url_for('annuler', id=parlementaire.id) }}" class="btn btn-danger">Annuler la prise en charge</a>
-                    </div>
-                  </div>
-                </form>
+                <div class="centered-buttons">
+                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}" target="_blank">
+                    <i class="fa fa-download"></i>
+                    Télécharger le courrier au format PDF
+                  </a>
+                </div>
 
               {% else %}
 
@@ -312,6 +301,53 @@
 
             </td>
           </tr>
+
+          {% if pris_en_charge %}
+            <tr>
+              <td class="label-next">
+                <span class="label" title="Saisir le numéro de suivi de la lettre recommandée"
+                      data-toggle="tooltip" style="background-color: #8888dd;">
+                  <i class="fa fa-envelope"></i>
+                  Confirmer l'envoi
+                </span>
+              </td>
+              <td colspan="4">
+
+                {% filter markdown -%}
+                  {% include "text/etape_confirmer_form.md" %}
+                {% endfilter %}
+
+                <div class="well">
+                  <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
+                    <div class="form-group row">
+                      <div class="col-md-2">
+                        <label for="suivi">Numéro de suivi</label>
+                      </div>
+                      <div class="col-md-10">
+                        <input name="suivi" type="text" placeholder="Ex: 1X12345678901" maxlength="13"> <b>*</b>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-2">
+                        <label for="file">Preuve d'envoi</label>
+                      </div>
+                      <div class="col-md-10">
+                        <input name="file" type="file" title="Choisissez un fichier...">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="col-md-offset-2 col-md-10">
+                        <br>
+                        <input class="btn btn-primary" type="submit" value="Confirmer !">
+                        <a href="{{ url_for('annuler', id=parlementaire.id) }}" class="btn btn-danger">Annuler la prise en charge</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </td>
+            </tr>
+          {% endif %}
 
         {% elif parlementaire.etape == ordres.ETAPE_ENVOYE %}
 

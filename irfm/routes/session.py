@@ -83,7 +83,7 @@ def setup_routes(app):
             'admin': False
         }
 
-        if request.form.get('prendre_en_charge'):
+        if 'prendre_en_charge' in request.form:
             return redirect(url_for('envoi',
                                     id=request.form['prendre_en_charge']))
 

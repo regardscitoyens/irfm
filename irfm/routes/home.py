@@ -80,7 +80,7 @@ def setup_routes(app):
     @app.route('/historique', endpoint='historique')
     def historique():
         return render_template('markdown.html.j2',
-                               title='Quel est l\'historique de l\'IRFM ?',
+                               title='Qu\'est-ce que l\'IRFM ?',
                                file='text/historique.md')
 
     @app.route('/derives', endpoint='derives')

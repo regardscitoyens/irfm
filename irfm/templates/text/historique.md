@@ -1,3 +1,11 @@
+L'Indemnité Représentative de Frais de Mandat (IRFM) est une indemnité versée chaque mois à tous les parlementaires. Son montant forfaitaire, indexé sur le point d'indice des fonctionnaires, s'élève en 2017 à 5 372,80 € nets par mois pour chaque député, soit près de 39 M€ en 2016 pour l'ensemble des députés.
+
+D'objectif comparable au remboursement de frais professionnels dans le monde de l'entreprise, elle vise à couvrir les « diverses dépenses liées à l'exercice de leur mandat qui ne sont pas directement prises en charge ou remboursées par l'Assemblée ». Cette indemnité évite aux parlementaires de devoir établir des notes de frais. En général cette indemnité sert à payer le loyer d'une permanence ou d'un bureau, l'essence nécessaire pour parcourir sa circonscription, des gerbes de fleurs pour les cérémonies officielles, des coupes pour les tournois sportifs, un site internet, etc.
+
+L'usage de l'indemnité est strictement encadré par l'[article 32 bis de l'Instruction Générale](http://www.assemblee-nationale.fr/connaissance/instruction.asp#igb_32bis) du Bureau de l'Assemblée nationale. Elle est versée sur un compte bancaire dédié. Les parlementaires sont censés restituer les sommes non utilisées en fin de mandat.
+
+#### Historique de l'IRFM
+
 L'[ordonnance n° 58-1210 du **13 décembre 1958**](https://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000000705195&categorieLien=cid) portant loi organique relative à l'indemnité des membres du Parlement définit deux indemnités : l'indemnité parlementaire et l'indemnité de fonction.
 
 
