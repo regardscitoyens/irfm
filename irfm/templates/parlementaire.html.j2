@@ -284,6 +284,13 @@
                   {% include "text/etape_confirmer.md" %}
                 {% endfilter %}
 
+                <div class="centered-buttons">
+                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}" target="_blank">
+                    <i class="fa fa-download"></i>
+                    Télécharger le courrier au format PDF
+                  </a>
+                </div>
+
                 <form method="POST" action="{{ url_for('confirmer', id=parlementaire.id) }}" enctype="multipart/form-data">
                   <div class="form-group">
                     <div class="col-md-2">
