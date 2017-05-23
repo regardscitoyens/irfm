@@ -1,5 +1,3 @@
-##### Les dérives de l'IRFM
-
 Depuis quelques années, la presse s'est fait l'écho d'abus quant à la gestion de l'IRFM par certains députés. Voici la liste des cas dont nous avons pu avoir connaissance :
 
  - de janvier à juin 2012, **Jérôme Cahuzac** (ancien député PS) a réglé ses abonnements à Canal Satellite et Canal Plus ainsi que 8 000 € de dépenses dans un magasin de piscine *(source : [Médiapart](https://www.mediapart.fr/journal/france/170913/cahuzac-utilisait-son-compte-de-depute-pour-des-depenses-personnelles?onglet=full))*
