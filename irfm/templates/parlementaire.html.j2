@@ -229,11 +229,30 @@
 
               {% else %}
 
-                <div class="alert alert-warning">
-                    Pour nous permettre d'assurer le suivi de l'envoi des courriers aux parlementaires, vous devez <a href="#" class="identify-link">vous identifier</a> pour pouvoir le prendre en charge.
-                </div>
-
-              {% endif %}
+              <div class="well">
+                <form action={{ url_for('envoi', id=parlementaire.id) }}>
+                  <div class="form-group row">
+                    <label for="envoiNick" class="col-sm-3 col-form-label">Votre pseudo</label>
+                    <div class="col-sm-9">
+                      <input type="text" name="nick" class="form-control" id="envoiNick" placeholder="un nickname">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="envoiEmail" class="col-sm-3 col-form-label">Email address</label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" id="envoiEmail" aria-describedby="emailHelp" placeholder="un email">
+                      <small id="emailHelp" class="form-text text-muted">Votre email ne sera utilisé que pour vous identifier et vous envoyer la procédure de prise en charge </small>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-offset-3 col-sm-9">
+                      <button type="submit" class="btn btn-primary"><i class="fa fa-thumbs-up"></i>
+                      Je prends en charge l'envoi !</button>
+                    </div>
+                  </div>
+                </form>
+            </div>
+            {% endif %}
             </td>
           </tr>
 
@@ -360,7 +379,9 @@
 
         {% endif %}
 
-        {% if parlementaire.etape != ordres.ETAPE_REPONSE_POSITIVE or is_admin %}
+        {% if ( parlementaire.etape != ordres.ETAPE_REPONSE_POSITIVE
+                and parlementaire.etape != ordres.ETAPE_A_ENVOYER )
+              or is_admin %}
 
           <!-- Interpeler -->
 
@@ -431,7 +452,8 @@
             </td>
           </tr>
 
-        {% else %}
+        {% endif %}
+        {% if parlementaire.etape == ordres.ETAPE_REPONSE_POSITIVE %}
 
            <tr>
             <td class="label-next">
