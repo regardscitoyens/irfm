@@ -236,7 +236,8 @@
                   <div class="form-group row">
                     <label for="envoiNick" class="col-sm-3 col-form-label">Votre pseudo</label>
                     <div class="col-sm-9">
-                      <input type="text" name="nick" class="form-control" id="envoiNick" placeholder="Un pseudonyme">
+                      <input type="text" name="nick" class="form-control" id="envoiNick" aria-describedby="nickHelp" placeholder="Un pseudonyme">
+                      <small id="nickHelp" class="form-text text-muted">Votre surnom sera rendu public pour indiquer que vous avez pris en charge l'envoi d'un courrier
                     </div>
                   </div>
                   <div class="form-group row">
@@ -245,6 +246,9 @@
                       <input type="email" name="email" class="form-control" id="envoiEmail" aria-describedby="emailHelp" placeholder="Une adresse e-mail">
                       <small id="emailHelp" class="form-text text-muted">Votre email ne sera utilisé que pour vous identifier et vous envoyer la procédure de prise en charge </small>
                     </div>
+                  </div>
+                  <div class="row">
+                    <p class="col-sm-offset-3 col-sm-9 alert alert-info">En vous inscrivant, vous déclarerez vouloir envoyer pour le compte de Regards Citoyens une lettre en accusé reception. Le cout peut varier de <a href="http://www.laposte.fr/particulier/outils/trouver-un-bureau-de-poste">5,10 € (en se rendant à la poste)</a> à <a href="https://boutique.laposte.fr/envoi-de-courrier-en-ligne/lettre-recommandee-en-ligne?">6,98 € (en passant par le site de La Poste)</a></p>
                   </div>
                   <div class="form-group row">
                     <div class="col-sm-offset-3 col-sm-9">
