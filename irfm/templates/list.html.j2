@@ -13,7 +13,7 @@
     <article class="panel-body">
       <div class="input-group">
         <span class="input-group-addon" id="search-header">Filtrer les parlementaires</span>
-        <input type="search" autocomplete="off" class="form-control" id="search" placeholder="Nom, groupe, circonscription..." value="{{ request.args.q|e }}" aria-describedby="search-header">
+        <input type="search" autocomplete="off" autofocus="autofocus" class="form-control" id="search" placeholder="Nom, groupe, circonscription..." value="{{ request.args.q|e }}" aria-describedby="search-header">
         <span class="input-group-btn">
           <button class="btn btn-primary" type="button" id="search-clear" style="display: none;">Effacer le filtre</button>
         </span>
