@@ -73,10 +73,10 @@ ETAPES = [
     },
     {
         'ordre': ETAPE_COURRIEL,
-        'label': 'Courriel envoyé',
+        'label': 'E-mail envoyé',
         'description': """
             La demande a été envoyée par Regards Citoyens au parlementaire
-            par courriel.
+            par e-mail.
         """,
         'couleur': '#66aadd',
         'icone': 'at',
