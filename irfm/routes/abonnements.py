@@ -60,7 +60,7 @@ def setup_routes(app):
 
         return redirect_back(fallback=url_for('parlementaire', id=id))
 
-    @app.route('/abonnement/clear')
+    @app.route('/abonnement/clear', endpoint='abo_clear')
     @require_user
     def abo_clear():
         user = User.query.filter(User.id == session['user']['id']).first()
