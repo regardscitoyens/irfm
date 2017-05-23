@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import flash, render_template, request, session
+from flask import flash, redirect, render_template, request, session, url_for
 
 from sqlalchemy.orm import joinedload
 
@@ -82,6 +82,9 @@ def setup_routes(app):
             'email': email,
             'admin': False
         }
+
+        if request.form.get('prendre_en_charge'):
+            redirect(url_for('envoi', id=request.form['prendre_en_charge']))
 
         return redirect_back()
 
