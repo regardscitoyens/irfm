@@ -69,6 +69,15 @@ img.rc-small {
   font-weight: bold;
 }
 
+.tuto-image {
+  text-align: center;
+  margin: 1em;
+}
+
+.tuto-image img {
+  max-width: 100%;
+}
+
 .anon {
   color: #ccc;
 }

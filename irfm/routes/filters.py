@@ -116,3 +116,13 @@ def setup(app):
         if eval_ctx.autoescape:
             result = Markup(result)
         return result
+
+    @app.template_filter('image_tuto')
+    def image_tuto(filename):
+        url = url_for('static', filename=filename)
+
+        return ('<div class="well tuto-image">'
+                '<a target="_blank" href="%s">'
+                '<img src="%s">'
+                '</a>'
+                '</div>') % (url, url)

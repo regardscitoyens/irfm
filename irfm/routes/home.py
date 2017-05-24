@@ -70,21 +70,3 @@ def setup_routes(app):
             },
             departements=dept_qs
         )
-
-    @app.route('/faq', endpoint='faq')
-    def faq():
-        return render_template('markdown.html.j2',
-                               title='Foire aux Questions',
-                               file='text/FAQ.md')
-
-    @app.route('/historique', endpoint='historique')
-    def historique():
-        return render_template('markdown.html.j2',
-                               title='Qu\'est-ce que l\'IRFM ?',
-                               file='text/historique.md')
-
-    @app.route('/derives', endpoint='derives')
-    def derives():
-        return render_template('markdown.html.j2',
-                               title='Les dérives de l\'IRFM',
-                               file='text/derives.md')

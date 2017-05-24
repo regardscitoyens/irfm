@@ -18,6 +18,12 @@ Par ailleurs, lorsque vous envoyez un courrier au nom de l'association Regards C
 
 Conformément à la loi Informatique et Libertés, vous disposez d'un droit d'accès et de rectification sur les données que nous détenons à votre sujet. N'hésitez pas à [nous contacter par e-mail](mailto:{{ config.ADMIN_EMAIL }}) si vous souhaitez exercer ce droit.
 
+##### Je ne suis pas certain de la manière d'envoyer le courrier, pouvez-vous m'aider ?
+
+Voir des [instructions pour remplir le bordereau papier]({{ url_for('tuto_papier') }}).
+
+Voir des [instructions pour envoyer le recommandé en ligne]({{ url_for('tuto_enligne') }}).
+
 ##### Que me conseillez-vous pour approfondir le sujet de l'IRFM ?
 
 Nous vous conseillons la lecture des rapports suivants :
