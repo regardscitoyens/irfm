@@ -8,6 +8,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from .importers.adresses import AdressesImporter
+from .importers.laposte import LaPosteImporter
 from .importers.nosdeputes import NosDeputesImporter
 
 from .irfm import app
@@ -100,6 +101,13 @@ def import_adresses():
     """Importe adresses postales des parlementaires"""
     app.config.update(SQLALCHEMY_ECHO=False)
     AdressesImporter(app).run()
+
+
+@manager.command
+def import_laposte():
+    """Importe l'état des courriers suivi depuis La Poste"""
+    app.config.update(SQLALCHEMY_ECHO=False)
+    LaPosteImporter(app).run()
 
 
 @manager.command
