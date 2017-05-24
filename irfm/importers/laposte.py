@@ -28,13 +28,14 @@ class LaPosteImporter(BaseImporter):
             soup = BeautifulSoup(requests.get(url).content, 'html5lib')
         except Exception as e:
             self.error('Erreur sur %s: %s' % (url, e))
+            return None
 
         ident = soup.select('td.identifiant_num')
         if not len(ident):
             return None
 
         ident = ident[0]
-        if ident.text.startswith('Aucun '):
+        if ident.text.strip().startswith('Aucun '):
             return None
 
         produit = self._next_el_sibling(ident)
