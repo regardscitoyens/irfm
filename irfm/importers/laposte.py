@@ -21,6 +21,8 @@ class LaPosteImporter(BaseImporter):
         return cur.next_sibling
 
     def _import_suivi(self, suivi):
+        self.info('Recherche suivi %s' % suivi)
+
         url = self.URL.format(suivi)
         try:
             soup = BeautifulSoup(requests.get(url).content, 'html5lib')
@@ -32,7 +34,7 @@ class LaPosteImporter(BaseImporter):
             return None
 
         ident = ident[0]
-        if ident.text.startswith('Aucun produit'):
+        if ident.text.startswith('Aucun '):
             return None
 
         produit = self._next_el_sibling(ident)
@@ -66,7 +68,6 @@ class LaPosteImporter(BaseImporter):
             if not act.suivi:
                 self.error('Pas de suivi: action %s' % act.id)
                 continue
-
             suivi = act.suivi.split(':', 1)[0]
             status = self.import_suivi(suivi)
             if status:
