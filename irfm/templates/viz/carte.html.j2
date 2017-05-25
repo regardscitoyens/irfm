@@ -7,7 +7,7 @@
     {% for dep in departements %}
       #carte .departement{{ dep.num_deptmt }} {
         fill: #4444bb;
-        fill-opacity: {{ dep.nb_envoyes / dep.total }};
+        fill-opacity: {{ dep.nb_prisencharge / dep.total }};
       }
     {% endfor %}
   </style>

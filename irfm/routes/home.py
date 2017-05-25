@@ -5,8 +5,8 @@ from flask import render_template
 from sqlalchemy.sql.expression import case, func
 
 from ..models import Parlementaire, db
-from ..models.constants import (ETAPES, ETAPES_BY_ORDRE, ETAPE_A_ENVOYER,
-                                ETAPE_ENVOYE, ETAPE_NA)
+from ..models.constants import (ETAPES, ETAPES_BY_ORDRE, ETAPE_A_CONFIRMER,
+                                ETAPE_A_ENVOYER, ETAPE_NA)
 
 
 def setup_routes(app):
@@ -40,10 +40,11 @@ def setup_routes(app):
             for e in ETAPES
         ])
 
-        # ...et qui sont dans une étape >= envoyé
+        # ...et qui sont dans une étape >= pris en charge
         dept_qs = dept_qs.add_columns(
-            func.sum(case([(Parlementaire.etape >= ETAPE_ENVOYE, 1)], else_=0))
-            .label('nb_envoyes')
+            func.sum(case([(Parlementaire.etape >= ETAPE_A_CONFIRMER, 1)],
+                          else_=0))
+            .label('nb_prisencharge')
         )
 
         dept_qs = dept_qs.group_by(Parlementaire.num_deptmt) \
