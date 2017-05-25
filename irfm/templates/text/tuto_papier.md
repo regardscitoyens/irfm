@@ -4,11 +4,11 @@ Pour envoyer le recommandé au format papier, vous aurez besoin :
 * d'une enveloppe
 * d'un bordereau d'envoi de lettre recommandée (disponible dans les bureaux de poste)
 
-Inutile d'inscrire quoi que ce soit sur l'enveloppe, toutes les informations sont sur le bordereau qui devra y être collé.
+Inutile d'inscrire quoi que ce soit sur l'enveloppe, toutes les informations sont sur le bordereau qui devra être collé dessus.
 
-Pour remplir le bordereau, recopiez l'adresse du parlementaire dans la case « Destinataire » et celle de Regards Citoyens dans la case « Expéditeur ». **Ces deux adresses sont sur le courrier que vous avez imprimé**.
+Pour remplir le bordereau, recopiez l'adresse du parlementaire dans la case « Destinataire » et celle de Regards Citoyens dans la case « Expéditeur ». **Ces deux adresses sont indiquées sur le courrier que vous avez imprimé**.
 
-Voici un exemple:
+Voici un exemple :
 
 {{ 'tuto_bordereau.jpg'|image_tuto }}
 

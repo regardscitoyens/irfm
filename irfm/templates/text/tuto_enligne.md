@@ -2,11 +2,11 @@ Pour envoyer le recommandé en ligne, vous aurez besoin de télécharger au pré
 
 Rendez-vous ensuite sur [la page d'envoi de lettre recommandée en ligne du site de La Poste](https://boutique.laposte.fr/envoi-de-courrier-en-ligne/lettre-recommandee-en-ligne/telecharger-document).
 
-Sur la première page, téléchargez courrier en cliquant sur « Parcourir » puis en choisissant le fichier PDF que vous avez téléchargé sur notre site.  Cliquez ensuite sur « Télécharger » : le document apparaît sur la liste en bas de page.  Vous pouvez passer à la suite en cliquant sur « Valider ».
+Sur la première page, téléchargez le courrier en cliquant sur « Parcourir » puis en choisissant le fichier PDF que vous avez téléchargé sur notre site.  Cliquez ensuite sur « Télécharger » : le document apparaît sur la liste en bas de page.  Vous pouvez passer à la suite en cliquant sur « Valider ».
 
 {{ 'tuto_enligne_1.png'|image_tuto }}
 
-Sur la page suivante, choisissez les options d'envoi :
+Sur la page suivante, choisissez ces options d'envoi :
 
 * Courrier distribué par le facteur
 * Avec accusé de réception
@@ -42,7 +42,7 @@ Encore un petit récapitulatif, validez en cliquant sur « Finaliser ma command
 
 {{ 'tuto_enligne_8.png'|image_tuto }}
 
-Si vous n'êtes pas connecté sur le site de La Poste, vous devrez le faire avant de passer au paiement.  Choisissez ensuite votre mode de paiement, ensez à accepter les conditions générales de vente, puis cliquez sur « Valider et payer ».
+Si vous n'êtes pas connecté sur le site de La Poste, vous devrez le faire avant de passer au paiement.  Choisissez ensuite votre mode de paiement, pensez à accepter les conditions générales de vente, puis cliquez sur « Valider et payer ».
 
 {{ 'tuto_enligne_10.png'|image_tuto }}
 
