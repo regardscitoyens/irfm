@@ -157,20 +157,24 @@ th.col-nobreak {
   margin-bottom: 1em;
 }
 
-#carte-legend-title {
+#carte-legend-buttons {
   flex-basis: 100%;
   font-weight: bold;
+  margin-bottom: 1em;
 }
 
 #carte-legend-gradient {
   border: 1px solid #aaa;
   height: .7em;
   flex-basis: 100%;
+}
 
+.carte-mode-prisencharge #carte-legend-gradient {
   background: linear-gradient(to right, #fff, #4444bb);
 }
 
-#carte-legend small {
+.carte-mode-envoye #carte-legend-gradient {
+  background: linear-gradient(to right, #fff, #8844bb);
 }
 
 #carte .land {

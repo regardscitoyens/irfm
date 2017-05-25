@@ -6,7 +6,7 @@ from sqlalchemy.sql.expression import case, func
 
 from ..models import Parlementaire, db
 from ..models.constants import (ETAPES, ETAPES_BY_ORDRE, ETAPE_A_CONFIRMER,
-                                ETAPE_A_ENVOYER, ETAPE_NA)
+                                ETAPE_A_ENVOYER, ETAPE_ENVOYE, ETAPE_NA)
 
 
 def setup_routes(app):
@@ -43,8 +43,9 @@ def setup_routes(app):
         # ...et qui sont dans une étape >= pris en charge
         dept_qs = dept_qs.add_columns(
             func.sum(case([(Parlementaire.etape >= ETAPE_A_CONFIRMER, 1)],
-                          else_=0))
-            .label('nb_prisencharge')
+                          else_=0)).label('nb_prisencharge'),
+            func.sum(case([(Parlementaire.etape >= ETAPE_ENVOYE, 1)],
+                          else_=0)).label('nb_envoyes')
         )
 
         dept_qs = dept_qs.group_by(Parlementaire.num_deptmt) \
