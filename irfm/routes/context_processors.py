@@ -69,12 +69,38 @@ def setup(app):
             },
         ]
 
+        if session.get('user'):
+            acts = Action.query \
+                         .filter(Parlementaire.id == Action.parlementaire_id) \
+                         .filter(Action.etape == ETAPE_A_CONFIRMER) \
+                         .filter(Action.user_id == session['user']['id']) \
+                         .exists()
+
+            nb = Parlementaire.query.filter(acts) \
+                                    .filter(Parlementaire.etape ==
+                                            ETAPE_A_CONFIRMER) \
+                                    .count()
+
+            label = 'Mes actions'
+            if nb > 0:
+                title = '%s envoi%s à confirmer' % (nb, 's' if nb > 1 else '')
+                label += ' <span class="badge" data-toggle="tooltip" ' \
+                         'title="%s">%s</span>' % (title, nb)
+
+            menu += [
+                {
+                    'url': url_for('mes_actions'),
+                    'label': '%s' % label,
+                    'endpoint': 'mes_actions'
+                }
+            ]
+
         if session.get('user') and session.get('user')['admin']:
             menu += [
                 {
                     'url': url_for('admin_recent'),
                     'label': '<span class="admin">Actions récentes</span>',
-                    'endpoint': 'admin_recent"'
+                    'endpoint': 'admin_recent'
                 }
             ]
 
@@ -87,7 +113,7 @@ def setup(app):
                         'url': url_for('admin_en_attente'),
                         'label': '<span class="admin">À confirmer (%s)</span>'
                                  % nb_aconfirmer,
-                        'endpoint': 'admin_en_attente"'
+                        'endpoint': 'admin_en_attente'
                     }
                 ]
 

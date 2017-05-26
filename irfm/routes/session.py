@@ -4,8 +4,8 @@ from flask import flash, redirect, render_template, request, session, url_for
 
 from sqlalchemy.orm import joinedload
 
-from ..models import Action, User, db
-from ..models.constants import ETAPE_ENVOYE
+from ..models import Action, Parlementaire, User, db
+from ..models.constants import ETAPE_A_CONFIRMER, ETAPE_ENVOYE
 
 from ..tools.routing import not_found, redirect_back, require_user
 from ..tools.text import check_email, check_password, sanitize_hard
@@ -124,3 +124,30 @@ def setup_routes(app):
             return redirect_back()
 
         return render_template('profil.html.j2', user=user, envois=envois)
+
+    @app.route('/mes-actions', endpoint='mes_actions')
+    @require_user
+    def mes_actions():
+        user = User.query.filter(User.id == session['user']['id']) \
+                         .options(joinedload(User.abonnements)) \
+                         .first()
+        if not user:
+            return not_found()
+
+        acts = Action.query \
+                     .filter(Parlementaire.id == Action.parlementaire_id) \
+                     .filter(Action.etape.in_([ETAPE_ENVOYE,
+                                               ETAPE_A_CONFIRMER])) \
+                     .filter(Action.user_id == session['user']['id']) \
+                     .exists()
+
+        qs = Parlementaire.query.filter(acts) \
+                                .options(joinedload(Parlementaire.groupe)) \
+                                .order_by(Parlementaire.nom) \
+                                .all()
+
+        return render_template(
+            'list.html.j2',
+            parlementaires=qs,
+            full_list=False
+        )
