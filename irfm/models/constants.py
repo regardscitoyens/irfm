@@ -36,6 +36,7 @@ SEXES = {
 # L'ordre est utilisé comme clé primaire lors de cet import.
 #
 
+ETAPE_DOCUMENT = -30
 ETAPE_COM_PUBLIE = -21
 ETAPE_COM_A_MODERER = -20
 ETAPE_COURRIEL = -10
@@ -49,6 +50,17 @@ ETAPE_REPONSE_NEGATIVE = 50
 
 ETAPES = [
     {
+        'ordre': ETAPE_DOCUMENT,
+        'label': 'Document',
+        'description': """
+            Un document nous a été transmis par le parlementaire.
+        """,
+        'couleur': '#88dd88',
+        'icone': 'paperclip',
+        'hidden': True,
+        'alerte': False,
+    },
+    {
         'ordre': ETAPE_COM_PUBLIE,
         'label': 'Commentaire',
         'description': """
@@ -57,6 +69,7 @@ ETAPES = [
         """,
         'couleur': '#bbbbbb',
         'icone': 'commenting',
+        'hidden': False,
         'alerte': False,
     },
     {
@@ -69,6 +82,7 @@ ETAPES = [
         """,
         'couleur': '#bb6666',
         'icone': 'commenting',
+        'hidden': True,
         'alerte': False,
     },
     {
@@ -80,6 +94,7 @@ ETAPES = [
         """,
         'couleur': '#66aadd',
         'icone': 'at',
+        'hidden': False,
         'alerte': False,
     },
     {
@@ -88,6 +103,7 @@ ETAPES = [
         'description': '',
         'couleur': '',
         'icone': '',
+        'hidden': True,
         'alerte': False,
     },
     {
@@ -99,6 +115,7 @@ ETAPES = [
         """,
         'couleur': '#bbbbbb',
         'icone': 'envelope-open',
+        'hidden': False,
         'alerte': False,
     },
     {
@@ -110,6 +127,7 @@ ETAPES = [
         """,
         'couleur': '#aaaaff',
         'icone': 'clock-o',
+        'hidden': False,
         'alerte': False,
     },
     {
@@ -121,6 +139,7 @@ ETAPES = [
         """,
         'couleur': '#8888dd',
         'icone': 'envelope',
+        'hidden': False,
         'alerte': False,
     },
     {
@@ -132,6 +151,7 @@ ETAPES = [
         """,
         'couleur': '#4444bb',
         'icone': 'check',
+        'hidden': False,
         'alerte': False,
     },
     {
@@ -143,6 +163,7 @@ ETAPES = [
         """,
         'couleur': '#66bb66',
         'icone': 'heart',
+        'hidden': False,
         'alerte': True,
     },
     {
@@ -155,6 +176,7 @@ ETAPES = [
         """,
         'couleur': '#bb6666',
         'icone': 'thumbs-down',
+        'hidden': False,
         'alerte': True,
     },
 ]

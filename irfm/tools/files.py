@@ -72,6 +72,16 @@ def generer_pdf(template, data, path, force=False):
             pisa.CreatePDF(html, pdf)
 
 
+def unique_filename(directory, basename, ext):
+    filename = '%s.%s' % (basename, ext)
+    if os.path.exists(os.path.join(directory, filename)):
+        counter = 0
+        while os.path.exists(os.path.join(directory, filename)):
+            counter += 1
+            filename = '%s-%s.%s' % (basename, counter, ext)
+    return filename
+
+
 def handle_upload(directory, basename, key='file'):
     filename = None
 
@@ -87,7 +97,7 @@ def handle_upload(directory, basename, key='file'):
         if ext == 'jpeg':
             ext = 'jpg'
 
-        filename = '%s.%s' % (basename, ext)
+        filename = unique_filename(directory, basename, ext)
         file.save(os.path.join(directory, filename))
 
     return filename

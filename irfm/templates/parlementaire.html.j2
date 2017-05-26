@@ -137,8 +137,8 @@
           <th></th>
         </tr>
 
-        {% for act in parlementaire.actions if (act.etape != ordres.ETAPE_COM_A_MODERER or is_admin) %}
-          <tr>
+        {% for act in parlementaire.actions if (not etapes_by_ordre[act.etape].hidden or is_admin) %}
+          <tr {% if etapes_by_ordre[act.etape].hidden %} class="danger"{% endif %}>
             <td>{{ act.etape|label_etape }}</td>
             <td>
               {% if act.user.nick == '!rc' %}
@@ -171,8 +171,7 @@
               {% endif %}
 
               {% if is_admin %}
-                {% if act.etape == ordres.ETAPE_COM_A_MODERER or
-                      act.etape == ordres.ETAPE_COM_PUBLIE or
+                {% if act.etape < ordres.ETAPE_COURRIEL or
                       act.etape == act.parlementaire.etape %}
                   <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=act.id) }}" title="Supprimer" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
                 {% endif %}
@@ -529,7 +528,7 @@
                   </div>
                   <div class="col-md-10">
                     <select name="etape">
-                      {% for etape in etapes if etape.ordre > parlementaire.etape %}
+                      {% for etape in etapes if etape.ordre > parlementaire.etape or etape.ordre < -10 %}
                         <option value="{{ etape.ordre }}">{{ etape.label }}</option>
                       {% endfor %}
                     </select>
