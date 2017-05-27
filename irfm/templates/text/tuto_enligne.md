@@ -14,6 +14,8 @@ Sur la page suivante, choisissez ces options d'envoi :
 * Impression Recto
 * Adresse sur la première page
 
+Note : si vous prévisualisez le courrier qui sera envoyé, ne vous inquiétez pas de la superposition de l'adresse apposée par la poste et de celle déjà présente sur le courrier.  Cela ne pose pas de problème pour l'envoi.
+
 {{ 'tuto_enligne_2.png'|image_tuto }}
 
 Sur la page suivante, vous allez définir les adresses de l'expéditeur et du destinataire.  Ces adresses sont présentes sur le courrier au format PDF que vous avez téléchargé.
