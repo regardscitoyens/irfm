@@ -15,6 +15,10 @@ while _m < 1:
 
 DEBUT_RELEVES = datetime.date(_y, _m, DEBUT_ACTION.day)
 
+# Délais pour la relance de citoyens en jours
+DELAI_RELANCE = 7
+DELAI_REPONSE = 2
+
 
 #
 # Lors de la modification de ces énumérations, penser à créer une migration DB

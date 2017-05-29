@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime, timedelta
 import os
 import time
 
@@ -7,8 +8,11 @@ from flask import render_template
 
 from flask_mail import Mail, Message
 
-from ..models import User, Parlementaire, db
-from ..models.constants import ETAPE_NA
+from sqlalchemy.orm import contains_eager, joinedload
+
+from ..models import Action, User, Parlementaire, db
+from ..models.constants import (DELAI_RELANCE, DELAI_REPONSE, ETAPE_NA,
+                                ETAPE_A_CONFIRMER)
 
 from ..tools.files import generer_demande
 
@@ -121,3 +125,47 @@ def envoyer_emails(app, envoyer):
         time.sleep(1)
 
     return missed_addr, missed_email
+
+
+def envoyer_relances(app, envoyer):
+    mail = Mail(app)
+
+    date_min = datetime.now() - timedelta(days=DELAI_RELANCE)
+    acts = Action.query.join(Action.parlementaire) \
+                       .filter(Action.etape == ETAPE_A_CONFIRMER) \
+                       .filter(Parlementaire.etape == ETAPE_A_CONFIRMER) \
+                       .filter(Action.suivi == None) \
+                       .filter(Action.date < date_min) \
+                       .options(contains_eager(Action.parlementaire)) \
+                       .options(joinedload(Action.user)) \
+                       .order_by(Parlementaire.nom) \
+                       .all()  # noqa
+
+    data = {}
+
+    for act in acts:
+        if act.user not in data:
+            data[act.user] = []
+        data[act.user].append(act)
+
+    for user, acts in data.items():
+        sender = ('Regards Citoyens', app.config['ADMIN_EMAIL'])
+        subject = 'Transparence IRFM - Relance'
+        body = render_template('courriers/mail_relance.txt.j2',
+                               user=user,
+                               parls=[a.parlementaire for a in acts],
+                               delai_relance=DELAI_RELANCE,
+                               delai_reponse=DELAI_REPONSE)
+
+        msg = Message(subject=subject, body=body, sender=sender,
+                      recipients=[user.email])
+
+        if envoyer:
+            mail.send(msg)
+            act.suivi = 'Relancé le %s' % datetime.now().strftime('%x')
+            time.sleep(1)
+        else:
+            print(msg)
+
+    if envoyer:
+        db.session.commit()
