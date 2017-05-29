@@ -162,7 +162,8 @@ def envoyer_relances(app, envoyer):
 
         if envoyer:
             mail.send(msg)
-            act.suivi = 'Relancé le %s' % datetime.now().strftime('%x')
+            for a in acts:
+                a.suivi = 'Relancé le %s' % datetime.now().strftime('%x')
             time.sleep(1)
         else:
             print(msg)
