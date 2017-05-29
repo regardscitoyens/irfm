@@ -8,12 +8,12 @@ from flask import (flash, redirect, render_template, request, session, url_for)
 from flask_mail import Mail, Message
 
 from sqlalchemy.orm import joinedload
-from sqlalchemy.sql.expression import case, func
+from sqlalchemy.sql.expression import func
 
 from ..models import Action, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE,
-                                ETAPE_ENVOYE)
+                                ETAPE_ENVOYE, ETAPE_NA)
 from ..tools.files import generer_demande, handle_upload
 from ..tools.routing import not_found, redirect_back, remote_addr, require_user
 from ..tools.text import check_suivi, slugify
@@ -66,7 +66,8 @@ def setup_routes(app):
 
         return render_template(
             'list.html.j2',
-            parlementaires=qs
+            parlementaires=qs,
+            full_list=True
         )
 
     @app.route('/parlementaires/<id>', endpoint='parlementaire')

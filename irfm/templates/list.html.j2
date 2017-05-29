@@ -6,19 +6,36 @@
 
 {% block content %}
   <section class="panel panel-default">
-    <header class="panel-heading">
-      <b>Liste des {{ parlementaires|length }} parlementaires</b>
-    </header>
+    {% if full_list %}
 
-    <article class="panel-body">
-      <div class="input-group">
-        <span class="input-group-addon" id="search-header">Filtrer les parlementaires</span>
-        <input type="search" autocomplete="off" autofocus="autofocus" class="form-control" id="search" placeholder="Nom, groupe, circonscription..." value="{{ request.args.q|e }}" aria-describedby="search-header">
-        <span class="input-group-btn">
-          <button class="btn btn-primary" type="button" id="search-clear" style="display: none;">Effacer le filtre</button>
-        </span>
-      </div>
-    </article>
+      <header class="panel-heading">
+        <b>Liste des {{ parlementaires|length }} parlementaires</b>
+      </header>
+
+      <article class="panel-body">
+        <div class="input-group">
+          <span class="input-group-addon" id="search-header">Filtrer les parlementaires</span>
+          <input type="search" autocomplete="off" autofocus="autofocus" class="form-control" id="search" placeholder="Nom, groupe, circonscription..." value="{{ request.args.q|e }}" aria-describedby="search-header">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" id="search-clear" style="display: none;">Effacer le filtre</button>
+          </span>
+        </div>
+      </article>
+
+    {% else %}
+
+      <header class="panel-heading">
+        <b>Mes actions</b>
+      </header>
+
+      <article class="panel-body" style="text-align: center;">
+        Vous souhaitez solliciter un autre parlementaire ?<br>
+
+        <a class="btn btn-sm btn-primary" href="/parlementaires">Trouver un parlementaire à solliciter</a>
+        <a class="btn btn-sm btn-primary" href="/hasard">Solliciter un parlementaire au hasard</a>
+      </article>
+
+    {% endif %}
 
     <table class="table table-condensed table-striped sortable searchable">
       <thead>

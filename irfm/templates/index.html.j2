@@ -85,9 +85,12 @@
       <header class="panel-heading">
         <b>Avancement par département</b>
       </header>
-      <article class="panel-body" id="carte-container">
+      <article class="panel-body carte-mode-prisencharge" id="carte-container">
         <div id="carte-legend">
-          <div id="carte-legend-title"><small>Taux d'envoi des demandes de documents aux parlementaires</small></div>
+          <div id="carte-legend-buttons">
+            <button id="btn-mode-prisencharge" class="btn btn-xs btn-primary">Pris en charge</button>
+            <button id="btn-mode-envoye" class="btn btn-xs btn-default">Courriers envoyés</button>
+          </div>
           <div id="carte-legend-gradient">
           </div>
           <small>Aucun</small>
@@ -137,6 +140,20 @@
       });
 
       /* Carte */
+
+      var modesCarte = ['prisencharge', 'envoye'];
+      modesCarte.forEach(function(mode) {
+        $('#btn-mode-' + mode).click(function(e) {
+          $('#carte-container .btn').removeClass('btn-primary').addClass('btn-default');
+          $(this).removeClass('btn-default').addClass('btn-primary');
+
+          var ctn = $('#carte-container');
+          modesCarte.forEach(function(m) { ctn.removeClass('carte-mode-' + m); });
+          ctn.addClass('carte-mode-' + mode);
+
+          e.preventDefault();
+        });
+      });
 
       {% for dep in departements %}
         $('.departement{{ dep.num_deptmt }}')

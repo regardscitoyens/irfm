@@ -10,7 +10,7 @@ from sqlalchemy.orm import joinedload
 from ..models import Action, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPES_BY_ORDRE, ETAPE_COM_A_MODERER,
-                                ETAPE_COM_PUBLIE)
+                                ETAPE_COM_PUBLIE, ETAPE_DOCUMENT)
 
 from ..tools.files import EXTENSIONS, handle_upload
 from ..tools.mails import envoyer_alerte
@@ -20,6 +20,7 @@ from ..tools.text import slugify
 
 
 def setup_routes(app):
+    uploads_root = os.path.join(app.config['DATA_DIR'], 'uploads')
 
     @app.route('/admin/recent', endpoint='admin_recent')
     @require_admin
@@ -72,6 +73,11 @@ def setup_routes(app):
 
         if action:
             parl_id = action.parlementaire_id
+
+            if action.attachment:
+                path = os.path.join(uploads_root, action.attachment)
+                if os.path.exists(path):
+                    os.unlink(path)
 
             db.session.delete(action)
             db.session.flush()
@@ -141,17 +147,24 @@ def setup_routes(app):
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id_parl))
 
+        if etape == ETAPE_DOCUMENT:
+            prefix = 'document'
+        else:
+            prefix = 'etape-%s' % etape
+
         try:
             filename = handle_upload(
-                os.path.join(app.config['DATA_DIR'], 'uploads'),
-                'etape-%s-%s' % (etape, slugify(parl.nom_complet))
+                uploads_root,
+                '%s-%s' % (prefix, slugify(parl.nom_complet))
             )
         except Exception as e:
             return redirect_back(error=str(e),
                                  fallback=url_for('parlementaire', id=id_parl))
 
         etape_data = ETAPES_BY_ORDRE[etape]
-        parl.etape = etape
+
+        if etape > 0:
+            parl.etape = etape
 
         action = Action(
             date=datetime.now(),

@@ -87,6 +87,25 @@ def setup(app):
         return ('<span data-toggle="tooltip"><i class="fa fa-%(icone)s"></i> '
                 '%(label)s</span>') % etape
 
+    @app.template_filter('suivi_laposte')
+    def suivi_laposte(suivi):
+        if not suivi:
+            return ''
+
+        parts = suivi.split(':', 1)
+        link = 'http://www.part.csuivi.courrier.laposte.fr/suivi/index?id=%s' \
+               % parts[0]
+        html = 'Suivi&nbsp: <a href="%s" target="_blank">%s</a>' \
+               % (link, parts[0])
+
+        if len(parts) > 1:
+            html += ' <span class="anon">&ndash; %s</span>' % parts[1]
+
+        warning = 'Le suivi peut ne pas fonctionner avant 24 heures.'
+        html += '<br><small>%s</small>' % warning
+
+        return html
+
     _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 
     @app.template_filter('nl2br')
@@ -97,3 +116,13 @@ def setup(app):
         if eval_ctx.autoescape:
             result = Markup(result)
         return result
+
+    @app.template_filter('image_tuto')
+    def image_tuto(filename):
+        url = url_for('static', filename=filename)
+
+        return ('<div class="well tuto-image">'
+                '<a target="_blank" href="%s">'
+                '<img src="%s">'
+                '</a>'
+                '</div>') % (url, url)

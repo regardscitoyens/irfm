@@ -18,6 +18,12 @@ Par ailleurs, lorsque vous envoyez un courrier au nom de l'association Regards C
 
 Conformément à la loi Informatique et Libertés, vous disposez d'un droit d'accès et de rectification sur les données que nous détenons à votre sujet. N'hésitez pas à [nous contacter par e-mail](mailto:{{ config.ADMIN_EMAIL }}) si vous souhaitez exercer ce droit.
 
+##### Je ne suis pas certain de la manière d'envoyer le courrier, pouvez-vous m'aider ?
+
+Voir des [instructions pour remplir le bordereau papier]({{ url_for('tuto_papier') }}).
+
+Voir des [instructions pour envoyer le recommandé en ligne]({{ url_for('tuto_enligne') }}).
+
 ##### Que me conseillez-vous pour approfondir le sujet de l'IRFM ?
 
 Nous vous conseillons la lecture des rapports suivants :
@@ -51,7 +57,7 @@ L'irresponsabilité, d'une part, couverte par l'article 26 de la Constitution : 
 
 L'inviolabilité, d'autre part, est décrite de la facon suivante : « *depuis la réforme du 4 août 1995, le régime de l'inviolabilité ne protège plus le député contre l'engagement de poursuites (mise en examen), en revanche, le député ne peut faire l'objet d'une arrestation ou de toute autre mesure privative ou restrictive de liberté (contrôle judiciaire) sans l'autorisation du Bureau, sauf les cas de crime ou délit flagrant, ou de condamnation définitive* ». Notre démarche ne porte aucunement sur une mesure privative ou restrictive de liberté. Elle respecte donc également ce principe d'inviolabilité.
 
-#### Et le secret bancaire ? Et la vie privée ?
+##### Et le secret bancaire ? Et la vie privée ?
 
 L'IRFM est réglementairement versée sur un compte bancaire dédié, séparé du compte personnel du député. Cette séparation des comptes permet d'assurer le respect de la vie privée des députés, puisque ce compte vise à financer l'ensemble des frais afférents à l'exercice du mandat parlementaire. Il n'y a donc aucun risque d'intrusion dans la vie privée des parlementaires. Ainsi, dans son [avis n° 20061451-JCG du 30 mars 2006](http://cada.data.gouv.fr/20063126/), la Commission d'Accès aux Documents Administratifs a considéré que « les relevés bancaires constituent [...] des documents administratifs communicables » lorsqu'ils « sont des pièces justificatives de la comptabilité et qu'ils sont afférents à [une] mission de service public ».
 

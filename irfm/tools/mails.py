@@ -7,10 +7,23 @@ from flask import render_template
 
 from flask_mail import Mail, Message
 
-from ..models import Parlementaire, db
+from ..models import User, Parlementaire, db
 from ..models.constants import ETAPE_NA
 
 from ..tools.files import generer_demande
+
+
+def mailing_lists():
+    filters = {
+        'Liste Membres': User.abo_membres == True,  # noqa
+        'Liste IRFM': User.abo_irfm == True,  # noqa
+        'Newsletter': User.abo_rc == True,  # noqa
+    }
+
+    return {
+        k: [u.email for u in User.query.filter(f).all()]
+        for k, f in filters.items()
+    }
 
 
 def envoyer_alerte(app, etape, parl, commentaire):

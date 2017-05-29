@@ -8,6 +8,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from .importers.adresses import AdressesImporter
+from .importers.laposte import LaPosteImporter
 from .importers.nosdeputes import NosDeputesImporter
 
 from .irfm import app
@@ -15,7 +16,8 @@ from .irfm import app
 from .models import db
 
 from .tools.files import generer_demandes as generer_demandes_
-from .tools.mails import envoyer_emails as envoyer_emails_
+from .tools.mails import (envoyer_emails as envoyer_emails_,
+                          mailing_lists as mailing_lists_)
 from .tools.procedure import fix_procedure as fix_procedure_
 from .tools.text import hash_password
 
@@ -59,6 +61,14 @@ def envoyer_emails(envoyer=False):
 
 
 @manager.command
+def mailing_lists():
+    """Affiche les abonnés aux mailing lists"""
+    app.config.update(SQLALCHEMY_ECHO=False)
+    for nom, emails in mailing_lists_().items():
+        print('%s :\n\t%s' % (nom, '\n\t'.join(emails)))
+
+
+@manager.command
 def fix_procedure():
     """Génère les étapes manquantes pour tous les parlementaires"""
     app.config.update(SQLALCHEMY_ECHO=False)
@@ -91,6 +101,13 @@ def import_adresses():
     """Importe adresses postales des parlementaires"""
     app.config.update(SQLALCHEMY_ECHO=False)
     AdressesImporter(app).run()
+
+
+@manager.command
+def import_laposte():
+    """Importe l'état des courriers suivi depuis La Poste"""
+    app.config.update(SQLALCHEMY_ECHO=False)
+    LaPosteImporter(app).run()
 
 
 @manager.command

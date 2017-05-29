@@ -5,8 +5,12 @@
     .idfbig { opacity:1; }
 
     {% for dep in departements %}
-      #carte .departement{{ dep.num_deptmt }} {
+      .carte-mode-prisencharge #carte .departement{{ dep.num_deptmt }} {
         fill: #4444bb;
+        fill-opacity: {{ dep.nb_prisencharge / dep.total }};
+      }
+      .carte-mode-envoye #carte .departement{{ dep.num_deptmt }} {
+        fill: #8844bb;
         fill-opacity: {{ dep.nb_envoyes / dep.total }};
       }
     {% endfor %}
