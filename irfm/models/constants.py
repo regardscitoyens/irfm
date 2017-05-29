@@ -40,7 +40,8 @@ SEXES = {
 # L'ordre est utilisé comme clé primaire lors de cet import.
 #
 
-ETAPE_DOCUMENT = -30
+ETAPE_DOC_PUBLIE = -31
+ETAPE_DOC_MASQUE = -30
 ETAPE_COM_PUBLIE = -21
 ETAPE_COM_A_MODERER = -20
 ETAPE_COURRIEL = -10
@@ -54,12 +55,23 @@ ETAPE_REPONSE_NEGATIVE = 50
 
 ETAPES = [
     {
-        'ordre': ETAPE_DOCUMENT,
+        'ordre': ETAPE_DOC_PUBLIE,
         'label': 'Document',
         'description': """
             Un document nous a été transmis par le parlementaire.
         """,
-        'couleur': '#88dd88',
+        'couleur': '#33aa33',
+        'icone': 'paperclip',
+        'hidden': False,
+        'alerte': False,
+    },
+    {
+        'ordre': ETAPE_DOC_MASQUE,
+        'label': 'Document (non publié)',
+        'description': """
+            Un document nous a été transmis par le parlementaire.
+        """,
+        'couleur': '#ccaa66',
         'icone': 'paperclip',
         'hidden': True,
         'alerte': False,

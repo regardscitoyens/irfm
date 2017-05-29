@@ -8,8 +8,9 @@ from ..models import Action, Parlementaire, User
 from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
                                 ETAPE_A_ENVOYER, ETAPE_COM_A_MODERER,
-                                ETAPE_COM_PUBLIE, ETAPE_COURRIEL, ETAPE_ENVOYE,
-                                ETAPE_NA, ETAPE_REPONSE_NEGATIVE,
+                                ETAPE_COM_PUBLIE, ETAPE_COURRIEL,
+                                ETAPE_DOC_MASQUE, ETAPE_DOC_PUBLIE,
+                                ETAPE_ENVOYE, ETAPE_NA, ETAPE_REPONSE_NEGATIVE,
                                 ETAPE_REPONSE_POSITIVE)
 
 
@@ -143,6 +144,8 @@ def setup(app):
             'ordres': {
                 'ETAPE_COM_PUBLIE': ETAPE_COM_PUBLIE,
                 'ETAPE_COM_A_MODERER': ETAPE_COM_A_MODERER,
+                'ETAPE_DOC_MASQUE': ETAPE_DOC_MASQUE,
+                'ETAPE_DOC_PUBLIE': ETAPE_DOC_PUBLIE,
                 'ETAPE_COURRIEL': ETAPE_COURRIEL,
                 'ETAPE_NA': ETAPE_NA,
                 'ETAPE_A_ENVOYER': ETAPE_A_ENVOYER,
