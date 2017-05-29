@@ -4,7 +4,7 @@ from datetime import datetime
 
 from flask import session, url_for
 
-from ..models import Action, Parlementaire
+from ..models import Action, Parlementaire, User
 from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
                                 ETAPE_A_ENVOYER, ETAPE_COM_A_MODERER,
@@ -118,7 +118,9 @@ def setup(app):
                 ]
 
             nb_moderer = Action.query \
+                               .join(Action.user) \
                                .filter(Action.etape == ETAPE_COM_A_MODERER) \
+                               .filter(User.nick != '!rc') \
                                .count()
 
             if nb_moderer > 0:
