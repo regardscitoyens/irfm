@@ -62,6 +62,7 @@ class LaPosteImporter(BaseImporter):
         acts = Action.query.join(Action.parlementaire) \
                            .filter(Parlementaire.etape == ETAPE_ENVOYE) \
                            .filter(Action.etape == ETAPE_ENVOYE) \
+                           .filter(~Action.suivi.like('%:Distribué%')) \
                            .order_by(Action.suivi) \
                            .all()
 
