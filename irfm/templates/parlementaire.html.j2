@@ -153,7 +153,7 @@
             <td>
               {% if act.suivi and act.etape == ordres.ETAPE_ENVOYE %}
                 {{ act.suivi|suivi_laposte }}
-              {% elif act.suivi %}
+              {% elif act.suivi and (act.etape != ordres.ETAPE_A_CONFIRMER or is_admin) %}
                 {{ act.suivi|e }}
               {% endif %}
             </td>
