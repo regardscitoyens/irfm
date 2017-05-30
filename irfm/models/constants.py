@@ -19,26 +19,7 @@ DEBUT_RELEVES = datetime.date(_y, _m, DEBUT_ACTION.day)
 DELAI_RELANCE = 7
 DELAI_REPONSE = 2
 
-
-#
-# Lors de la modification de ces énumérations, penser à créer une migration DB
-# pour mettre à jour les types ENUM correspondants en base de données.
-#
-
-CHAMBRES = {
-    'AN': 'Assemblée nationale',
-    'SEN': 'Sénat',
-}
-
-SEXES = {
-    'F': 'Femme',
-    'H': 'Homme',
-}
-
-#
-# Lors de la modification de cette énumération, relancer l'import des étapes.
-# L'ordre est utilisé comme clé primaire lors de cet import.
-#
+# Etapes
 
 ETAPE_DOC_PUBLIE = -31
 ETAPE_DOC_MASQUE = -30
@@ -198,3 +179,19 @@ ETAPES = [
 ]
 
 ETAPES_BY_ORDRE = {e['ordre']: e for e in ETAPES}
+
+
+#
+# Lors de la modification de ces énumérations, penser à créer une migration DB
+# pour mettre à jour les types ENUM correspondants en base de données.
+#
+
+CHAMBRES = {
+    'AN': 'Assemblée nationale',
+    'SEN': 'Sénat',
+}
+
+SEXES = {
+    'F': 'Femme',
+    'H': 'Homme',
+}

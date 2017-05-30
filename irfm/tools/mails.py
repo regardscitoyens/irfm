@@ -15,6 +15,7 @@ from ..models.constants import (DELAI_RELANCE, DELAI_REPONSE, ETAPE_NA,
                                 ETAPE_A_CONFIRMER)
 
 from ..tools.files import generer_demande
+from ..tools.text import create_usertoken as token
 
 
 def mailing_lists():
@@ -153,6 +154,7 @@ def envoyer_relances(app, envoyer):
         subject = 'Transparence IRFM - Relance'
         body = render_template('courriers/mail_relance.txt.j2',
                                user=user,
+                               token=token(user.id, app.config['SECRET_KEY']),
                                parls=[a.parlementaire for a in acts],
                                delai_relance=DELAI_RELANCE,
                                delai_reponse=DELAI_REPONSE)

@@ -15,8 +15,9 @@ from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE,
                                 ETAPE_ENVOYE, ETAPE_NA)
 from ..tools.files import generer_demande, handle_upload
-from ..tools.routing import not_found, redirect_back, remote_addr, require_user
-from ..tools.text import check_suivi, slugify
+from ..tools.routing import (can_login_from_token, not_found, redirect_back,
+                             remote_addr, require_user)
+from ..tools.text import check_suivi, create_usertoken as token, slugify
 
 
 def pris_en_charge(parl, force=False):
@@ -71,6 +72,7 @@ def setup_routes(app):
         )
 
     @app.route('/parlementaires/<id>', endpoint='parlementaire')
+    @can_login_from_token
     def parlementaire(id):
         parl = Parlementaire.query \
                             .filter_by(id=id) \
@@ -143,6 +145,8 @@ def setup_routes(app):
 
             subject = 'Transparence IRFM - Envoi d\'une demande de documents'
             body = render_template('courriers/mail_prise_en_charge.txt.j2',
+                                   token=token(session['user']['id'],
+                                               app.config['SECRET_KEY']),
                                    parlementaire=parl)
             msg = Message(subject=subject, body=body,
                           sender=('Regards Citoyens',
@@ -151,6 +155,9 @@ def setup_routes(app):
 
             with open(os.path.join(files_root, filename), 'rb') as f:
                 msg.attach(filename, 'application/pdf', f.read())
+
+            if app.config['MAIL_SUPPRESS_SEND']:
+                print(msg)
 
             mail.send(msg)
 

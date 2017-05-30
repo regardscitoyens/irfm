@@ -16,15 +16,9 @@ envoyé, et si vous le souhaitez, d'y joindre une photo ou un scan de la preuve
 d'envoi.
 
 Pour retrouver la liste des parlementaires que vous avez pris en charge,
-accédez au site <{{ url_for('home', _external=True) }}>. Vous devrez vous
-identifier (en cliquant sur le bouton « S'identifier » en haut à droite de la
-page) avec les informations utilisées lors de la prise en charge de l'envoi,
-c'est-à-dire :
+utilisez le lien ci-dessous:
 
-  Pseudo: {{ user.nick }}
-  E-mail: {{ user.email }}
-
-Vous pourrez alors cliquer sur « Mes actions » dans le menu en tête de page.
+<{{ url_for('mes_actions', ut=token, _external=True) }}>
 
 Sans nouvelles de votre part sous {{ delai_reponse }} jours, nous remettrons l'envoi à
 disposition d'autres citoyens.
