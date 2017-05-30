@@ -6,9 +6,9 @@ from .text import is_safe_url
 from ..models import User
 
 
-def redirect_back(fallback=None, error=None):
-    if error:
-        flash(error, category='error')
+def redirect_back(fallback=None, **kwargs):
+    for k, v in kwargs.items():
+        flash(v, category=k)
 
     if request.referrer and is_safe_url(request.referrer) and \
        request.referrer != request.url:
@@ -26,8 +26,9 @@ def not_found():
 def require_user(f):
     def decorator(*args, **kwargs):
         if not session.get('user'):
-            return redirect_back(error='Vous devez vous identifier pour '
-                                       'accéder à cette page')
+            return redirect_back(login_error='Vous devez vous identifier pour '
+                                             'accéder à cette page',
+                                 login_next=request.url)
 
         if 'id' not in session['user']:
             session['user']['id'] = User.query \

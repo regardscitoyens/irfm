@@ -8,7 +8,8 @@ from ..models import Action, Parlementaire, User, db
 from ..models.constants import ETAPE_A_CONFIRMER, ETAPE_ENVOYE
 
 from ..tools.routing import not_found, redirect_back, require_user
-from ..tools.text import check_email, check_password, sanitize_hard
+from ..tools.text import (check_email, check_password, is_safe_url,
+                          sanitize_hard)
 
 
 def setup_routes(app):
@@ -50,23 +51,23 @@ def setup_routes(app):
         if nick != request.form['nick']:
             msg = 'Seuls les caractères suivants sont autorisés: ' \
                   'a-z 0-9 _ - @ . '
-            return redirect_back(error=msg)
+            return redirect_back(login_error=msg)
 
         if not len(nick):
             msg = 'Veuillez saisir un pseudonyme !'
-            return redirect_back(error=msg)
+            return redirect_back(login_error=msg)
 
         email = request.form['email'].strip()
         if not check_email(email):
             msg = 'Veuillez saisir une adresse e-mail valide pour assurer ' \
                   'le suivi de l\'envoi des demandes !'
-            return redirect_back(error=msg)
+            return redirect_back(login_error=msg)
 
         user = User.query.filter(User.nick == nick).first()
 
         if user and user.email != email:
             msg = 'L\'adresse e-mail que vous avez saisie n\'est pas la bonne.'
-            return redirect_back(error=msg)
+            return redirect_back(login_error=msg)
 
         if not user:
             user = User(nick=nick, email=email, admin=False)
@@ -87,13 +88,15 @@ def setup_routes(app):
             return redirect(url_for('envoi',
                                     id=request.form['prendre_en_charge']))
 
+        if 'next' in request.form and is_safe_url(request.form['next']):
+            return redirect(request.form['next'])
+
         return redirect_back()
 
     @app.route('/logout')
     def logout():
         session.pop('user', None)
-
-        return redirect_back()
+        return redirect(url_for('home'))
 
     @app.route('/profil', endpoint='profil', methods=['GET', 'POST'])
     @require_user

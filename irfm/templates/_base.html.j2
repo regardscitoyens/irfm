@@ -90,6 +90,13 @@
                 {% else %}
                   <li>
                     <form class="form-horizontal login-form" method="POST" action="{{ url_for('login') }}">
+                      {% for cat, msg in get_flashed_messages(with_categories=True, category_filter=['login_error', 'login_next']) %}
+                        {% if cat == 'login_error' %}
+                          <div class="alert alert-danger login-error">{{ msg }}</div>
+                        {% elif cat == 'login_next' %}
+                          <input name="next" type="hidden" value="{{ msg }}">
+                        {% endif %}
+                      {% endfor %}
                       <input name="nick" type="text" class="form-control" placeholder="Pseudo">
                       <input name="email" type="text" class="form-control" placeholder="Adresse e-mail">
                       <small>Votre adresse e-mail ne sera pas publiée.</small><br><br>
@@ -109,7 +116,7 @@
     {% for cat, message in get_flashed_messages(with_categories=True) %}
       {% if cat == 'success' %}
         <div class="alert alert-success" role="alert">{{ message }}</div>
-      {% else %}
+      {% elif cat not in ('login_error', 'login_next') %}
         <div class="alert alert-danger" role="alert">{{ message }}</div>
       {% endif %}
     {% endfor %}
@@ -196,6 +203,11 @@
       });
 
       $('[data-toggle="tooltip"]').tooltip()
+
+      if ($('.login-error').length) {
+        $('.login .dropdown-toggle').dropdown('toggle');
+        $('.login [name="nick"]').focus();
+      }
     });
   </script>
 </body>
