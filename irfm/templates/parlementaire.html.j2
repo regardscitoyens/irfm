@@ -170,8 +170,12 @@
               {% endif %}
 
               {% if act.etape == ordres.ETAPE_A_CONFIRMER %}
-                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id) }}">
                   <i class="fa fa-download"></i> Télécharger le courrier (PDF)
+                </a>
+
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_png', id=parlementaire.id) }}">
+                  <i class="fa fa-download"></i> PNG
                 </a>
               {% elif act.etape in (ordres.ETAPE_COM_A_MODERER, ordres.ETAPE_DOC_MASQUE) and is_admin %}
                 <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=act.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
@@ -231,9 +235,14 @@
                     Je prends en charge l'envoi !
                   </a>
 
-                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}" target="_blank">
+                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id) }}" target="_blank">
                     <i class="fa fa-download"></i>
                     Télécharger le courrier au format PDF
+                  </a>
+
+                  <a class="btn btn-default" href="{{ url_for('demande_png', id=parlementaire.id) }}" target="_blank">
+                    <i class="fa fa-download"></i>
+                    Au format PNG
                   </a>
                 </div>
 
@@ -292,9 +301,13 @@
                 {% endfilter %}
 
                 <div class="centered-buttons">
-                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}" target="_blank">
+                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id) }}" target="_blank">
                     <i class="fa fa-download"></i>
                     Télécharger le courrier au format PDF
+                  </a>
+                  <a class="btn btn-default" href="{{ url_for('demande_png', id=parlementaire.id) }}" target="_blank">
+                    <i class="fa fa-download"></i>
+                    Au format PNG
                   </a>
                 </div>
 
