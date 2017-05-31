@@ -123,24 +123,28 @@ th.col-nobreak {
 #pie-container {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
 }
 
 #pie-container #pie,
 #pie-container #pie-legend {
   flex-grow: 0;
-  flex-shrink: 0;
 }
 
 #pie-container #pie {
-  text-align: center;
-  flex-basis: 70%;
+  flex-shrink: 1;
+  flex-basis: 65%;
+  padding-right: 5%;
+  position: relative;
 }
 
 #pie-container #pie canvas {
-  margin: 0 auto 0 auto;
+  width: 100%;
+  height: 60%;
 }
 
 #pie-container #pie-legend {
+  flex-shrink: 0;
   flex-basis: 30%;
 }
 

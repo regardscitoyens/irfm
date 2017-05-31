@@ -50,7 +50,7 @@
       </header>
       <article class="panel-body" id="pie-container">
         <div id="pie">
-          <canvas id="pie-canvas" height="200" width="300"></canvas>
+          <canvas id="pie-canvas" height="240" width="400"></canvas>
         </div>
         <div id="pie-legend">
           {% for etape in etapes %}
@@ -130,6 +130,7 @@
             display: false
           },
           responsive: false,
+          maintainAspectRatio: true,
           rotation: Math.PI * (1 - (circleRatio - 0.5)),
           circumference: 2 * Math.PI * circleRatio,
           cutoutPercentage: 25,
