@@ -234,7 +234,7 @@ def setup_routes(app):
             parlementaire=parl,
             etape=parl.etape,
             attachment=filename,
-            suivi=request.form['suivi'].upper()
+            suivi=request.form['suivi'].strip().upper()
         )
 
         db.session.add(action)

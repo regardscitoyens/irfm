@@ -33,7 +33,7 @@ def check_usertoken(token, secret):
 
 
 def check_suivi(text):
-    return text and re.search(r'^\d[A-Z]\d{11}$', text.upper())
+    return text and re.search(r'^\d[A-Z]\d{11}$', text.strip().upper())
 
 
 def hash_password(password, secret):
