@@ -14,14 +14,14 @@ def etat_courriers():
     Renvoie les données pour constituer un histogramme des états des courriers.
     """
 
-    _etats = [
-        'Inconnu',
-        'Pris en charge',
-        'En cours de traitement',
-        'En attente de seconde présentation',
-        'Pli présenté',
-        'Attend d\'être retiré au guichet',
-        'Distribué',
+    _categories = [
+        {'etats': [''], 'label': 'Inconnu'},
+        {'etats': ['Pris en charge', 'En cours de traitement'],
+         'label': 'Pris en charge'},
+        {'etats': ['Pli présenté', 'En attente de seconde présentation'],
+         'label': 'Présenté'},
+        {'etats': ['Attend d\'être retiré au guichet'], 'label': 'Au guichet'},
+        {'etats': ['Distribué'], 'label': 'Distribué'}
     ]
 
     # Extrait "Distribué" de "1X23456: Distribué (01/02/2017)"
@@ -31,14 +31,15 @@ def etat_courriers():
         ' (', 1
     )
 
-    data = {item.etat if len(item.etat) else 'Inconnu': item.nb
+    data = {item.etat: item.nb
             for item in db.session.query(expr.label('etat'),
                                          func.count(1).label('nb'))
                                   .filter(Action.etape == ETAPE_ENVOYE)
                                   .group_by(expr)
                                   .all()}
 
-    return [(etat, data.get(etat, 0)) for etat in _etats]
+    return [(c['label'], sum([data.get(e, 0) for e in c['etats']]))
+            for c in _categories]
 
 
 def par_departement():

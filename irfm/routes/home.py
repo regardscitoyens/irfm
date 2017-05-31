@@ -3,13 +3,16 @@
 from flask import render_template
 
 from ..models.constants import ETAPES_BY_ORDRE
-from ..models.queries import par_etape, par_departement, random_parl
+from ..models.queries import (etat_courriers, par_etape, par_departement,
+                              random_parl)
 
 
 def setup_routes(app):
 
     @app.route('/', endpoint='home')
     def home():
+        # Données camembert
+
         etapes_qs = par_etape()
 
         def each_etape(getter):
@@ -24,7 +27,17 @@ def setup_routes(app):
                 'data': each_etape(lambda e: e.nb),
                 'backgroundColor': key_each_etape('couleur'),
                 'hoverBackgroundColor': key_each_etape('couleur'),
-                'borderWidth': each_etape(lambda e: 0)
+                'borderWidth': 0
+            }]
+        }
+
+        # Données histogramme
+
+        etats = etat_courriers()
+        histo_data = {
+            'labels': [etat for etat, nb in etats],
+            'datasets': [{
+                'data': [nb for etat, nb in etats]
             }]
         }
 
@@ -32,5 +45,6 @@ def setup_routes(app):
             'index.html.j2',
             parlementaire=random_parl(),
             etapes_data=etapes_data,
+            histo_data=histo_data,
             departements=par_departement()
         )
