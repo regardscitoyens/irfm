@@ -8,12 +8,13 @@ from flask import (flash, redirect, render_template, request, session, url_for)
 from flask_mail import Mail, Message
 
 from sqlalchemy.orm import joinedload
-from sqlalchemy.sql.expression import func
 
 from ..models import Action, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPE_COM_A_MODERER, ETAPE_COM_PUBLIE,
-                                ETAPE_ENVOYE, ETAPE_NA)
+                                ETAPE_ENVOYE)
+from ..models.queries import random_parl
+
 from ..tools.files import generer_demande, handle_upload
 from ..tools.routing import (can_login_from_token, not_found, redirect_back,
                              remote_addr, require_user)
@@ -47,17 +48,7 @@ def setup_routes(app):
 
     @app.route('/hasard', endpoint='hasard')
     def hasard():
-        parl = Parlementaire.query \
-                            .filter(Parlementaire.etape == ETAPE_A_ENVOYER) \
-                            .order_by(func.random()) \
-                            .first()
-        if not parl:
-            parl = Parlementaire.query \
-                                .filter(Parlementaire.etape > ETAPE_NA) \
-                                .order_by(func.random()) \
-                                .first()
-
-        return redirect(url_for('parlementaire', id=parl.id))
+        return redirect(url_for('parlementaire', id=random_parl().id))
 
     @app.route('/parlementaires', endpoint='parlementaires')
     def parlementaires():
