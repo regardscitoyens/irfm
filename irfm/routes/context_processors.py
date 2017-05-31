@@ -109,11 +109,12 @@ def setup(app):
                 .filter(Parlementaire.etape == ETAPE_A_CONFIRMER).count()
 
             if nb_aconfirmer > 0:
+                badge = ' <span class="badge">%s</span>' % nb_aconfirmer
                 menu += [
                     {
                         'url': url_for('admin_en_attente'),
-                        'label': '<span class="admin">À confirmer (%s)</span>'
-                                 % nb_aconfirmer,
+                        'label': '<span class="admin">À confirmer</span> %s'
+                                 % badge,
                         'endpoint': 'admin_en_attente'
                     }
                 ]
@@ -125,11 +126,12 @@ def setup(app):
                                .count()
 
             if nb_moderer > 0:
+                badge = ' <span class="badge">%s</span>' % nb_moderer
                 menu += [
                     {
                         'url': url_for('admin_commentaires'),
-                        'label': '<span class="admin">À modérer (%s)</span>'
-                                 % nb_moderer,
+                        'label': '<span class="admin">À modérer</span> %s'
+                                 % badge,
                         'endpoint': 'admin_commentaires'
                     }
                 ]
