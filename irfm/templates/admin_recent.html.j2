@@ -44,7 +44,13 @@
               {% if action.suivi and action.etape == ordres.ETAPE_ENVOYE %}
                 {{ action.suivi|suivi_laposte }}
               {% elif action.suivi %}
-                {{ action.suivi|e }}
+                {% if action.user and action.user.nick == '!rc' %}
+                  {% filter markdown -%}
+                    {{ action.suivi }}
+                  {%- endfilter %}
+                {% else %}
+                  {{ action.suivi|e }}
+                {% endif %}
               {% endif %}
             </td>
             <td class="col-nobreak">

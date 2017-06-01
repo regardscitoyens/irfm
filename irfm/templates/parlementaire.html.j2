@@ -154,7 +154,13 @@
               {% if act.suivi and act.etape == ordres.ETAPE_ENVOYE %}
                 {{ act.suivi|suivi_laposte }}
               {% elif act.suivi and (act.etape != ordres.ETAPE_A_CONFIRMER or is_admin) %}
-                {{ act.suivi|e }}
+                {% if act.user and act.user.nick == '!rc' %}
+                  {% filter markdown -%}
+                    {{ act.suivi }}
+                  {%- endfilter %}
+                {% else %}
+                  {{ act.suivi|e }}
+                {% endif %}
               {% endif %}
             </td>
             <td class="col-right col-nobreak">
