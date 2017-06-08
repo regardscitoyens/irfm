@@ -211,7 +211,8 @@ def setup_routes(app):
                 return redirect_back(error=msg,
                                      fallback=url_for('parlementaire', id=id))
 
-        if not check_suivi(request.form['suivi']):
+        suivi = check_suivi(request.form['suivi'])
+        if not suivi:
             msg = 'Veuillez indiquer un numéro de suivi valide'
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id))
@@ -234,7 +235,7 @@ def setup_routes(app):
             parlementaire=parl,
             etape=parl.etape,
             attachment=filename,
-            suivi=request.form['suivi'].strip().upper()
+            suivi=suivi
         )
 
         db.session.add(action)
