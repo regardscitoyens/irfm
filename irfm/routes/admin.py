@@ -10,7 +10,8 @@ from sqlalchemy.orm import joinedload
 from ..models import Action, Parlementaire, User, db
 from ..models.constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER,
                                 ETAPES_BY_ORDRE, ETAPE_COM_A_MODERER,
-                                ETAPE_COM_PUBLIE, ETAPE_DOCUMENT)
+                                ETAPE_COM_PUBLIE, ETAPE_DOC_MASQUE,
+                                ETAPE_DOC_PUBLIE)
 
 from ..tools.files import EXTENSIONS, handle_upload
 from ..tools.mails import envoyer_alerte
@@ -103,12 +104,20 @@ def setup_routes(app):
     @require_admin
     def admin_publish(id):
         action = Action.query \
-                       .filter(Action.etape == ETAPE_COM_A_MODERER) \
+                       .filter(Action.etape.in_([ETAPE_COM_A_MODERER,
+                                                 ETAPE_DOC_MASQUE,
+                                                 ETAPE_DOC_PUBLIE])) \
                        .filter(Action.id == id) \
                        .first()
 
         if action:
-            action.etape = ETAPE_COM_PUBLIE
+            if action.etape == ETAPE_COM_A_MODERER:
+                action.etape = ETAPE_COM_PUBLIE
+            elif action.etape == ETAPE_DOC_PUBLIE:
+                action.etape = ETAPE_DOC_MASQUE
+            elif action.etape == ETAPE_DOC_MASQUE:
+                action.etape = ETAPE_DOC_PUBLIE
+
             db.session.commit()
 
         return redirect_back()
@@ -147,7 +156,7 @@ def setup_routes(app):
             return redirect_back(error=msg,
                                  fallback=url_for('parlementaire', id=id_parl))
 
-        if etape == ETAPE_DOCUMENT:
+        if etape in (ETAPE_DOC_MASQUE, ETAPE_DOC_PUBLIE):
             prefix = 'document'
         else:
             prefix = 'etape-%s' % etape

@@ -44,22 +44,32 @@
               {% if action.suivi and action.etape == ordres.ETAPE_ENVOYE %}
                 {{ action.suivi|suivi_laposte }}
               {% elif action.suivi %}
-                {{ action.suivi|e }}
+                {% if action.user and action.user.nick == '!rc' %}
+                  {% filter markdown -%}
+                    {{ action.suivi }}
+                  {%- endfilter %}
+                {% else %}
+                  {{ action.suivi|e }}
+                {% endif %}
               {% endif %}
             </td>
-            <td>
+            <td class="col-nobreak">
               {% if action.attachment %}
                 <a class="btn btn-default btn-sm" href="{{ url_for('attachment', id=action.id) }}" target="_blank">Voir</a>
                 {{ action.attachment }}
               {% endif %}
             </td>
-            <td class="col-right">
-              {% if action.etape == ordres.ETAPE_COM_A_MODERER %}
-                <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=action.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-check"></i></a>
+            <td class="col-right col-nobreak">
+              {% if action.etape in (ordres.ETAPE_COM_A_MODERER, ordres.ETAPE_DOC_MASQUE) %}
+                <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=action.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+              {% elif action.etape == ordres.ETAPE_DOC_PUBLIE %}
+                <a class="btn btn-warning btn-sm" href="{{ url_for('admin_publish', id=action.id) }}" title="Masquer" data-toggle="tooltip"><i class="fa fa-eye-slash"></i></a>
               {% endif %}
 
               {% if action.etape == ordres.ETAPE_COM_A_MODERER or
                     action.etape == ordres.ETAPE_COM_PUBLIE or
+                    action.etape == ordres.ETAPE_DOC_MASQUE or
+                    action.etape == ordres.ETAPE_DOC_PUBLIE or
                     action.etape == action.parlementaire.etape %}
                 <a class="btn btn-danger btn-sm" href="{{ url_for('admin_delete', id=action.id) }}" title="Supprimer" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
               {% endif %}

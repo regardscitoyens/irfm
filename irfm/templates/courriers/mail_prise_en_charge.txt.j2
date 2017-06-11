@@ -17,7 +17,7 @@ Voici la marche à suivre :
 
 2. Retournez sur la page du parlementaire pour nous envoyer le numéro de suivi
    du courrier et ansi confirmer l'envoi :
-   <{{ url_for('parlementaire', id=parlementaire.id, _external=True) }}>.
+   <{{ url_for('parlementaire', id=parlementaire.id, ut=token, _external=True) }}>.
 
    N'oubliez pas cette étape pour que nous puissions suivre l'avancement de
    l'opération ! Vous pourrez si vous le souhaitez joindre une photo ou un
@@ -27,7 +27,7 @@ Voici la marche à suivre :
    vous en devenez automatiquement membre. L'adhésion est gratuite et sans
    aucune obligation. Vous pouvez si vous le souhaitez vous abonner à la liste
    de discussion des membres de l'association depuis la page de votre profil:
-   <{{ url_for('profil', _external=True) }}>.
+   <{{ url_for('profil', ut=token, _external=True) }}>.
 
 Note : pour pouvoir confirmer l'envoi, vous devrez vous identifier avec les
 mêmes identifiants, à savoir :
@@ -36,7 +36,7 @@ mêmes identifiants, à savoir :
   E-mail: {{ session.user.email }}
 
 Enfin, si vous changez d'avis (ce n'est pas grave !), merci de le signaler sur
-la page du parlementaire <{{ url_for('parlementaire', id=parlementaire.id, _external=True) }}>.
+la page du parlementaire <{{ url_for('parlementaire', id=parlementaire.id, ut=token, _external=True) }}>.
 
 N'hésitez pas à nous contacter par e-mail en cas de souci.
 

@@ -1,0 +1,33 @@
+Bonjour {{ user.nick }},
+
+Vous avez indiqué sur notre site dédié à l'opération de transparence sur l'IRFM
+que vous preniez en charge l'envoi de la demande de documents pour :
+{% for parl in parls -%}
+- {{ parl.nom_complet }}
+{%- endfor %}
+
+Comme {{ delai_relance }} jours se sont écoulés depuis, nous nous permettons de
+vous envoyer un petit message de relance.
+
+Pour assurer le suivi de notre opération, il est important que vous confirmiez
+l'envoi sur la page de chaque parlementaire.  Un formulaire y est disponible,
+et vous permettra de saisir le numéro de suivi du courrier que vous avez
+envoyé, et si vous le souhaitez, d'y joindre une photo ou un scan de la preuve
+d'envoi.
+
+Pour retrouver la liste des parlementaires que vous avez pris en charge,
+utilisez le lien ci-dessous:
+
+<https://irfm.regardscitoyens.org/mes-actions?ut={{ token }}>
+
+Sans nouvelles de votre part sous {{ delai_reponse }} jours, nous remettrons l'envoi à
+disposition d'autres citoyens.
+
+N'hésitez pas à nous contacter par e-mail en cas de souci !
+
+--
+
+Regards Citoyens
+
+Ce message a été envoyé automatiquement. Si vous pensez l'avoir reçu par
+erreur, merci de nous contacter par retour de mail.

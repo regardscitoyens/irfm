@@ -153,21 +153,40 @@
             <td>
               {% if act.suivi and act.etape == ordres.ETAPE_ENVOYE %}
                 {{ act.suivi|suivi_laposte }}
-              {% elif act.suivi %}
-                {{ act.suivi|e }}
+              {% elif act.suivi and (act.etape != ordres.ETAPE_A_CONFIRMER or is_admin) %}
+                {% if act.user and act.user.nick == '!rc' %}
+                  {% filter markdown -%}
+                    {{ act.suivi }}
+                  {%- endfilter %}
+                {% else %}
+                  {{ act.suivi|e }}
+                {% endif %}
               {% endif %}
             </td>
             <td class="col-right col-nobreak">
+              {% if act.attachment %}
+                {% set doc_label -%}
+                  {% if act.etape == ordres.ETAPE_ENVOYE %}
+                    Voir la preuve d'envoi
+                  {% else %}
+                    Voir le document joint
+                  {% endif %}
+                {%- endset %}
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('attachment', id=act.id) }}">{{ doc_label }}</a>
+              {% endif %}
+
               {% if act.etape == ordres.ETAPE_A_CONFIRMER %}
-                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='show') }}">
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_pdf', id=parlementaire.id) }}">
                   <i class="fa fa-download"></i> Télécharger le courrier (PDF)
                 </a>
-              {% elif act.etape == ordres.ETAPE_ENVOYE and act.attachment %}
-                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('preuve_envoi', id=parlementaire.id) }}">Voir la preuve d'envoi</a>
-              {% elif act.etape == ordres.ETAPE_COM_A_MODERER and is_admin %}
-                <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=act.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-check"></i></a>
-              {% elif act.attachment %}
-                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('attachment', id=act.id) }}">Voir le document joint</a>
+
+                <a class="btn btn-default btn-sm" target="_blank" href="{{ url_for('demande_png', id=parlementaire.id) }}">
+                  <i class="fa fa-download"></i> PNG
+                </a>
+              {% elif act.etape in (ordres.ETAPE_COM_A_MODERER, ordres.ETAPE_DOC_MASQUE) and is_admin %}
+                <a class="btn btn-primary btn-sm" href="{{ url_for('admin_publish', id=act.id) }}" title="Publier" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+              {% elif act.etape == ordres.ETAPE_DOC_PUBLIE and is_admin %}
+                <a class="btn btn-warning btn-sm" href="{{ url_for('admin_publish', id=act.id) }}" title="Masquer" data-toggle="tooltip"><i class="fa fa-eye-slash"></i></a>
               {% endif %}
 
               {% if is_admin %}
@@ -222,9 +241,14 @@
                     Je prends en charge l'envoi !
                   </a>
 
-                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}" target="_blank">
+                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id) }}" target="_blank">
                     <i class="fa fa-download"></i>
                     Télécharger le courrier au format PDF
+                  </a>
+
+                  <a class="btn btn-default" href="{{ url_for('demande_png', id=parlementaire.id) }}" target="_blank">
+                    <i class="fa fa-download"></i>
+                    Au format PNG
                   </a>
                 </div>
 
@@ -283,9 +307,13 @@
                 {% endfilter %}
 
                 <div class="centered-buttons">
-                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id, mode='download') }}" target="_blank">
+                  <a class="btn btn-default" href="{{ url_for('demande_pdf', id=parlementaire.id) }}" target="_blank">
                     <i class="fa fa-download"></i>
                     Télécharger le courrier au format PDF
+                  </a>
+                  <a class="btn btn-default" href="{{ url_for('demande_png', id=parlementaire.id) }}" target="_blank">
+                    <i class="fa fa-download"></i>
+                    Au format PNG
                   </a>
                 </div>
 
@@ -322,7 +350,7 @@
                         <label for="suivi">Numéro de suivi</label>
                       </div>
                       <div class="col-md-10">
-                        <input name="suivi" type="text" placeholder="Ex: 1X12345678901" maxlength="13"> <b>*</b>
+                        <input name="suivi" type="text" placeholder="Ex: 1X12345678901"> <b>*</b>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -529,7 +557,7 @@
                   <div class="col-md-10">
                     <select name="etape">
                       {% for etape in etapes if etape.ordre > parlementaire.etape or etape.ordre < -10 %}
-                        <option value="{{ etape.ordre }}">{{ etape.label }}</option>
+                        <option value="{{ etape.ordre }}">{{ etape.label }}{% if etape.ordre == ordres.ETAPE_DOC_PUBLIE %} (public !){% endif %}</option>
                       {% endfor %}
                     </select>
                   </div>

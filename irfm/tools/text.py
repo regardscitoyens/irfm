@@ -21,8 +21,23 @@ def check_password(candidate, hashed_password, secret):
                                hashed_password)
 
 
+def create_usertoken(uid, secret):
+    return '%s:%s' % (uid, hash_password('user #%s' % uid, secret))
+
+
+def check_usertoken(token, secret):
+    if ':' in token:
+        uid, tok = token.split(':', 1)
+        if hmac.compare_digest(hash_password('user #%s' % uid, secret), tok):
+            return uid
+
+
 def check_suivi(text):
-    return text and re.search(r'^\d[A-Z]\d{11}$', text.upper())
+    suivi = text.strip().replace(' ', '').upper()
+    if suivi and re.search(r'^\d[A-Z]\d{11}$', suivi):
+        return suivi
+    else:
+        return None
 
 
 def hash_password(password, secret):

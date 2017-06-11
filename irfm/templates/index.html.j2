@@ -50,7 +50,7 @@
       </header>
       <article class="panel-body" id="pie-container">
         <div id="pie">
-          <canvas id="pie-canvas" height="200" width="300"></canvas>
+          <canvas id="pie-canvas" height="210" width="350"></canvas>
         </div>
         <div id="pie-legend">
           {% for etape in etapes %}
@@ -61,6 +61,9 @@
             {% endif %}
           {% endfor %}
         </div>
+      </article>
+      <article class="panel-body" id="bar-container">
+        <canvas id="bar-canvas" height="150" width="400"></canvas>
       </article>
     </section>
 
@@ -122,7 +125,7 @@
       /* Camembert */
       var circleRatio = 0.52;
 
-      var chart = new Chart($('#pie-canvas'), {
+      new Chart($('#pie-canvas'), {
         type: 'pie',
         data: {{ etapes_data|tojson }},
         options: {
@@ -130,11 +133,43 @@
             display: false
           },
           responsive: false,
+          maintainAspectRatio: true,
           rotation: Math.PI * (1 - (circleRatio - 0.5)),
           circumference: 2 * Math.PI * circleRatio,
           cutoutPercentage: 25,
           animation: {
             animateRotate: false
+          }
+        }
+      });
+
+      /* Histo de suivi des courriers */
+
+      new Chart($('#bar-canvas'), {
+        type: 'horizontalBar',
+        data: {{ histo_data|tojson }},
+        options: {
+          animation: {
+            duration: 0
+          },
+          legend: {
+            display: false
+          },
+          title: {
+            display: true,
+            text: 'Suivi des courriers envoyés'
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                min: 0
+              }
+            }],
+            yAxes: [{
+              ticks: {
+              fontSize: 10
+              }
+            }]
           }
         }
       });

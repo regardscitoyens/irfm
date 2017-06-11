@@ -4,12 +4,13 @@ from datetime import datetime
 
 from flask import session, url_for
 
-from ..models import Action, Parlementaire
+from ..models import Action, Parlementaire, User
 from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_AR_RECU, ETAPE_A_CONFIRMER,
                                 ETAPE_A_ENVOYER, ETAPE_COM_A_MODERER,
-                                ETAPE_COM_PUBLIE, ETAPE_COURRIEL, ETAPE_ENVOYE,
-                                ETAPE_NA, ETAPE_REPONSE_NEGATIVE,
+                                ETAPE_COM_PUBLIE, ETAPE_COURRIEL,
+                                ETAPE_DOC_MASQUE, ETAPE_DOC_PUBLIE,
+                                ETAPE_ENVOYE, ETAPE_NA, ETAPE_REPONSE_NEGATIVE,
                                 ETAPE_REPONSE_POSITIVE)
 
 
@@ -108,25 +109,29 @@ def setup(app):
                 .filter(Parlementaire.etape == ETAPE_A_CONFIRMER).count()
 
             if nb_aconfirmer > 0:
+                badge = ' <span class="badge">%s</span>' % nb_aconfirmer
                 menu += [
                     {
                         'url': url_for('admin_en_attente'),
-                        'label': '<span class="admin">À confirmer (%s)</span>'
-                                 % nb_aconfirmer,
+                        'label': '<span class="admin">À confirmer</span> %s'
+                                 % badge,
                         'endpoint': 'admin_en_attente'
                     }
                 ]
 
             nb_moderer = Action.query \
+                               .join(Action.user) \
                                .filter(Action.etape == ETAPE_COM_A_MODERER) \
+                               .filter(User.nick != '!rc') \
                                .count()
 
             if nb_moderer > 0:
+                badge = ' <span class="badge">%s</span>' % nb_moderer
                 menu += [
                     {
                         'url': url_for('admin_commentaires'),
-                        'label': '<span class="admin">À modérer (%s)</span>'
-                                 % nb_moderer,
+                        'label': '<span class="admin">À modérer</span> %s'
+                                 % badge,
                         'endpoint': 'admin_commentaires'
                     }
                 ]
@@ -141,6 +146,8 @@ def setup(app):
             'ordres': {
                 'ETAPE_COM_PUBLIE': ETAPE_COM_PUBLIE,
                 'ETAPE_COM_A_MODERER': ETAPE_COM_A_MODERER,
+                'ETAPE_DOC_MASQUE': ETAPE_DOC_MASQUE,
+                'ETAPE_DOC_PUBLIE': ETAPE_DOC_PUBLIE,
                 'ETAPE_COURRIEL': ETAPE_COURRIEL,
                 'ETAPE_NA': ETAPE_NA,
                 'ETAPE_A_ENVOYER': ETAPE_A_ENVOYER,

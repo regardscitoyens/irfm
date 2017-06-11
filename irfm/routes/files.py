@@ -20,14 +20,24 @@ def setup_routes(app):
     if not os.path.exists(uploads_root):
         os.mkdir(uploads_root)
 
-    @app.route('/parlementaire/<id>/demande/<mode>', endpoint='demande_pdf')
-    def demande_pdf(id, mode='download'):
+    @app.route('/parlementaire/<id>/demande', endpoint='demande_pdf')
+    def demande_pdf(id):
         parl = Parlementaire.query.filter_by(id=id).first()
 
         if not parl:
             return not_found()
 
         filename = generer_demande(parl, files_root)
+        return redirect(url_for('get_file', filename=filename))
+
+    @app.route('/parlementaire/<id>/demande_png', endpoint='demande_png')
+    def demande_png(id):
+        parl = Parlementaire.query.filter_by(id=id).first()
+
+        if not parl:
+            return not_found()
+
+        filename = '%s.png' % generer_demande(parl, files_root)[:-4]
         return redirect(url_for('get_file', filename=filename))
 
     @app.route('/parlementaire/<id>/preuve-envoi', endpoint='preuve_envoi')

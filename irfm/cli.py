@@ -17,6 +17,7 @@ from .models import db
 
 from .tools.files import generer_demandes as generer_demandes_
 from .tools.mails import (envoyer_emails as envoyer_emails_,
+                          envoyer_relances as envoyer_relances_,
                           mailing_lists as mailing_lists_)
 from .tools.procedure import fix_procedure as fix_procedure_
 from .tools.text import hash_password
@@ -58,6 +59,14 @@ def envoyer_emails(envoyer=False):
         print('\n'.join(missed_email))
     else:
         print('Aucun parlementaire sans adresse mail :)')
+
+
+@manager.command
+@manager.option('--envoyer', action='store_true')
+def envoyer_relances(envoyer=False):
+    """Envoie des e-mails de relance"""
+    app.config.update(SQLALCHEMY_ECHO=False)
+    envoyer_relances_(app, envoyer)
 
 
 @manager.command

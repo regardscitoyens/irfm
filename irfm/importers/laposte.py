@@ -9,6 +9,10 @@ from ..models import Action, Parlementaire, db
 from ..models.constants import ETAPE_ENVOYE
 
 
+class SuiviInvalide(Exception):
+    pass
+
+
 class LaPosteImporter(BaseImporter):
 
     URL = 'http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={}'
@@ -35,8 +39,11 @@ class LaPosteImporter(BaseImporter):
             return None
 
         ident = ident[0]
-        if ident.text.strip().startswith('Aucun '):
+        idtxt = ident.text.strip()
+        if idtxt.startswith('Aucun '):
             return None
+        elif idtxt.startswith('L\'identifiant saisi'):
+            raise SuiviInvalide()
 
         produit = self._next_el_sibling(ident)
         date = self._next_el_sibling(produit)
@@ -50,8 +57,12 @@ class LaPosteImporter(BaseImporter):
 
     def import_suivi(self, suivi):
         if suivi not in self.cache:
-            statut = self._import_suivi(suivi)
-            self.info('SUIVI %s => %s' % (suivi, statut))
+            try:
+                statut = self._import_suivi(suivi)
+                self.info('SUIVI %s => %s' % (suivi, statut))
+            except SuiviInvalide:
+                self.error('INVALIDE %s' % suivi)
+                statut = 'Suivi invalide !'
 
             self.cache[suivi] = statut
         return self.cache[suivi]

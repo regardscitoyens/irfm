@@ -39,7 +39,8 @@ def generer_demandes(app):
 
 
 def generer_demande(parl, directory, force=False):
-    filename = 'demande-irfm-%s.pdf' % slugify(parl.nom_complet)
+    basename = 'demande-irfm-%s' % slugify(parl.nom_complet)
+    filename = '%s.pdf' % basename
     path = os.path.join(directory, filename)
 
     debut = max(DEBUT_RELEVES,
@@ -60,6 +61,19 @@ def generer_demande(parl, directory, force=False):
     }
 
     generer_pdf('courriers/demande.html.j2', data, path, force)
+
+    png_filename = '%s.png' % basename
+    png_path = os.path.join(directory, png_filename)
+    if not os.path.exists(png_path):
+        os.system(' '.join([
+            'convert',
+            '-density', '180',
+            '-trim',
+            path,
+            '-background', 'white',
+            '-flatten',
+            png_path
+        ]))
 
     return filename
 

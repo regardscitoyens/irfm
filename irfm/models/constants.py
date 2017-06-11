@@ -15,28 +15,14 @@ while _m < 1:
 
 DEBUT_RELEVES = datetime.date(_y, _m, DEBUT_ACTION.day)
 
+# Délais pour la relance de citoyens en jours
+DELAI_RELANCE = 7
+DELAI_REPONSE = 2
 
-#
-# Lors de la modification de ces énumérations, penser à créer une migration DB
-# pour mettre à jour les types ENUM correspondants en base de données.
-#
+# Etapes
 
-CHAMBRES = {
-    'AN': 'Assemblée nationale',
-    'SEN': 'Sénat',
-}
-
-SEXES = {
-    'F': 'Femme',
-    'H': 'Homme',
-}
-
-#
-# Lors de la modification de cette énumération, relancer l'import des étapes.
-# L'ordre est utilisé comme clé primaire lors de cet import.
-#
-
-ETAPE_DOCUMENT = -30
+ETAPE_DOC_PUBLIE = -31
+ETAPE_DOC_MASQUE = -30
 ETAPE_COM_PUBLIE = -21
 ETAPE_COM_A_MODERER = -20
 ETAPE_COURRIEL = -10
@@ -50,12 +36,23 @@ ETAPE_REPONSE_NEGATIVE = 50
 
 ETAPES = [
     {
-        'ordre': ETAPE_DOCUMENT,
+        'ordre': ETAPE_DOC_PUBLIE,
         'label': 'Document',
         'description': """
             Un document nous a été transmis par le parlementaire.
         """,
-        'couleur': '#88dd88',
+        'couleur': '#33aa33',
+        'icone': 'paperclip',
+        'hidden': False,
+        'alerte': False,
+    },
+    {
+        'ordre': ETAPE_DOC_MASQUE,
+        'label': 'Document (non publié)',
+        'description': """
+            Un document nous a été transmis par le parlementaire.
+        """,
+        'couleur': '#ccaa66',
         'icone': 'paperclip',
         'hidden': True,
         'alerte': False,
@@ -182,3 +179,19 @@ ETAPES = [
 ]
 
 ETAPES_BY_ORDRE = {e['ordre']: e for e in ETAPES}
+
+
+#
+# Lors de la modification de ces énumérations, penser à créer une migration DB
+# pour mettre à jour les types ENUM correspondants en base de données.
+#
+
+CHAMBRES = {
+    'AN': 'Assemblée nationale',
+    'SEN': 'Sénat',
+}
+
+SEXES = {
+    'F': 'Femme',
+    'H': 'Homme',
+}
