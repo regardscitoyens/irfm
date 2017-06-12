@@ -13,6 +13,10 @@ class SuiviInvalide(Exception):
     pass
 
 
+class MarkupInattendu(Exception):
+    pass
+
+
 class LaPosteImporter(BaseImporter):
 
     URL = 'http://www.part.csuivi.courrier.laposte.fr/suivi/index?id={}'
@@ -45,17 +49,20 @@ class LaPosteImporter(BaseImporter):
         elif idtxt.startswith('L\'identifiant saisi'):
             raise SuiviInvalide()
 
-        produit = self._next_el_sibling(ident)
-        date = self._next_el_sibling(produit)
-        localisation = self._next_el_sibling(date)
-        statut = self._next_el_sibling(localisation)
+        try:
+            produit = self._next_el_sibling(ident)
+            date = self._next_el_sibling(produit)
+            localisation = self._next_el_sibling(date)
+            statut = self._next_el_sibling(localisation)
+        except AttributeError:
+            raise MarkupInattendu()
 
         if date and statut:
             return '%s (%s)' % (statut.text, date.text)
         else:
             return None
 
-    def import_suivi(self, suivi):
+    def import_suivi(self, suivi, tries=2):
         if suivi not in self.cache:
             try:
                 statut = self._import_suivi(suivi)
@@ -63,6 +70,13 @@ class LaPosteImporter(BaseImporter):
             except SuiviInvalide:
                 self.error('INVALIDE %s' % suivi)
                 statut = 'Suivi invalide !'
+            except MarkupInattendu:
+                if tries > 0:
+                    self.error('Markup invalide, essais restants = %s' % tries)
+                    statut = self.import_suivi(suivi, tries - 1)
+                else:
+                    self.error('Markup invalide')
+                    statut = None
 
             self.cache[suivi] = statut
         return self.cache[suivi]
