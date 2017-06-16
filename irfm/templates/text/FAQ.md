@@ -24,6 +24,12 @@ Voir des [instructions pour remplir le bordereau papier]({{ url_for('tuto_papier
 
 Voir des [instructions pour envoyer le recommandé en ligne]({{ url_for('tuto_enligne') }}).
 
+##### Qu'allez vous faire des documents reçus ?
+
+Les documents reçus seront publiés après une étape de retrait des informations presonnelles. Ils seront réutilisables par tous, simples citoyens comme journalistes.
+
+En période électorale, jouer le jeu de la transparence peut s’avérer périlleux, les adversaires électoraux pouvant aisément monter en épingle une mauvaise interprétation de certaines informations. En l’absence de mécanisme de contrôle sur ces dépenses, les députés sortants attaqués n’auraient alors pas vraiment l’occasion de se défendre. Pour éviter que les choix en faveur de la transparence démocratique se transforment en punition électorale, nous avons ainsi pris la décision de ne publier les relevés obtenus qu’après la fin des élections législatives, c’est-à-dire à partir de la fin du mois de juin.
+
 ##### Que me conseillez-vous pour approfondir le sujet de l'IRFM ?
 
 Nous vous conseillons la lecture des rapports suivants :
