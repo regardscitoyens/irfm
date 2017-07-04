@@ -28,7 +28,7 @@ Voir des [instructions pour remplir le bordereau papier]({{ url_for('tuto_papier
 
 Voir des [instructions pour envoyer le recommandé en ligne]({{ url_for('tuto_enligne') }}).
 
-##### Qu'allez-vous faire des documents reçus ?
+##### Qu'allez-vous faire des documents reçus ?
 
 Les documents reçus seront publiés après une étape de retrait des informations presonnelles. Ils seront réutilisables par tous, simples citoyens comme journalistes.
 
