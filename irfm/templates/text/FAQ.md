@@ -10,6 +10,10 @@ Ce n'est pas grave : en France, les parlementaires sont des élus de la Nation e
 
 C'est normal, nous avons décidé de commencer l'opération uniquement avec les députés, profitant du calendrier électoral pour inciter chaque candidat à prendre position sur le sujet de l'IRFM. Le tour du Sénat viendra ensuite.
 
+##### Je ne trouve pas les nouveaux députés de la 15ème législature !
+
+C'est normal, les nouveaux députés n'ont encore rien à communiquer puisque leur mandat vient tout juste de débuter. Par ailleurs, il n'est pas exclu que les lois de moralisation de la vie politique qui sont actuellement discutées au parlement établissent de nouvelles règles de transparence sur l'IRFM, et que nous n'ayons donc pas besoin d'étendre l'opération à la 15ème législature.
+
 ##### Pourquoi dois-je m'identifier et donner une adresse e-mail ?
 
 L'identification nous permet de mieux répartir les efforts, en nous assurant que deux contributeurs n'envoient pas un courrier a un même parlementaire.
