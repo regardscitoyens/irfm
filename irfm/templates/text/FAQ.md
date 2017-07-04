@@ -12,7 +12,11 @@ C'est normal, nous avons décidé de commencer l'opération uniquement avec les 
 
 ##### Je ne trouve pas les nouveaux députés de la 15ème législature !
 
-C'est normal, les nouveaux députés n'ont encore rien à communiquer puisque leur mandat vient tout juste de débuter. Par ailleurs, il n'est pas exclu que les lois de moralisation de la vie politique qui sont actuellement discutées au parlement établissent de nouvelles règles de transparence sur l'IRFM, et que nous n'ayons donc pas besoin d'étendre l'opération à la 15ème législature.
+'est normal, les nouveaux députés n'ont encore rien à communiquer puisque leur mandat vient tout juste de débuter. Par ailleurs, il n'est pas exclu que les lois de moralisation de la vie politique qui sont actuellement discutées au parlement établissent de nouvelles règles de transparence sur l'IRFM, et que nous n'ayons donc pas besoin d'étendre l'opération à la 15ème législature.
+
+##### Quelle est l'utilité d'une telle demande pour les députés qui n'ont pas été réélus ?
+
+Ces députés ont bénéficié comme les autres d'un budget pris sur les deniers publics pour couvrir leurs frais de mandat. Le fait qu'ils ne soient pas réélus ne les dispense pas du devoir de rendre des comptes aux citoyens sur l'utilisation qu'ils en ont faite.
 
 ##### Pourquoi dois-je m'identifier et donner une adresse e-mail ?
 
