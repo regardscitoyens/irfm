@@ -48,22 +48,12 @@
       <header class="panel-heading">
         <b>Avancement</b>
       </header>
-      <article class="panel-body" id="pie-container">
-        <div id="pie">
-          <canvas id="pie-canvas" height="210" width="350"></canvas>
-        </div>
-        <div id="pie-legend">
-          {% for etape in etapes %}
-            {% if etape.label in etapes_data.labels %}
-              <p>
-                <a href="{{ url_for('parlementaires') }}?q={{ etape.label }}">{{ etape|label_etape }}</a>
-              </p>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </article>
-      <article class="panel-body" id="bar-container">
-        <canvas id="bar-canvas" height="150" width="400"></canvas>
+      <article class="panel-body">
+        <center>
+        <a style="font-size: 35px" href="/parlementaires?q=R%C3%A9ponse%20positive" class="btn btn-success">7<br/>Frais de mandats obtenus</a>
+        <br/><br/>
+        <p><a href="/parlementaires" class="btn btn-danger">550 députés n'ayant pas répondu positivement</a></p>
+        </center>
       </article>
     </section>
 
