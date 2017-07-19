@@ -23,9 +23,9 @@ def setup(app):
     @app.template_filter('fonc_parlementaire')
     def fonc_parlementaire(parl, article=False):
         if parl.sexe == 'F':
-            return 'Sénatrice' if parl.chambre == 'SEN' else 'Députée'
+            return 'Sénatrice' if parl.chambre == 'SEN' else 'Députée entre 2012 et 2017'
         else:
-            return 'Sénateur' if parl.chambre == 'SEN' else 'Député'
+            return 'Sénateur' if parl.chambre == 'SEN' else 'Député entre 2012 et 2017'
 
     @app.template_filter('lien_parl')
     def lien_parl(parl):
