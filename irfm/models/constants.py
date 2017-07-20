@@ -33,6 +33,7 @@ ETAPE_ENVOYE = 20
 ETAPE_AR_RECU = 30
 ETAPE_REPONSE_POSITIVE = 40
 ETAPE_REPONSE_NEGATIVE = 50
+ETAPE_DEMANDE_CADA = 60
 
 ETAPES = [
     {
@@ -176,6 +177,19 @@ ETAPES = [
         'hidden': False,
         'alerte': True,
     },
+    {
+        'ordre': ETAPE_DEMANDE_CADA,
+        'label': 'Demande CADA',
+        'description': """
+            Suite au refus ou a l'absence de réponse du parlementaire, nous
+            avons transmis la demande d'accès aux relevés de compte à la
+            Commission d'Accès aux Documents Administratifs.
+        """,
+        'couleur': '#bbbb66',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': True
+    }
 ]
 
 ETAPES_BY_ORDRE = {e['ordre']: e for e in ETAPES}

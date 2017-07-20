@@ -19,7 +19,8 @@ from .tools.files import generer_demandes as generer_demandes_
 from .tools.mails import (envoyer_emails as envoyer_emails_,
                           envoyer_relances as envoyer_relances_,
                           mailing_lists as mailing_lists_)
-from .tools.procedure import fix_procedure as fix_procedure_
+from .tools.procedure import (fix_procedure as fix_procedure_,
+                              avance_procedure as avance_procedure_)
 from .tools.text import hash_password
 
 
@@ -82,6 +83,17 @@ def fix_procedure():
     """Génère les étapes manquantes pour tous les parlementaires"""
     app.config.update(SQLALCHEMY_ECHO=False)
     fix_procedure_(app)
+
+
+@manager.command
+@manager.option('-e', '--etape', dest='etape', default=None)
+def avance_procedure(etape):
+    """
+    Avance la procédure pour tous les parlementaire, et envoie les alertes
+    correspondantes.
+    """
+    app.config.update(SQLALCHEMY_ECHO=False)
+    avance_procedure_(app, etape)
 
 
 @manager.command

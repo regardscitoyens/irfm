@@ -439,6 +439,28 @@
           </tr>
 
 
+        {% elif parlementaire.etape == ordres.ETAPE_DEMANDE_CADA %}
+
+          <!-- DEMANDE_CADA -->
+
+          <tr>
+            <td class="label-next">
+              <span class="label" title="Nous avons déposé un recours auprès de la CADA "
+                    data-toggle="tooltip" style="background-color: #bb6666;">
+                <i class="fa fa-balance-scale"></i>
+                Demande CADA
+              </span>
+            </td>
+            <td colspan="4">
+
+              {% filter markdown -%}
+                {% include "text/etape_cada.md" %}
+              {% endfilter %}
+
+            </td>
+          </tr>
+
+
         {% endif %}
 
         {% if ( parlementaire.etape != ordres.ETAPE_REPONSE_POSITIVE
