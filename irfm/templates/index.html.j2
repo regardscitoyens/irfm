@@ -1,26 +1,8 @@
 {% extends "_base.html.j2" %}
 
 {% block content %}
-  <div class="col-md-8">
-    <div class="well lead">
-      <p>L'Indemnité Représentative de Frais de Mandat (IRFM) est une indemnité d'environ 5 000 € versée chaque mois à tous les parlementaires pour couvrir les dépenses liées à leur mandat.</p>
-      <p>Faute de transparence, nous demandons à chaque parlementaire de nous fournir les éléments permettant aux citoyens de contrôler l'utilisation de leur indemnité :</p>
-      <ul>
-        <li>les relevés bancaires du compte dédié (sur les 6 derniers mois)</li>
-        <li>la dernière déclaration annuelle auprès du Bureau attestant sur l'honneur de l'utilisation conforme de l'IRFM</li>
-      </ul>
-    </div>
 
-    <section class="panel panel-primary">
-      <header class="panel-heading">
-        <b>Comment nous aider ?</b>
-      </header>
-      <article class="panel-body">
-        {% filter markdown -%}
-          {% include "text/howto_help.md" %}
-        {% endfilter %}
-      </article>
-    </section>
+  <div class="col-md-8">
 
     <section class="panel panel-default">
       <header class="panel-heading">
@@ -33,12 +15,14 @@
       </article>
     </section>
 
-    <section class="panel panel-default">
+    <section class="panel panel-primary">
       <header class="panel-heading">
-        <b>Quelles sont les étapes suivantes pour obtenir la transparence de l'IRFM ?</b>
+        <b>Comment nous aider ?</b>
       </header>
-      <article class="panel-body" id="procedure-container">
-        {% include "viz/procedure.svg" %}
+      <article class="panel-body">
+        {% filter markdown -%}
+          {% include "text/howto_help.md" %}
+        {% endfilter %}
       </article>
     </section>
   </div>
@@ -52,7 +36,7 @@
         <center>
         <a style="font-size: 35px" href="/parlementaires?q=R%C3%A9ponse%20positive" class="btn btn-success">7<br/>Frais de mandats obtenus</a>
         <br/><br/>
-        <p><a href="/parlementaires" class="btn btn-danger">567 députés n'ayant pas répondu positivement</a></p>
+        <p><a href="/parlementaires?q=Demande%20CADA" class="btn btn-danger">567 députés n'ayant pas répondu positivement</a></p>
         </center>
       </article>
     </section>
@@ -69,11 +53,19 @@
           {{ parlementaire.nom_circo }} &ndash;
           Circonscription n°{{ parlementaire.num_circo }}<br><br>
 
-          <a class="btn btn-primary btn-sm" href="{{ url_for('parlementaire', id=parlementaire.id) }}" role="button">Envoyer la demande</a>
+
+          <a class="btn btn-primary btn-sm" href="{{ url_for('parlementaire', id=parlementaire.id) }}" role="button">
+            {% if current_step < ordres.ETAPE_DEMANDE_CADA %}
+              Envoyer la demande
+            {% else %}
+              Voir la page du parlementaire
+            {% endif %}
+          </a>
         </div>
       </article>
     </section>
 
+    {% if current_step < ordres.ETAPE_DEMANDE_CADA %}
     <section class="panel panel-default">
       <header class="panel-heading">
         <b>Avancement par département</b>
@@ -92,7 +84,20 @@
         {% include "viz/carte.html.j2" %}
       </article>
     </section>
+    {% endif %}
   </div>
+
+  <div class="col-md-12">
+    <section class="panel panel-default">
+      <header class="panel-heading">
+        <b>Quelles sont les étapes suivantes pour obtenir la transparence de l'IRFM ?</b>
+      </header>
+      <article class="panel-body" id="procedure-container">
+        {% include "viz/procedure.svg" %}
+      </article>
+    </section>
+  </div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -112,105 +117,109 @@
   <script>
     $(document).ready(function () {
 
-      /* Camembert */
-      var circleRatio = 0.52;
+      {% if current_step < ordres.ETAPE_DEMANDE_CADA %}
 
-      new Chart($('#pie-canvas'), {
-        type: 'pie',
-        data: {{ etapes_data|tojson }},
-        options: {
-          legend: {
-            display: false
-          },
-          responsive: false,
-          maintainAspectRatio: true,
-          rotation: Math.PI * (1 - (circleRatio - 0.5)),
-          circumference: 2 * Math.PI * circleRatio,
-          cutoutPercentage: 25,
-          animation: {
-            animateRotate: false
+        /* Camembert */
+        var circleRatio = 0.52;
+
+        new Chart($('#pie-canvas'), {
+          type: 'pie',
+          data: {{ etapes_data|tojson }},
+          options: {
+            legend: {
+              display: false
+            },
+            responsive: false,
+            maintainAspectRatio: true,
+            rotation: Math.PI * (1 - (circleRatio - 0.5)),
+            circumference: 2 * Math.PI * circleRatio,
+            cutoutPercentage: 25,
+            animation: {
+              animateRotate: false
+            }
           }
-        }
-      });
-
-      /* Histo de suivi des courriers */
-
-      new Chart($('#bar-canvas'), {
-        type: 'horizontalBar',
-        data: {{ histo_data|tojson }},
-        options: {
-          animation: {
-            duration: 0
-          },
-          legend: {
-            display: false
-          },
-          title: {
-            display: true,
-            text: 'Suivi des courriers envoyés'
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                min: 0
-              }
-            }],
-            yAxes: [{
-              ticks: {
-              fontSize: 10
-              }
-            }]
-          }
-        }
-      });
-
-      /* Carte */
-
-      var modesCarte = ['prisencharge', 'envoye'];
-      modesCarte.forEach(function(mode) {
-        $('#btn-mode-' + mode).click(function(e) {
-          $('#carte-container .btn').removeClass('btn-primary').addClass('btn-default');
-          $(this).removeClass('btn-default').addClass('btn-primary');
-
-          var ctn = $('#carte-container');
-          modesCarte.forEach(function(m) { ctn.removeClass('carte-mode-' + m); });
-          ctn.addClass('carte-mode-' + mode);
-
-          e.preventDefault();
         });
-      });
 
-      {% for dep in departements %}
-        $('.departement{{ dep.num_deptmt }}')
-          .attr('data-content',
-            {% for ordre in [ordres.ETAPE_A_ENVOYER, ordres.ETAPE_A_CONFIRMER] %}
-              {{ etapes_by_ordre[ordre]|label_etape_text|tojson }} +
-              "&nbsp;: {{ dep['nb_etape_%s' % ordre] }} <br>" +
-            {% endfor %}
+        /* Histo de suivi des courriers */
 
-            {{ etapes_by_ordre[ordres.ETAPE_ENVOYE]|label_etape_text|tojson }} +
-            "&nbsp;: {{ dep.nb_envoyes }} <br>"
-          )
-          .click(function() {
-            location.href = '{{ url_for('parlementaires') }}?q={{ dep.num_deptmt }}';
+        new Chart($('#bar-canvas'), {
+          type: 'horizontalBar',
+          data: {{ histo_data|tojson }},
+          options: {
+            animation: {
+              duration: 0
+            },
+            legend: {
+              display: false
+            },
+            title: {
+              display: true,
+              text: 'Suivi des courriers envoyés'
+            },
+            scales: {
+              xAxes: [{
+                ticks: {
+                  min: 0
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                fontSize: 10
+                }
+              }]
+            }
+          }
+        });
+
+        /* Carte */
+
+        var modesCarte = ['prisencharge', 'envoye'];
+        modesCarte.forEach(function(mode) {
+          $('#btn-mode-' + mode).click(function(e) {
+            $('#carte-container .btn').removeClass('btn-primary').addClass('btn-default');
+            $(this).removeClass('btn-default').addClass('btn-primary');
+
+            var ctn = $('#carte-container');
+            modesCarte.forEach(function(m) { ctn.removeClass('carte-mode-' + m); });
+            ctn.addClass('carte-mode-' + mode);
+
+            e.preventDefault();
           });
-      {% endfor %}
+        });
 
-      $('.land').mouseover(function(e) {
-        $('#carte-popover .popover-title').html($(this).attr('title'));
-        $('#carte-popover .popover-content').html($(this).attr('data-content'));
+        {% for dep in departements %}
+          $('.departement{{ dep.num_deptmt }}')
+            .attr('data-content',
+              {% for ordre in [ordres.ETAPE_A_ENVOYER, ordres.ETAPE_A_CONFIRMER] %}
+                {{ etapes_by_ordre[ordre]|label_etape_text|tojson }} +
+                "&nbsp;: {{ dep['nb_etape_%s' % ordre] }} <br>" +
+              {% endfor %}
 
-      });
+              {{ etapes_by_ordre[ordres.ETAPE_ENVOYE]|label_etape_text|tojson }} +
+              "&nbsp;: {{ dep.nb_envoyes }} <br>"
+            )
+            .click(function() {
+              location.href = '{{ url_for('parlementaires') }}?q={{ dep.num_deptmt }}';
+            });
+        {% endfor %}
 
-      $('.land').mousemove(function(e) {
-        $('#carte-popover').css('left', e.clientX - 200)
-                           .css('top', e.clientY + 20)
-                           .show();
-      });
+        $('.land').mouseover(function(e) {
+          $('#carte-popover .popover-title').html($(this).attr('title'));
+          $('#carte-popover .popover-content').html($(this).attr('data-content'));
 
-      $('.land').mouseleave(function(e) {
-        $('#carte-popover').hide();
-      });
+        });
+
+        $('.land').mousemove(function(e) {
+          $('#carte-popover').css('left', e.clientX - 200)
+                             .css('top', e.clientY + 20)
+                             .show();
+        });
+
+        $('.land').mouseleave(function(e) {
+          $('#carte-popover').hide();
+        });
+
+      {% endif %}
 
       /* Procedure */
 

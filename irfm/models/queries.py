@@ -3,7 +3,7 @@
 from sqlalchemy.sql.expression import case, func
 
 from .constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER, ETAPE_ENVOYE,
-                        ETAPE_NA, ETAPES)
+                        ETAPE_NA, ETAPE_REPONSE_POSITIVE, ETAPES)
 from .database import db
 from .parlementaire import Parlementaire
 from .procedure import Action
@@ -105,3 +105,14 @@ def random_parl():
                             .first()
 
     return parl
+
+
+def current_step():
+    """
+    Renvoie l'étape minimale de tous les parlementaires concernés
+    """
+
+    return db.session.query(func.min(Parlementaire.etape).label('etape')) \
+                     .filter(Parlementaire.etape > ETAPE_NA) \
+                     .filter(Parlementaire.etape != ETAPE_REPONSE_POSITIVE) \
+                     .first().etape

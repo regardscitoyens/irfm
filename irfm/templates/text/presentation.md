@@ -13,3 +13,7 @@ Sans aucune transparence sur l'utilisation de cet argent public, les parlementai
 #### Plus de transparence ?
 
 Nous souhaitons demander à chaque parlementaire de nous fournir les éléments permettant aux citoyens de contrôler l'utilisation de leur indemnité : les relevés bancaires (sur les 6 derniers mois) ainsi que la dernière déclaration attestant sur l'honneur d'utilisation conforme de l'IRFM qu'il doit transmettre chaque année au Bureau de l'Assemblée nationale.
+
+#### Qui est concerné ?
+
+Pour l'instant, seuls les députés de la précédente législature sont concernés.  Les nouveaux députés n'ont encore rien à communiquer puisque leur mandat vient tout juste de débuter. Par ailleurs, il n'est pas exclu que les lois de moralisation de la vie politique qui sont actuellement discutées au parlement établissent de nouvelles règles de transparence sur l'IRFM, et que nous n'ayons donc pas besoin d'étendre l'opération à la 15ème législature.
