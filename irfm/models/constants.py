@@ -185,7 +185,7 @@ ETAPES = [
             avons transmis la demande d'accès aux relevés de compte à la
             Commission d'Accès aux Documents Administratifs.
         """,
-        'couleur': '#bbbb66',
+        'couleur': '#eebb44',
         'icone': 'balance-scale',
         'hidden': False,
         'alerte': True

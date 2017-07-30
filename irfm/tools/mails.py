@@ -31,11 +31,14 @@ def mailing_lists():
     }
 
 
-def envoyer_alerte(app, etape, parl, commentaire):
+def envoyer_alerte(app, etape, parl, commentaire=None):
     mail = Mail(app)
 
     sender = ('Regards Citoyens', app.config['ADMIN_EMAIL'])
     subject = 'Transparence IRFM - Alerte pour %s' % parl.nom_complet
+
+    if not commentaire:
+        commentaire = etape['description']
 
     messages = []
     for user in parl.abonnes:

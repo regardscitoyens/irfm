@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, time
+from time import sleep
 
 from ..models import Action, Parlementaire, User, db
-from ..models.constants import (DEBUT_ACTION, ETAPE_COURRIEL, ETAPES_BY_ORDRE,
-                                ETAPE_DEMANDE_CADA, ETAPE_REPONSE_POSITIVE,
-                                ETAPE_NA)
+from ..models.constants import (DEBUT_ACTION, ETAPE_A_CONFIRMER,
+                                ETAPE_COURRIEL, ETAPES_BY_ORDRE,
+                                ETAPE_DEMANDE_CADA, ETAPE_DOC_PUBLIE,
+                                ETAPE_REPONSE_POSITIVE, ETAPE_NA)
 
 from .mails import envoyer_alerte
 
@@ -64,23 +66,44 @@ def avance_procedure(app, ordre_etape):
     for parl in parls:
         print(parl.nom_complet)
 
-        # Création de l'action
-        act = Action(
-            parlementaire=parl,
-            etape=ordre_etape,
-            date=datetime.now(),
-            user=admin,
-        )
-        db.session.add(act)
+        # Cas particulier demande CADA
+        if ordre_etape == ETAPE_DEMANDE_CADA:
+            if parl.etape == ETAPE_A_CONFIRMER:
+                # Suppression de l'étape prise en charge si c'est l'étape
+                # actuelle du député
+                pec = Action.query \
+                            .filter(Action.parlementaire == parl) \
+                            .filter(Action.etape == ETAPE_A_CONFIRMER) \
+                            .first()
+                if pec:
+                    db.session.delete(pec)
+
+            # Transformation de l'action 'Document' en action "Demande CADA"
+            act = Action.query \
+                        .filter(Action.parlementaire == parl) \
+                        .filter(Action.etape == ETAPE_DOC_PUBLIE) \
+                        .filter(Action.attachment.like('document-cada-%')) \
+                        .first()
+            if act:
+                act.etape = ETAPE_DEMANDE_CADA
+
+        # Création de l'action si inexistante
+        if not act:
+            act = Action(
+                parlementaire=parl,
+                etape=ordre_etape,
+                date=datetime.now(),
+                user=admin,
+            )
+            db.session.add(act)
+
         parl.etape = ordre_etape
 
         # Commit immédiat pour pouvoir arrêter en plein milieu et reprendre
         db.session.commit()
 
         if etape['alerte']:
-            cnt = envoyer_alerte(app, etape, parl, '')
+            cnt = envoyer_alerte(app, etape, parl)
             if cnt:
                 print('%s e-mails d\'alerte envoyés' % cnt)
-
-        # Throttling mails
-        time.sleep(1)
+                sleep(1)

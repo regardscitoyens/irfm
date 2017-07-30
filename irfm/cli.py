@@ -93,7 +93,7 @@ def avance_procedure(etape):
     correspondantes.
     """
     app.config.update(SQLALCHEMY_ECHO=False)
-    avance_procedure_(app, etape)
+    avance_procedure_(app, int(etape))
 
 
 @manager.command
