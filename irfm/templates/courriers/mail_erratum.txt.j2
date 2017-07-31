@@ -1,7 +1,7 @@
 Bonjour{% if not anon_id %} {{ user.nick }}{% endif %},
 
-Une erreur s'est glissée dans notre e-mail d'alerte précédent, et le lien vers
-la page de {{ parl.nom_complet }} est incorrect.
+Une erreur s'est glissée dans l'e-mail d'alerte que nous venons de vous
+envoyer, et le lien vers la page de {{ parl.nom_complet }} est incorrect.
 
 Voici le bon lien :
 <{{ url_for('parlementaire', id=parl.id, _external=True) }}>
