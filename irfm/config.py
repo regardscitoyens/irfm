@@ -50,6 +50,7 @@ class DefaultConfig(object):
     MAIL_SUPPRESS_SEND = False
 
     PERMANENT_SESSION_LIFETIME = 6 * 31 * 24 * 60 * 60
+    SERVER_NAME = 'irfm.regardscitoyens.org'
 
 
 class DebugConfig(DefaultConfig):

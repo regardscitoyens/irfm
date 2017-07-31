@@ -12,7 +12,7 @@ from sqlalchemy.orm import contains_eager, joinedload
 
 from ..models import Action, User, Parlementaire, db
 from ..models.constants import (DELAI_RELANCE, DELAI_REPONSE, ETAPE_NA,
-                                ETAPE_A_CONFIRMER)
+                                ETAPE_A_CONFIRMER, ETAPE_DEMANDE_CADA)
 
 from ..tools.files import generer_demande
 from ..tools.text import create_usertoken as token
@@ -175,3 +175,38 @@ def envoyer_relances(app, envoyer):
 
     if envoyer:
         db.session.commit()
+
+
+def erratum_cada(app):
+    parls = Parlementaire.query \
+        .filter(Parlementaire.etape == ETAPE_DEMANDE_CADA) \
+        .all()
+
+    mail = Mail(app)
+
+    for parl in parls:
+        print(parl.nom_complet)
+
+        sender = ('Regards Citoyens', app.config['ADMIN_EMAIL'])
+        subject = 'Transparence IRFM - Erratum - Alerte pour %s' % \
+            parl.nom_complet
+
+        messages = []
+        for user in parl.abonnes:
+            anon_id = user.nick[8:] if user.nick.startswith('anonyme!') \
+                else None
+            body = render_template('courriers/mail_erratum.txt.j2',
+                                   user=user,
+                                   anon_id=anon_id,
+                                   parl=parl)
+
+            messages.append(Message(subject=subject, body=body, sender=sender,
+                                    recipients=[user.email]))
+
+        if len(messages):
+            with mail.connect() as conn:
+                for msg in messages:
+                    conn.send(msg)
+
+            print('%s e-mails d\'erratum envoyés' % len(messages))
+            time.sleep(1)

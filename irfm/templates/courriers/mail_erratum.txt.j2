@@ -1,0 +1,16 @@
+Bonjour{% if not anon_id %} {{ user.nick }}{% endif %},
+
+Une erreur s'est glissée dans notre e-mail d'alerte précédent, et le lien vers
+la page de {{ parl.nom_complet }} est incorrect.
+
+Voici le bon lien :
+<{{ url_for('parlementaire', id=parl.id, _external=True) }}>
+
+Avec nos excuses, et bien cordialement,
+
+--
+
+Regards Citoyens
+
+Ce message a été envoyé automatiquement. Si vous pensez l'avoir reçu par
+erreur, merci de nous contacter par retour de mail.
