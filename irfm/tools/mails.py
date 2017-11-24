@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
+import email
 import os
+import re
+import subprocess
 import time
 
 from flask import render_template
@@ -9,10 +12,12 @@ from flask import render_template
 from flask_mail import Mail, Message
 
 from sqlalchemy.orm import contains_eager, joinedload
+from sqlalchemy.orm.exc import NoResultFound
 
 from ..models import Action, User, Parlementaire, db
 from ..models.constants import (DELAI_RELANCE, DELAI_REPONSE, ETAPE_NA,
                                 ETAPE_A_CONFIRMER, ETAPE_DEMANDE_CADA)
+from ..models.functions import normalize_name
 
 from ..tools.files import generer_demande
 from ..tools.text import create_usertoken as token
@@ -210,3 +215,60 @@ def erratum_cada(app):
 
             print('%s e-mails d\'erratum envoyés' % len(messages))
             time.sleep(1)
+
+
+AVIS_INCOMPETENCE = 'La commission ne peut donc que se déclarer ' + \
+                    'incompétente pour se prononcer sur la demande.'
+AVIS_RE_DEPUTE = re.compile('par (Monsieur|Madame) ([^,]*),? députée?')
+
+
+def extraire_mails_cada(app):
+    emails_root = os.path.join(app.config['DATA_DIR'], 'emails')
+    files_root = os.path.join(app.config['DATA_DIR'], 'files')
+
+    for eml in [f for f in os.listdir(emails_root)
+                if os.path.isfile(os.path.join(emails_root, f))
+                and f.endswith('.eml')]:
+        with open(os.path.join(emails_root, eml)) as f:
+            message = email.message_from_file(f)
+            cada_id = message['subject']
+
+            # Extraction pièce jointe 'Avis.pdf'
+            pdf = None
+            for pl in message.get_payload():
+                if pl.get_filename() == 'Avis.pdf':
+                    pdf = pl.get_payload(decode=True)
+
+            if not pdf:
+                print('CADA %s: (!) avis introuvable' % cada_id)
+                continue
+
+            # Enregistrement du PDF
+            pdfname = os.path.join(files_root, 'avis-cada-%s.pdf' % cada_id)
+            with open(pdfname, 'wb') as outf:
+                outf.write(pdf)
+
+            # Extraction du texte
+            pro = subprocess.run(['pdftotext', pdfname, '-'],
+                                 stdout=subprocess.PIPE,
+                                 encoding='utf-8')
+
+            # Vérification de la décision
+            if AVIS_INCOMPETENCE not in pro.stdout:
+                print('CADA %s: (!) décision inattendue' % cada_id)
+
+            # Extraction du député concerné
+            match = AVIS_RE_DEPUTE.search(pro.stdout)
+            if not match:
+                print('CADA %s: (!) nom député introuvable' % cada_id)
+            else:
+                nom = match.group(2)
+                condition = normalize_name(Parlementaire.nom_complet) \
+                    .ilike(normalize_name(nom))
+
+                try:
+                    parl = Parlementaire.query.filter(condition).one()
+                    print('CADA %s: %s' % (cada_id, parl.nom_complet))
+                except NoResultFound:
+                    print('CADA %s: (!) parlementaire inconnu %s'
+                          % (cada_id, nom))

@@ -4,7 +4,8 @@
 
 * Python 3 + headers (ie. python3-dev)
 * virtualenvwrapper
-* PostgreSQL (postgresql-server-dev-all)
+* PostgreSQL (postgresql-server-dev-all) avec l'extension unaccent
+* pdftotext
 
 ### Nouvelle Installation
 
@@ -15,6 +16,7 @@ $ mkvirtualenv --python=$(which python3) irfm
 $ pip install -e .
 $ sudo -u postgres psql -c "create user irfm with password 'irfm';"
 $ sudo -u postgres psql -c "create database irfm with owner irfm;"
+$ sudo -u postgres psql irfm -c "create extension unaccent;"
 $ irfm db upgrade
 $ irfm import_nd
 $ irfm import_adresses

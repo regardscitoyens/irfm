@@ -19,7 +19,8 @@ from .tools.files import generer_demandes as generer_demandes_
 from .tools.mails import (envoyer_emails as envoyer_emails_,
                           envoyer_relances as envoyer_relances_,
                           mailing_lists as mailing_lists_,
-                          erratum_cada as erratum_cada_)
+                          erratum_cada as erratum_cada_,
+                          extraire_mails_cada as extraire_mails_cada_)
 from .tools.procedure import (fix_procedure as fix_procedure_,
                               avance_procedure as avance_procedure_)
 from .tools.text import hash_password
@@ -104,6 +105,15 @@ def erratum_cada():
     """
     app.config.update(SQLALCHEMY_ECHO=False)
     erratum_cada_(app)
+
+
+@manager.command
+def extraire_mails_cada():
+    """
+    Extraire les e-mails de réponse CADA
+    """
+    app.config.update(SQLALCHEMY_ECHO=False)
+    extraire_mails_cada_(app)
 
 
 @manager.command
