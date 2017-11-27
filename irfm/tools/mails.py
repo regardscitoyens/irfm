@@ -16,7 +16,8 @@ from sqlalchemy.orm.exc import NoResultFound
 
 from ..models import Action, User, Parlementaire, db
 from ..models.constants import (DELAI_RELANCE, DELAI_REPONSE, ETAPE_NA,
-                                ETAPE_A_CONFIRMER, ETAPE_DEMANDE_CADA)
+                                ETAPE_A_CONFIRMER, ETAPE_DEMANDE_CADA,
+                                ETAPE_DOC_MASQUE)
 from ..models.functions import normalize_name
 
 from ..tools.files import generer_demande
@@ -219,16 +220,22 @@ def erratum_cada(app):
 
 AVIS_INCOMPETENCE = 'La commission ne peut donc que se déclarer ' + \
                     'incompétente pour se prononcer sur la demande.'
-AVIS_RE_DEPUTE = re.compile('par (Monsieur|Madame) ([^,]*),? députée?')
+AVIS_RE_DEPUTE = re.compile('par( Monsieur| Madame)+ ([^,]*),? députée?')
+AVIS_EXCEPTIONS = {
+    'Pierre LELLOUCH': 'Pierre LELLOUCHE'
+}
 
 
 def extraire_mails_cada(app):
     emails_root = os.path.join(app.config['DATA_DIR'], 'emails')
     files_root = os.path.join(app.config['DATA_DIR'], 'files')
 
+    admin = User.query.filter(User.nick == '!rc').one()
+
     for eml in [f for f in os.listdir(emails_root)
                 if os.path.isfile(os.path.join(emails_root, f))
                 and f.endswith('.eml')]:
+        remove = False
         with open(os.path.join(emails_root, eml)) as f:
             message = email.message_from_file(f)
             cada_id = message['subject']
@@ -238,13 +245,15 @@ def extraire_mails_cada(app):
             for pl in message.get_payload():
                 if pl.get_filename() == 'Avis.pdf':
                     pdf = pl.get_payload(decode=True)
+                    break
 
             if not pdf:
                 print('CADA %s: (!) avis introuvable' % cada_id)
                 continue
 
             # Enregistrement du PDF
-            pdfname = os.path.join(files_root, 'avis-cada-%s.pdf' % cada_id)
+            pdfbase = 'avis-cada-%s.pdf' % cada_id
+            pdfname = os.path.join(files_root, pdfbase)
             with open(pdfname, 'wb') as outf:
                 outf.write(pdf)
 
@@ -261,14 +270,52 @@ def extraire_mails_cada(app):
             match = AVIS_RE_DEPUTE.search(pro.stdout)
             if not match:
                 print('CADA %s: (!) nom député introuvable' % cada_id)
-            else:
-                nom = match.group(2)
-                condition = normalize_name(Parlementaire.nom_complet) \
-                    .ilike(normalize_name(nom))
+                continue
 
-                try:
-                    parl = Parlementaire.query.filter(condition).one()
-                    print('CADA %s: %s' % (cada_id, parl.nom_complet))
-                except NoResultFound:
-                    print('CADA %s: (!) parlementaire inconnu %s'
-                          % (cada_id, nom))
+            nom = match.group(2)
+            nom = AVIS_EXCEPTIONS.get(nom, nom)
+            condition = normalize_name(Parlementaire.nom_complet) \
+                .ilike(normalize_name(nom))
+
+            try:
+                parl = Parlementaire.query.filter(condition).one()
+            except NoResultFound:
+                print('CADA %s: (!) parlementaire inconnu %s'
+                      % (cada_id, nom))
+                continue
+
+            # Recherche d'un avis existant
+            try:
+                act = Action.query \
+                    .filter(Action.parlementaire == parl) \
+                    .filter(Action.attachment.like('avis-cada-%')) \
+                    .one()
+            except NoResultFound:
+                act = None
+
+            if act:
+                if act.attachment != pdfbase:
+                    print('CADA %s; (!) 2ème avis CADA (existant: %s)'
+                          % (cada_id, pdfbase))
+                continue
+
+            print('CADA %s; Ajout avis CADA pour %s'
+                  % (cada_id, parl.nom_complet))
+
+            act = Action(
+                parlementaire=parl,
+                etape=ETAPE_DOC_MASQUE,
+                date=datetime.now(),
+                suivi='La CADA s\'est déclarée incompétente pour '
+                      + 'répondre à notre demande.',
+                attachment=pdfbase,
+                user=admin
+            )
+
+            db.session.add(act)
+            db.session.commit()
+
+        if remove:
+            os.unlink(os.path.join(emails_root, eml))
+
+    db.session.commit()
