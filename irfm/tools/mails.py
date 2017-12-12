@@ -229,7 +229,7 @@ AVIS_EXCEPTIONS = {
 
 def extraire_mails_cada(app):
     emails_root = os.path.join(app.config['DATA_DIR'], 'emails')
-    files_root = os.path.join(app.config['DATA_DIR'], 'files')
+    uploads_root = os.path.join(app.config['DATA_DIR'], 'uploads')
 
     admin = User.query.filter(User.nick == '!rc').one()
 
@@ -254,7 +254,7 @@ def extraire_mails_cada(app):
 
             # Enregistrement du PDF
             pdfbase = 'avis-cada-%s.pdf' % cada_id
-            pdfname = os.path.join(files_root, pdfbase)
+            pdfname = os.path.join(uploads_root, pdfbase)
             with open(pdfname, 'wb') as outf:
                 outf.write(pdf)
 
