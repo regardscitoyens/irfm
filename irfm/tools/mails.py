@@ -259,16 +259,15 @@ def extraire_mails_cada(app):
                 outf.write(pdf)
 
             # Extraction du texte
-            pro = subprocess.run(['pdftotext', pdfname, '-'],
-                                 stdout=subprocess.PIPE,
-                                 encoding='utf-8')
+            out = subprocess.check_output(['pdftotext', pdfname, '-'],
+                                          encoding='utf-8')
 
             # Vérification de la décision
-            if AVIS_INCOMPETENCE not in pro.stdout:
+            if AVIS_INCOMPETENCE not in out:
                 print('CADA %s: (!) décision inattendue' % cada_id)
 
             # Extraction du député concerné
-            match = AVIS_RE_DEPUTE.search(pro.stdout)
+            match = AVIS_RE_DEPUTE.search(out)
             if not match:
                 print('CADA %s: (!) nom député introuvable' % cada_id)
                 continue
