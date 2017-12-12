@@ -259,8 +259,8 @@ def extraire_mails_cada(app):
                 outf.write(pdf)
 
             # Extraction du texte
-            out = subprocess.check_output(['pdftotext', pdfname, '-'],
-                                          encoding='utf-8')
+            out = str(subprocess.check_output(['pdftotext', pdfname, '-']),
+                      encoding='utf-8')
 
             # Vérification de la décision
             if AVIS_INCOMPETENCE not in out:
