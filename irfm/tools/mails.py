@@ -222,7 +222,8 @@ AVIS_INCOMPETENCE = 'La commission ne peut donc que se déclarer ' + \
                     'incompétente pour se prononcer sur la demande.'
 AVIS_RE_DEPUTE = re.compile('par( Monsieur| Madame)+ ([^,]*),? députée?')
 AVIS_EXCEPTIONS = {
-    'Pierre LELLOUCH': 'Pierre LELLOUCHE'
+    'Pierre LELLOUCH': 'Pierre LELLOUCHE',
+    'Paul GIACCOBBI': 'Paul GIACOBBI'
 }
 
 
