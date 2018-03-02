@@ -50,7 +50,7 @@ Nous vous conseillons la lecture des rapports suivants :
 
 ##### Des parlementaires ont-ils déjà fait preuve de transparence en la matière ?
 
-Voici les éléments que nous avons pu réunir :
+*Voici les éléments que nous avons pu réunir concernant la 14ème législature (2012-2017) :*
 
 * Laurence Abeille : [http://laurence-abeille.fr/la-transparence-sur-mon-train-de-vie-de-deputee/](http://laurence-abeille.fr/la-transparence-sur-mon-train-de-vie-de-deputee/)
 * Jean-Pierre Allossery : [http://dailynord.fr/2014/12/irfm-des-deputes-nordistes-seuls-deux-dentre-eux-ont-joue-le-jeu/](http://dailynord.fr/2014/12/irfm-des-deputes-nordistes-seuls-deux-dentre-eux-ont-joue-le-jeu/)
@@ -63,6 +63,19 @@ Voici les éléments que nous avons pu réunir :
 * Pascal Popelin : [http://pascalpopelin.blogspot.fr/2016/06/lemploi-de-mes-frais-de-mandat.html](http://pascalpopelin.blogspot.fr/2016/06/lemploi-de-mes-frais-de-mandat.html)
 * Barbara Romagnan : [http://www.barbararomagnan.eu/engagement-transparence-les-moyens-materiels-et-financiers-pour-mon-mandat/](http://www.barbararomagnan.eu/engagement-transparence-les-moyens-materiels-et-financiers-pour-mon-mandat/)
 * François de Rugy : [https://image.jimcdn.com/app/cms/image/transf/dimension=origxorig:format=png/path/s58a384f780187880/image/id85336c9e3988af7/version/1485861652/image.png](https://image.jimcdn.com/app/cms/image/transf/dimension=origxorig:format=png/path/s58a384f780187880/image/id85336c9e3988af7/version/1485861652/image.png)
+
+*Voici les éléments que nous avons pu réunir concernant la 15ème législature (2017-2022) :*
+
+Certains députés font preuve de transparence sur leur IRFM :
+* Paula Forteza : [https://irfm.forteza.fr/journal](https://irfm.forteza.fr/journal)
+* Marion Lenne : [http://www.marionlenne.fr/irfm/](http://www.marionlenne.fr/irfm/)
+
+Certains députés ont entamé une démarché partielle de transparence de leur IRFM : 
+* Matthieu Orphelin : [http://matthieuorphelin.org/frais-de-mandat/](http://matthieuorphelin.org/frais-de-mandat/)
+* Jacques Marilossian : [https://www.jmarilossian.fr/actualites/articles/le-budget-du-cabinet-parlementaire](https://www.jmarilossian.fr/actualites/articles/le-budget-du-cabinet-parlementaire)
+
+Certains députés ont également annoncé réfléchir aux modalités d'ouverture de leur IRFM :
+* Eric Bothorel : [https://ericbothorel.fr/frais-de-mandat/](https://ericbothorel.fr/frais-de-mandat/)
 
 ##### Votre démarche respecte-t-elle l'immunité parlementaire ?
 
