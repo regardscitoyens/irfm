@@ -241,7 +241,7 @@ def extraire_mails_cada(app):
         with open(os.path.join(emails_root, eml)) as f:
             message = email.message_from_file(f)
             cada_id = message['subject']
-            date_avis = dateparser.parse(message['date'].replace(" (CET)", "")
+            date_avis = dateparser.parse(message['date'].replace(" (CET)", ""))
 
             # Extraction pièce jointe 'Avis.pdf'
             pdf = None

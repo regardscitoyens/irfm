@@ -122,7 +122,7 @@ def export_pour_ta(app):
                                .all()
 
     output_order = ['num', 'nom', 'sexe', 'refus', 'demande', 'bordereau',
-                    'avis_cada']
+                    'avis_cada', 'date_cada']
 
     print(';'.join(output_order))
 
@@ -148,5 +148,6 @@ def export_pour_ta(app):
             if act.etape == ETAPE_DOC_MASQUE and \
                     act.attachment.startswith('avis-cada'):
                 data['avis_cada'] = act.attachment
+                data['date_cada'] = act.date.strftime('%d/%m/%Y')
 
         print(';'.join([data.get(k, '') for k in output_order]))
