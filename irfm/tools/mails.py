@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime, timedelta
+import dateparser
 import email
 import os
 import re
@@ -240,6 +241,7 @@ def extraire_mails_cada(app):
         with open(os.path.join(emails_root, eml)) as f:
             message = email.message_from_file(f)
             cada_id = message['subject']
+            date_avis = dateparser.parse(message['date'].replace(" (CET)", "")
 
             # Extraction pièce jointe 'Avis.pdf'
             pdf = None
@@ -297,6 +299,10 @@ def extraire_mails_cada(app):
                 if act.attachment != pdfbase:
                     print('CADA %s; (!) 2ème avis CADA (existant: %s)'
                           % (cada_id, pdfbase))
+                if act.date != date_avis:
+                    act.date = date_avis
+                    db.session.add(act)
+                    db.session.commit()
                 continue
 
             print('CADA %s; Ajout avis CADA pour %s'

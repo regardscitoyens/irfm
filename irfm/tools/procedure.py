@@ -10,7 +10,7 @@ from ..models.constants import (DEBUT_ACTION, ETAPE_A_CONFIRMER,
                                 ETAPE_COURRIEL, ETAPES_BY_ORDRE,
                                 ETAPE_DEMANDE_CADA, ETAPE_DOC_PUBLIE,
                                 ETAPE_REPONSE_NEGATIVE,
-                                ETAPE_DOC_MASQUE, ETAPE_AR_RECU,
+                                ETAPE_DOC_MASQUE, ETAPE_ENVOYE,
                                 ETAPE_REPONSE_POSITIVE, ETAPE_NA)
 
 from .mails import envoyer_alerte
@@ -121,7 +121,7 @@ def export_pour_ta(app):
                                .order_by(Parlementaire.nom) \
                                .all()
 
-    output_order = ['num', 'nom', 'sexe', 'refus', 'demande', 'ar',
+    output_order = ['num', 'nom', 'sexe', 'refus', 'demande', 'bordereau',
                     'avis_cada']
 
     print(';'.join(output_order))
@@ -139,8 +139,8 @@ def export_pour_ta(app):
         }
 
         for act in parl.actions:
-            if act.etape == ETAPE_AR_RECU:
-                data['ar'] = act.attachment
+            if act.etape == ETAPE_ENVOYE:
+                data['bordereau'] = act.attachment
 
             if act.etape == ETAPE_REPONSE_NEGATIVE:
                 data['refus'] = 'REFUS'
