@@ -22,7 +22,8 @@ from .tools.mails import (envoyer_emails as envoyer_emails_,
                           erratum_cada as erratum_cada_,
                           extraire_mails_cada as extraire_mails_cada_)
 from .tools.procedure import (fix_procedure as fix_procedure_,
-                              avance_procedure as avance_procedure_)
+                              avance_procedure as avance_procedure_,
+                              export_pour_ta as export_pour_ta_)
 from .tools.text import hash_password
 
 
@@ -85,6 +86,13 @@ def fix_procedure():
     """Génère les étapes manquantes pour tous les parlementaires"""
     app.config.update(SQLALCHEMY_ECHO=False)
     fix_procedure_(app)
+
+
+@manager.command
+def export_pour_ta():
+    """Génère un export CSV pour les requêtes TA"""
+    app.config.update(SQLALCHEMY_ECHO=False)
+    export_pour_ta_(app)
 
 
 @manager.command

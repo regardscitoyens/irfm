@@ -3,13 +3,18 @@
 from datetime import datetime, time
 from time import sleep
 
+from sqlalchemy.orm import joinedload
+
 from ..models import Action, Parlementaire, User, db
 from ..models.constants import (DEBUT_ACTION, ETAPE_A_CONFIRMER,
                                 ETAPE_COURRIEL, ETAPES_BY_ORDRE,
                                 ETAPE_DEMANDE_CADA, ETAPE_DOC_PUBLIE,
+                                ETAPE_REPONSE_NEGATIVE,
+                                ETAPE_DOC_MASQUE, ETAPE_AR_RECU,
                                 ETAPE_REPONSE_POSITIVE, ETAPE_NA)
 
 from .mails import envoyer_alerte
+from .text import slugify
 
 
 def fix_procedure(app):
@@ -107,3 +112,41 @@ def avance_procedure(app, ordre_etape):
             if cnt:
                 print('%s e-mails d\'alerte envoyés' % cnt)
                 sleep(1)
+
+
+def export_pour_ta(app):
+    parls = Parlementaire.query.filter(Parlementaire.etape >=
+                                       ETAPE_DEMANDE_CADA) \
+                               .options(joinedload(Parlementaire.actions)) \
+                               .order_by(Parlementaire.nom) \
+                               .all()
+
+    output_order = ['num', 'nom', 'sexe', 'refus', 'demande', 'ar',
+                    'avis_cada']
+
+    print(';'.join(output_order))
+
+    parl_num = 0
+    for parl in parls:
+        parl_num = parl_num + 1
+
+        data = {
+            'num': '%03d' % parl_num,
+            'nom': parl.nom_complet,
+            'sexe': parl.sexe,
+            'refus': '',
+            'demande': 'demande-irfm-%s.pdf' % slugify(parl.nom_complet)
+        }
+
+        for act in parl.actions:
+            if act.etape == ETAPE_AR_RECU:
+                data['ar'] = act.attachment
+
+            if act.etape == ETAPE_REPONSE_NEGATIVE:
+                data['refus'] = 'REFUS'
+
+            if act.etape == ETAPE_DOC_MASQUE and \
+                    act.attachment.startswith('avis-cada'):
+                data['avis_cada'] = act.attachment
+
+        print(';'.join([data.get(k, '') for k in output_order]))
