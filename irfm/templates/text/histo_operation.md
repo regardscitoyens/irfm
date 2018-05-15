@@ -5,13 +5,13 @@
 
 **du 16 mai 2017 au 7 juillet 2017**
 
-* 279 relances envoyées par recommandé avec l'aide des citoyens ; 239 avis de réception reçus.
-* 7 réponse positives de parlementaires, 18 réponses négatives.
+* 279 relances envoyées par recommandé avec l'aide des citoyens ; 239 accusés de réception reçus.
+* 7 réponses positives de parlementaires, 18 réponses négatives.
 
 **8 juillet 2017**
 
 * Clôture des envois de recommandés avec l'aide des citoyens.
-* Dépôt de 567 recours auprès de la Commission d'Accès aux Documents administratifs pour les parlementaires ne nous ayant pas répondu, ou ayant répondu par la négative.
+* Dépôt de 567 recours auprès de la Commission d'Accès aux Documents Administratifs pour les parlementaires ne nous ayant pas répondu, ou ayant répondu par la négative.
 
 **23 novembre 2017**
 
