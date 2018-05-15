@@ -34,6 +34,8 @@ ETAPE_AR_RECU = 30
 ETAPE_REPONSE_POSITIVE = 40
 ETAPE_REPONSE_NEGATIVE = 50
 ETAPE_DEMANDE_CADA = 60
+ETAPE_INCOMPETENCE_CADA = 65
+ETAPE_REQUETE_TA = 70
 
 ETAPES = [
     {
@@ -184,6 +186,40 @@ ETAPES = [
             Suite au refus ou a l'absence de réponse du parlementaire, nous
             avons transmis la demande d'accès aux relevés de compte à la
             Commission d'Accès aux Documents Administratifs.
+        """,
+        'couleur': '#eebb44',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': True
+    },
+    {
+        'ordre': ETAPE_INCOMPETENCE_CADA,
+        'label': 'Incompétence CADA',
+        'description': """
+            Suite au refus ou a l'absence de réponse du parlementaire, nous
+            avons transmis la demande d'accès aux relevés de compte à la
+            Commission d'Accès aux Documents Administratifs.  Celle-ci s'est
+            déclarée incompétente pour répondre à notre demande.
+        """,
+        'couleur': '#bbbbbb',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': False
+    },
+    {
+        'ordre': ETAPE_REQUETE_TA,
+        'label': 'Requête TA',
+        'description': """
+            Suite à la déclaration d'incompétence de la CADA, nous avons
+            transmis la requête au tribunal administratif.
+        """,
+        'description_mail': """
+            Suite au refus ou a l'absence de réponse du parlementaire, nous
+            avons transmis la demande d'accès aux relevés de compte à la
+            Commission d'Accès aux Documents Administratifs.  Celle-ci s'est
+            déclarée incompétente pour répondre à notre demande.
+
+            Nous avons donc transmis la requête au tribunal administratif.
         """,
         'couleur': '#eebb44',
         'icone': 'balance-scale',

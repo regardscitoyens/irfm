@@ -11,7 +11,8 @@ from ..models.constants import (CHAMBRES, ETAPES, ETAPES_BY_ORDRE,
                                 ETAPE_COM_PUBLIE, ETAPE_COURRIEL,
                                 ETAPE_DOC_MASQUE, ETAPE_DOC_PUBLIE,
                                 ETAPE_ENVOYE, ETAPE_NA, ETAPE_REPONSE_NEGATIVE,
-                                ETAPE_REPONSE_POSITIVE, ETAPE_DEMANDE_CADA)
+                                ETAPE_REPONSE_POSITIVE, ETAPE_DEMANDE_CADA,
+                                ETAPE_INCOMPETENCE_CADA, ETAPE_REQUETE_TA)
 
 
 def setup(app):
@@ -156,7 +157,9 @@ def setup(app):
                 'ETAPE_AR_RECU': ETAPE_AR_RECU,
                 'ETAPE_REPONSE_POSITIVE': ETAPE_REPONSE_POSITIVE,
                 'ETAPE_REPONSE_NEGATIVE': ETAPE_REPONSE_NEGATIVE,
-                'ETAPE_DEMANDE_CADA': ETAPE_DEMANDE_CADA
+                'ETAPE_DEMANDE_CADA': ETAPE_DEMANDE_CADA,
+                'ETAPE_INCOMPETENCE_CADA': ETAPE_INCOMPETENCE_CADA,
+                'ETAPE_REQUETE_TA': ETAPE_REQUETE_TA
             },
             'chambres': CHAMBRES
         }

@@ -8,7 +8,11 @@ C'est simple : choisissez un parlementaire pour lequel la demande de document n
 
 {% else %}
 
-Nous avons transmis un recours auprès de la [Commission d'Accès aux Documents Administratifs (CADA)](http://cada.fr) pour chaque parlementaire n'ayant pas répondu positivement à notre demande.  Celle-ci statuera vraisemblablement à la rentrée.
+{% if current_step == ordres.ETAPE_DEMANDE_CADA %}
+Nous avons transmis un recours auprès de la [Commission d'Accès aux Documents Administratifs (CADA)](http://cada.fr) pour chaque parlementaire n'ayant pas répondu positivement à notre demande. Celle-ci statuera vraisemblablement à la rentrée.
+{% elif current_step == ordres.ETAPE_REQUETE_TA %}
+Nous avons déposé une requête auprès du Tribunal Administratif pour chaque parlementaire n'ayant pas répondu positivement à notre demande.
+{% endif %}
 
 En attendant, vous pouvez contacter directement l'un des parlementaires ou l'un de leurs collaborateurs pour recueillir leur avis sur cette opération, et tenter de les convaincre de nous répondre favorablement.
 

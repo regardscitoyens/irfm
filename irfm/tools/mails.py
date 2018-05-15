@@ -45,7 +45,10 @@ def envoyer_alerte(app, etape, parl, commentaire=None):
     subject = 'Transparence IRFM - Alerte pour %s' % parl.nom_complet
 
     if not commentaire:
-        commentaire = etape['description']
+        if 'description_mail' in etape:
+            commentaire = etape['description_mail']
+        else:
+            commentaire = etape['description']
 
     messages = []
     for user in parl.abonnes:
