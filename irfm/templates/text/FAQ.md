@@ -70,15 +70,13 @@ Certains députés font preuve de transparence sur leur IRFM :
 
 * Paula Forteza : [https://irfm.forteza.fr/journal](https://irfm.forteza.fr/journal)
 * Marion Lenne : [http://www.marionlenne.fr/irfm/](http://www.marionlenne.fr/irfm/)
+* Eric Bothorel : [https://ericbothorel.fr/frais-de-mandat/](https://ericbothorel.fr/frais-de-mandat/)
 
 Certains députés ont entamé une démarché partielle de transparence de leur IRFM : 
 
 * Matthieu Orphelin : [http://matthieuorphelin.org/frais-de-mandat/](http://matthieuorphelin.org/frais-de-mandat/)
 * Jacques Marilossian : [https://www.jmarilossian.fr/actualites/articles/le-budget-du-cabinet-parlementaire](https://www.jmarilossian.fr/actualites/articles/le-budget-du-cabinet-parlementaire)
 
-Certains députés ont également annoncé réfléchir aux modalités d'ouverture de leur IRFM :
-
-* Eric Bothorel : [https://ericbothorel.fr/frais-de-mandat/](https://ericbothorel.fr/frais-de-mandat/)
 
 ##### Votre démarche respecte-t-elle l'immunité parlementaire ?
 
