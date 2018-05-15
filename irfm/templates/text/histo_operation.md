@@ -5,7 +5,7 @@
 
 **du 16 mai 2017 au 7 juillet 2017**
 
-* 279 relances envoyées par recommandé avec l'aide des citoyens ; 239 accusés de réception reçus.
+* 279 relances envoyées par recommandé avec l'aide des citoyens ; 239 avis de réception reçus.
 * 7 réponses positives de parlementaires, 18 réponses négatives.
 
 **8 juillet 2017**
