@@ -19,8 +19,8 @@
 
 **du 23 novembre 2017 au 3 janvier 2018**
 
-* Réception des 573 avis de la CADA sur les demandes à chaque parlementaire concerné. Tous les avis reçus sont identiques.
+* Réception des 567 avis de la CADA sur les demandes à chaque parlementaire concerné. Tous les avis reçus sont identiques.
 
 **15 mai 2018**
 
-* Dépôt d'un recours collectif auprès du Tribunal Administratif.
+* Dépôt d'un recours auprès du Tribunal Administratif pour les 567 parlementaires concernés.
