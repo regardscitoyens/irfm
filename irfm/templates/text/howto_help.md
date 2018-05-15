@@ -16,7 +16,7 @@ Nous avons déposé une requête auprès du Tribunal Administratif pour chaque p
 
 En attendant, vous pouvez contacter directement l'un des parlementaires ou l'un de leurs collaborateurs pour recueillir leur avis sur cette opération, et tenter de les convaincre de nous répondre favorablement.
 
-<center><a class="btn btn-primary" href="/parlementaires?q=Demande%20CADA">Trouver un-e député-e à solliciter</a> &nbsp; &nbsp; <a class="btn btn-primary" href="/hasard">Solliciter un-e député-e au hasard</a></center>
+<center><a class="btn btn-primary" href="/parlementaires?q={{ etapes_by_ordre[current_step].label | urlencode }}">Trouver un-e député-e à solliciter</a> &nbsp; &nbsp; <a class="btn btn-primary" href="/hasard">Solliciter un-e député-e au hasard</a></center>
 
 {% endif %}
 
