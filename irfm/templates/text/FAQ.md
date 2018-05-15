@@ -22,7 +22,7 @@ Ces députés ont bénéficié comme les autres d'un budget pris sur les deniers
 
 L'identification nous permet de mieux répartir les efforts, en nous assurant que deux contributeurs n'envoient pas un courrier a un même parlementaire.
 
-Par ailleurs, lorsque vous envoyez un courrier au nom de l'association Regards Citoyens, vous en devenez membre (c'est une obligation juridique : nous ne pouvons [mandater que nos membres pour agir au nom de l'association](https://www.regardscitoyens.org/documents/association/20170514_RegardsCitoyens_PVConseilAdministration_mandat.pdf)).  Si vous le souhaitez, vous pourrez alors vous inscrire à la liste de discussion des membres de l'association.  L'adhésion est *gratuite* et n'implique *aucune obligation* autre que le respect de [nos statuts](https://www.regardscitoyens.org/documents/RegardsCitoyens-Statuts-v2.pdf).  Si vous le souhaitez, vous pourrez y renoncer par la suite en nous contactant.
+Par ailleurs, lorsque vous envoyez un courrier au nom de l'association Regards Citoyens, vous en devenez membre (c'est une obligation juridique : nous ne pouvons [mandater que nos membres pour agir au nom de l'association](https://www.regardscitoyens.org/documents/association/20170514_RegardsCitoyens_PVConseilAdministration_mandat.pdf)). Si vous le souhaitez, vous pourrez alors vous inscrire à la liste de discussion des membres de l'association. L'adhésion est _gratuite_ et n'implique _aucune obligation_ autre que le respect de [nos statuts](https://www.regardscitoyens.org/documents/RegardsCitoyens-Statuts-v2.pdf). Si vous le souhaitez, vous pourrez y renoncer par la suite en nous contactant.
 
 Conformément à la loi Informatique et Libertés, vous disposez d'un droit d'accès et de rectification sur les données que nous détenons à votre sujet. N'hésitez pas à [nous contacter par e-mail](mailto:{{ config.ADMIN_EMAIL }}) si vous souhaitez exercer ce droit.
 
@@ -48,13 +48,17 @@ Nous vous conseillons la lecture des rapports suivants :
 * celui de l'[IFRAP](http://www.ifrap.org/etat-et-collectivites/indemnite-de-representation-et-de-frais-de-mandats-irfm-et-amendement-courson)
 * celui de [Contribuables Associés](http://www.contribuables.org/2015/12/frais-de-mandat-pour-un-controle-systematique/)
 
+<a name="deputes-transparents"></a>
+
 ##### Des parlementaires ont-ils déjà fait preuve de transparence en la matière ?
 
-*Voici les éléments que nous avons pu réunir concernant la 14ème législature (2012-2017) :*
+<a name="deputes-transparents-14"></a>
+
+_Voici les éléments que nous avons pu réunir concernant la 14ème législature (2012-2017) :_
 
 * Laurence Abeille : [http://laurence-abeille.fr/la-transparence-sur-mon-train-de-vie-de-deputee/](http://laurence-abeille.fr/la-transparence-sur-mon-train-de-vie-de-deputee/)
 * Jean-Pierre Allossery : [http://dailynord.fr/2014/12/irfm-des-deputes-nordistes-seuls-deux-dentre-eux-ont-joue-le-jeu/](http://dailynord.fr/2014/12/irfm-des-deputes-nordistes-seuls-deux-dentre-eux-ont-joue-le-jeu/)
-* Isabelle Attard : [http://isabelleattard.fr/bilan2013/IRFM_2012-2013.pdf](http://isabelleattard.fr/bilan2013/IRFM_2012-2013.pdf) « *j'ai été la seule députée à transmettre mes relevés de compte à l'association Pour Une Démocratie Directe* » [https://isabelleattard2017.fr/charte/](https://isabelleattard2017.fr/charte/)
+* Isabelle Attard : [http://isabelleattard.fr/bilan2013/IRFM_2012-2013.pdf](http://isabelleattard.fr/bilan2013/IRFM_2012-2013.pdf) « _j'ai été la seule députée à transmettre mes relevés de compte à l'association Pour Une Démocratie Directe_ » [https://isabelleattard2017.fr/charte/](https://isabelleattard2017.fr/charte/)
 * Éric Azaulet : [http://www.alauzet.net/mes-revenus-depenses/](http://www.alauzet.net/mes-revenus-depenses/)
 * Jean-Luc Bleunven : [http://www.jeanlucbleunven.fr/transparence-sur-lutilisation-de-mon-indemnite-representative-de-frais-de-mandat-irfm/](http://www.jeanlucbleunven.fr/transparence-sur-lutilisation-de-mon-indemnite-representative-de-frais-de-mandat-irfm/)
 * Florent Boudié : [http://florentboudie.fr/2013/04/08/florent-boudie-depute-de-la-gironde-rend-public-son-patrimoine-personnel-le-montant-de-son-indemnite-parlementaire-ainsi-que-lusage-de-lirfm-et-en-appelle-a-une-reforme-massive/](http://florentboudie.fr/2013/04/08/florent-boudie-depute-de-la-gironde-rend-public-son-patrimoine-personnel-le-montant-de-son-indemnite-parlementaire-ainsi-que-lusage-de-lirfm-et-en-appelle-a-une-reforme-massive/)
@@ -64,7 +68,9 @@ Nous vous conseillons la lecture des rapports suivants :
 * Barbara Romagnan : [http://www.barbararomagnan.eu/engagement-transparence-les-moyens-materiels-et-financiers-pour-mon-mandat/](http://www.barbararomagnan.eu/engagement-transparence-les-moyens-materiels-et-financiers-pour-mon-mandat/)
 * François de Rugy : [https://image.jimcdn.com/app/cms/image/transf/dimension=origxorig:format=png/path/s58a384f780187880/image/id85336c9e3988af7/version/1485861652/image.png](https://image.jimcdn.com/app/cms/image/transf/dimension=origxorig:format=png/path/s58a384f780187880/image/id85336c9e3988af7/version/1485861652/image.png)
 
-*Voici les éléments que nous avons pu réunir concernant la 15ème législature (2017-2022) :*
+<a name="deputes-transparents-15"></a>
+
+_Voici les éléments que nous avons pu réunir concernant la 15ème législature (2017-2022) :_
 
 Certains députés font preuve de transparence sur leur IRFM :
 
@@ -72,19 +78,18 @@ Certains députés font preuve de transparence sur leur IRFM :
 * Marion Lenne : [http://www.marionlenne.fr/irfm/](http://www.marionlenne.fr/irfm/)
 * Eric Bothorel : [https://ericbothorel.fr/frais-de-mandat/](https://ericbothorel.fr/frais-de-mandat/)
 
-Certains députés ont entamé une démarché partielle de transparence de leur IRFM : 
+Certains députés ont entamé une démarché partielle de transparence de leur IRFM :
 
 * Matthieu Orphelin : [http://matthieuorphelin.org/frais-de-mandat/](http://matthieuorphelin.org/frais-de-mandat/)
 * Jacques Marilossian : [https://www.jmarilossian.fr/actualites/articles/le-budget-du-cabinet-parlementaire](https://www.jmarilossian.fr/actualites/articles/le-budget-du-cabinet-parlementaire)
-
 
 ##### Votre démarche respecte-t-elle l'immunité parlementaire ?
 
 Dans sa [fiche pédagogique sur le statut des députés l'Assemblée nationale](http://www2.assemblee-nationale.fr/decouvrir-l-assemblee/role-et-pouvoirs-de-l-assemblee-nationale/le-depute/le-statut-du-depute), l'Assemblée nationale rappelle clairement les deux protections juridiques apportées aux députés.
 
-L'irresponsabilité, d'une part, couverte par l'article 26 de la Constitution : « *aucun membre du Parlement ne peut être poursuivi, recherché, arrêté, détenu ou jugé à l'occasion des opinions ou votes émis par lui dans l'exercice de ses fonctions* ». Notre action ne porte ni sur les opinions ni sur les avis émis par les parlementaires dans l'exercice de leurs fonctions, mais sur l'utilisation des moyens alloués aux frais de campagne. Notre demande n'est donc pas couverte par l'irresponsabilité.
+L'irresponsabilité, d'une part, couverte par l'article 26 de la Constitution : « _aucun membre du Parlement ne peut être poursuivi, recherché, arrêté, détenu ou jugé à l'occasion des opinions ou votes émis par lui dans l'exercice de ses fonctions_ ». Notre action ne porte ni sur les opinions ni sur les avis émis par les parlementaires dans l'exercice de leurs fonctions, mais sur l'utilisation des moyens alloués aux frais de campagne. Notre demande n'est donc pas couverte par l'irresponsabilité.
 
-L'inviolabilité, d'autre part, est décrite de la facon suivante : « *depuis la réforme du 4 août 1995, le régime de l'inviolabilité ne protège plus le député contre l'engagement de poursuites (mise en examen), en revanche, le député ne peut faire l'objet d'une arrestation ou de toute autre mesure privative ou restrictive de liberté (contrôle judiciaire) sans l'autorisation du Bureau, sauf les cas de crime ou délit flagrant, ou de condamnation définitive* ». Notre démarche ne porte aucunement sur une mesure privative ou restrictive de liberté. Elle respecte donc également ce principe d'inviolabilité.
+L'inviolabilité, d'autre part, est décrite de la facon suivante : « _depuis la réforme du 4 août 1995, le régime de l'inviolabilité ne protège plus le député contre l'engagement de poursuites (mise en examen), en revanche, le député ne peut faire l'objet d'une arrestation ou de toute autre mesure privative ou restrictive de liberté (contrôle judiciaire) sans l'autorisation du Bureau, sauf les cas de crime ou délit flagrant, ou de condamnation définitive_ ». Notre démarche ne porte aucunement sur une mesure privative ou restrictive de liberté. Elle respecte donc également ce principe d'inviolabilité.
 
 ##### Et le secret bancaire ? Et la vie privée ?
 
