@@ -11,12 +11,9 @@ from ..models.constants import ETAPES_BY_ORDRE
 
 def setup(app):
 
-    @app.template_filter('madame_monsieur')
-    def madame_monsieur(parl):
-        if parl.sexe == 'F':
-            return 'Madame'
-        else:
-            return 'Monsieur'
+    @app.template_filter('si_sexe')
+    def si_sexe(parl, si_femme, si_homme):
+        return si_femme if parl.sexe == 'F' else si_homme
 
     @app.template_filter('titre_parlementaire')
     def titre_parlementaire(parl):

@@ -1,10 +1,10 @@
-{{ parlementaire|madame_monsieur }},
+{{ parlementaire|si_sexe('Madame', 'Monsieur') }},
 
-Le 16 mai 2017, nous vous avions sollicité afin d'obtenir la communication de
-deux types de documents : les relevés des 6 derniers mois (de décembre 2016 à
-mai 2017) de votre compte bancaire dédié à vos frais de mandat et la
-déclaration sur l'honneur que vous deviez transmettre au 31 décembre 2016 au
-Président de l'Assemblée nationale.
+Le 16 mai 2017, nous vous avions sollicit{{ parlementaire|si_sexe('e', '')}}
+afin d'obtenir la communication de deux types de documents : les relevés des 6
+derniers mois (de décembre 2016 à mai 2017) de votre compte bancaire dédié à
+vos frais de mandat et la déclaration sur l'honneur que vous deviez transmettre
+au 31 décembre 2016 au Président de l'Assemblée nationale.
 
 Vous aviez alors fait le choix de ne pas nous communiquer ces documents. Nous
 tenions à vous informer que nous avons déposé mi-mai une requête au tribunal
