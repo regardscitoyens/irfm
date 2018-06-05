@@ -14,8 +14,10 @@ class NonTrouve(Exception):
 class EmailImporter(BaseImporter):
 
     def import_emails(self, nom, emails):
-        parl = Parlementaire.query.filter(Parlementaire.nom_complet == nom) \
-                                  .one()
+        parl = Parlementaire.query \
+                            .filter(Parlementaire.nom_complet == nom) \
+                            .first()
+
         if not parl:
             raise NonTrouve('%s non trouvé' % nom)
 
