@@ -8,6 +8,7 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
 from .importers.adresses import AdressesImporter
+from .importers.emails import EmailImporter
 from .importers.laposte import LaPosteImporter
 from .importers.nosdeputes import NosDeputesImporter
 
@@ -158,6 +159,16 @@ def import_laposte():
     """Importe l'état des courriers suivi depuis La Poste"""
     app.config.update(SQLALCHEMY_ECHO=False)
     LaPosteImporter(app).run()
+
+
+@manager.command
+def import_emails():
+    """
+    Importe les emails des députés depuis un fichier DATA_DIR/emails.csv au
+    format "nom complet;email1,email2,..."
+    """
+    app.config.update(SQLALCHEMY_ECHO=False)
+    EmailImporter(app).run()
 
 
 @manager.command
