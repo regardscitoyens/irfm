@@ -18,7 +18,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from ..models import Action, User, Parlementaire, db
 from ..models.constants import (DELAI_RELANCE, DELAI_REPONSE, ETAPE_NA,
                                 ETAPE_A_CONFIRMER, ETAPE_DEMANDE_CADA,
-                                ETAPE_DOC_MASQUE)
+                                ETAPE_DOC_MASQUE, ETAPE_REQUETE_TA)
 from ..models.functions import normalize_name
 
 from ..tools.files import generer_demande
@@ -70,14 +70,33 @@ def envoyer_alerte(app, etape, parl, commentaire=None):
     return len(messages)
 
 
-def envoyer_emails(app, envoyer):
+def envoyer_emails(app, envoyer, mode):
     files_root = os.path.join(app.config['DATA_DIR'], 'files')
+    modes = {
+        'initial': {
+            'si_envoyes': 0,
+            'set_envoyes': 1,
+            'etape_min': ETAPE_NA,
+            'joindre_demande_pdf': True,
+            'template': 'courriers/mail_parlementaire.txt.j2'
+        },
+        'ta': {
+            'si_envoyes': 1,
+            'set_envoyes': 2,
+            'etape_min': ETAPE_REQUETE_TA - 1,
+            'joindre_demande_pdf': False,
+            'template': 'courriers/mail_parlementaire_ta.txt.j2'
+        }
+    }
+
+    options = modes[mode or 'initial']
 
     mail = Mail(app)
-    parls = Parlementaire.query.filter(Parlementaire.etape > ETAPE_NA) \
-                               .filter(Parlementaire.mails_envoyes == 0) \
-                               .order_by(Parlementaire.nom) \
-                               .all()
+    parls = Parlementaire.query \
+        .filter(Parlementaire.etape > options['etape_min']) \
+        .filter(Parlementaire.mails_envoyes == options['si_envoyes']) \
+        .order_by(Parlementaire.nom) \
+        .all()
 
     missed_addr = []
     missed_email = []
@@ -104,12 +123,13 @@ def envoyer_emails(app, envoyer):
             missed_email.append(parl.nom_complet)
             continue
 
-        filename = generer_demande(parl, files_root)
+        if options['joindre_demande_pdf']:
+            filename = generer_demande(parl, files_root)
 
         sender = ('Regards Citoyens', app.config['ADMIN_EMAIL'])
         subject = 'Demande d\'accès aux dépenses de vos frais de mandat'
-        body = render_template('courriers/mail_parlementaire.txt.j2',
-                               parlementaire=parl)
+
+        body = render_template(options['template'], parlementaire=parl)
 
         if envoyer:
             recipients = parl.emails.split(',')
@@ -125,15 +145,16 @@ def envoyer_emails(app, envoyer):
         msg = Message(subject=subject, body=body, sender=sender,
                       recipients=recipients, bcc=bcc)
 
-        with open(os.path.join(files_root, filename), 'rb') as f:
-            msg.attach(filename, 'application/pdf', f.read())
+        if options['joindre_demande_pdf']:
+            with open(os.path.join(files_root, filename), 'rb') as f:
+                msg.attach(filename, 'application/pdf', f.read())
 
         print('[%s/%s] Envoi mail à %s (%s)' %
               (total, len(parls), parl.nom_complet, ', '.join(recipients)))
         mail.send(msg)
 
         if envoyer:
-            parl.mails_envoyes = 1
+            parl.mails_envoyes = options['set_envoyes']
             db.session.commit()
 
         time.sleep(1)

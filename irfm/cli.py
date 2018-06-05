@@ -45,10 +45,11 @@ def clear_cache():
 
 @manager.command
 @manager.option('--envoyer', action='store_true')
-def envoyer_emails(envoyer=False):
+@manager.option('--modele', dest='modele', default=None)
+def envoyer_emails(envoyer=False, modele=None):
     """Envoie des e-mails pour tous les parlementaires"""
     app.config.update(SQLALCHEMY_ECHO=False)
-    missed_addr, missed_email = envoyer_emails_(app, envoyer)
+    missed_addr, missed_email = envoyer_emails_(app, envoyer, modele)
 
     print('')
     if len(missed_addr):
