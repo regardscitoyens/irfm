@@ -35,7 +35,7 @@ class EmailImporter(BaseImporter):
         erreurs = 0
         changes = 0
         with open(join(self.app.config['DATA_DIR'], 'emails.csv'),
-                  newline='') as csvfile:
+                  newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=';')
             for row in reader:
                 try:
