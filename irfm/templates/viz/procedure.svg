@@ -1012,7 +1012,7 @@
          y="-76.039421"
          x="-145.41687"
          id="tspan1055"
-         sodipodi:role="line">7</tspan></text>
+         sodipodi:role="line">{{ nb_ok }}</tspan></text>
   </g>
   <g
      id="nb_negatifs"
@@ -1032,6 +1032,6 @@
          y="-223.58508"
          x="-2.7185695"
          id="tspan1055-3"
-         sodipodi:role="line">567</tspan></text>
+         sodipodi:role="line">{{ nb_ko }}</tspan></text>
   </g>
 </svg>

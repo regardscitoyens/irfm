@@ -2,8 +2,14 @@
 
 from sqlalchemy.sql.expression import case, func
 
-from .constants import (ETAPE_A_CONFIRMER, ETAPE_A_ENVOYER, ETAPE_ENVOYE,
-                        ETAPE_NA, ETAPE_REPONSE_POSITIVE, ETAPES)
+from .constants import (
+    ETAPE_A_CONFIRMER,
+    ETAPE_A_ENVOYER,
+    ETAPE_ENVOYE,
+    ETAPE_NA,
+    ETAPE_REPONSE_POSITIVE,
+    ETAPES,
+)
 from .database import db
 from .parlementaire import Parlementaire
 from .procedure import Action
@@ -15,31 +21,33 @@ def etat_courriers():
     """
 
     _categories = [
-        {'etats': [''], 'label': 'Inconnu'},
-        {'etats': ['Pris en charge', 'En cours de traitement'],
-         'label': 'Pris en charge'},
-        {'etats': ['Pli présenté', 'En attente de seconde présentation'],
-         'label': 'Présenté'},
-        {'etats': ['Attend d\'être retiré au guichet'], 'label': 'Au guichet'},
-        {'etats': ['Distribué'], 'label': 'Distribué'}
+        {"etats": [""], "label": "Inconnu"},
+        {
+            "etats": ["Pris en charge", "En cours de traitement"],
+            "label": "Pris en charge",
+        },
+        {
+            "etats": ["Pli présenté", "En attente de seconde présentation"],
+            "label": "Présenté",
+        },
+        {"etats": ["Attend d'être retiré au guichet"], "label": "Au guichet"},
+        {"etats": ["Distribué"], "label": "Distribué"},
     ]
 
     # Extrait "Distribué" de "1X23456: Distribué (01/02/2017)"
-    expr = func.split_part(
-        func.split_part(
-            Action.suivi, ':', 2),
-        ' (', 1
-    )
+    expr = func.split_part(func.split_part(Action.suivi, ":", 2), " (", 1)
 
-    data = {item.etat: item.nb
-            for item in db.session.query(expr.label('etat'),
-                                         func.count(1).label('nb'))
-                                  .filter(Action.etape == ETAPE_ENVOYE)
-                                  .group_by(expr)
-                                  .all()}
+    data = {
+        item.etat: item.nb
+        for item in db.session.query(expr.label("etat"), func.count(1).label("nb"))
+        .filter(Action.etape == ETAPE_ENVOYE)
+        .group_by(expr)
+        .all()
+    }
 
-    return [(c['label'], sum([data.get(e, 0) for e in c['etats']]))
-            for c in _categories]
+    return [
+        (c["label"], sum([data.get(e, 0) for e in c["etats"]])) for c in _categories
+    ]
 
 
 def par_departement():
@@ -49,28 +57,35 @@ def par_departement():
     """
 
     # Comptage des parlementaires par département...
-    dept_qs = db.session \
-                .query(Parlementaire.num_deptmt,
-                       func.count(Parlementaire.id).label('total'))
+    dept_qs = db.session.query(
+        Parlementaire.num_deptmt, func.count(Parlementaire.id).label("total")
+    )
 
     # ...et par étape
-    dept_qs = dept_qs.add_columns(*[
-        func.sum(case([(Parlementaire.etape == e['ordre'], 1)], else_=0))
-        .label('nb_etape_%s' % e['ordre'])
-        for e in ETAPES
-    ])
+    dept_qs = dept_qs.add_columns(
+        *[
+            func.sum(case([(Parlementaire.etape == e["ordre"], 1)], else_=0)).label(
+                "nb_etape_%s" % e["ordre"]
+            )
+            for e in ETAPES
+        ]
+    )
 
     # ...et qui sont dans une étape >= pris en charge
     dept_qs = dept_qs.add_columns(
-        func.sum(case([(Parlementaire.etape >= ETAPE_A_CONFIRMER, 1)],
-                      else_=0)).label('nb_prisencharge'),
-        func.sum(case([(Parlementaire.etape >= ETAPE_ENVOYE, 1)],
-                      else_=0)).label('nb_envoyes')
+        func.sum(case([(Parlementaire.etape >= ETAPE_A_CONFIRMER, 1)], else_=0)).label(
+            "nb_prisencharge"
+        ),
+        func.sum(case([(Parlementaire.etape >= ETAPE_ENVOYE, 1)], else_=0)).label(
+            "nb_envoyes"
+        ),
     )
 
-    return dept_qs.group_by(Parlementaire.num_deptmt) \
-                  .order_by(Parlementaire.num_deptmt) \
-                  .all()
+    return (
+        dept_qs.group_by(Parlementaire.num_deptmt)
+        .order_by(Parlementaire.num_deptmt)
+        .all()
+    )
 
 
 def par_etape():
@@ -79,12 +94,14 @@ def par_etape():
     """
 
     count = func.count(Parlementaire.id)
-    return db.session.query(Parlementaire.etape, count.label('nb')) \
-                     .filter(Parlementaire.etape > ETAPE_NA) \
-                     .group_by(Parlementaire.etape) \
-                     .order_by(Parlementaire.etape) \
-                     .having(count > 0) \
-                     .all()
+    return (
+        db.session.query(Parlementaire.etape, count.label("nb"))
+        .filter(Parlementaire.etape > ETAPE_NA)
+        .group_by(Parlementaire.etape)
+        .order_by(Parlementaire.etape)
+        .having(count > 0)
+        .all()
+    )
 
 
 def random_parl():
@@ -93,16 +110,18 @@ def random_parl():
     aucun n'est disponible parmi ceux concernés par l'opération
     """
 
-    parl = Parlementaire.query \
-                        .filter(Parlementaire.etape == ETAPE_A_ENVOYER) \
-                        .order_by(func.random()) \
-                        .first()
+    parl = (
+        Parlementaire.query.filter(Parlementaire.etape == ETAPE_A_ENVOYER)
+        .order_by(func.random())
+        .first()
+    )
 
     if not parl:
-        parl = Parlementaire.query \
-                            .filter(Parlementaire.etape > ETAPE_NA) \
-                            .order_by(func.random()) \
-                            .first()
+        parl = (
+            Parlementaire.query.filter(Parlementaire.etape > ETAPE_NA)
+            .order_by(func.random())
+            .first()
+        )
 
     return parl
 
@@ -112,7 +131,32 @@ def current_step():
     Renvoie l'étape minimale de tous les parlementaires concernés
     """
 
-    return db.session.query(func.min(Parlementaire.etape).label('etape')) \
-                     .filter(Parlementaire.etape > ETAPE_NA) \
-                     .filter(Parlementaire.etape != ETAPE_REPONSE_POSITIVE) \
-                     .first().etape
+    return (
+        db.session.query(func.min(Parlementaire.etape).label("etape"))
+        .filter(Parlementaire.etape > ETAPE_NA)
+        .filter(Parlementaire.etape != ETAPE_REPONSE_POSITIVE)
+        .first()
+        .etape
+    )
+
+
+def nb_ok():
+    """
+    Renvoie le nombre de parlementaires ayant répondu positivement
+    """
+
+    return Parlementaire.query.filter(
+        Parlementaire.etape == ETAPE_REPONSE_POSITIVE
+    ).count()
+
+
+def nb_ko():
+    """
+    Renvoie le nombre de parlementaires n'ayant pas répondu positivement
+    """
+
+    return (
+        Parlementaire.query.filter(Parlementaire.etape > ETAPE_NA)
+        .filter(Parlementaire.etape != ETAPE_REPONSE_POSITIVE)
+        .count()
+    )

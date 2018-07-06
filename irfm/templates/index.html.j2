@@ -34,9 +34,9 @@
       </header>
       <article class="panel-body">
         <center>
-        <a style="font-size: 35px" href="/parlementaires?q=R%C3%A9ponse%20positive" class="btn btn-success">7<br/>Frais de mandats obtenus</a>
+        <a style="font-size: 35px" href="/parlementaires?q=R%C3%A9ponse%20positive" class="btn btn-success">{{ nb_ok }}<br/>Frais de mandats obtenus</a>
         <br/><br/>
-        <p><a href="/parlementaires?q={{ etapes_by_ordre[current_step].label | urlencode }}" class="btn btn-danger">567 députés n'ayant pas répondu positivement</a></p>
+        <p><a href="/parlementaires?q={{ etapes_by_ordre[current_step].label | urlencode }}" class="btn btn-danger">{{ nb_ko }} députés n'ayant pas répondu positivement</a></p>
         </center>
       </article>
     </section>
@@ -237,7 +237,7 @@
 
       /* Procedure */
 
-      var en_cours = "En cours: requête déposée au Tribunal Administratif pour 567 députés n'ayant pas répondu favorablement à notre demande";
+      var en_cours = "En cours: requête déposée au Tribunal Administratif pour {{ nb_ko }} députés n'ayant pas répondu favorablement à notre demande";
       var tooltips = {
         '#demande': "Envoi d'une demande de communication des relevés bancaires et de l'attestation d'utilisation de l'IRFM aux parlementaires",
 
@@ -280,7 +280,7 @@
         '#nb_negatifs': en_cours,
         '#saisie_ta': en_cours,
 
-        '#nb_positifs': "7 parlementaires ont accepté de nous communiquer les informations demandées"
+        '#nb_positifs': "{{ nb_ok }} parlementaires ont accepté de nous communiquer les informations demandées"
       };
 
       var tooltips_right = ['#accord_eur', '#rejet_eur', '#lobbying'];
