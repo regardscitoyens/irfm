@@ -49,9 +49,9 @@ with open("data/codes.txt") as f:
                       '","'+";".join(defendeurs)+
                       '","'+";".join(defendeurs_mandataire)+'","'+
                       "-".join(date)+'","'+
-                      tds[1].get_text(strip=True)+'","'+
-                      tds[2].get_text(strip=True)+'","'+
-                      tds[3].get_text(strip=True)+'","'+
+                      (tds[1].get_text(strip=True) if (len(tds) > 1) else "") +'","'+
+                      (tds[2].get_text(strip=True) if (len(tds) > 2) else "") +'","'+
+                      (tds[3].get_text(strip=True) if (len(tds) > 3) else "") +'","'+
                       (tds[4].get_text(strip=True) if (len(tds) > 4) else "") +
                       '"')
             else:
