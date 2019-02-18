@@ -156,7 +156,20 @@
     #parl_cada,
     #accord_parl_cada,
     #refus_parl_cada,
-    #silence_parl_cada {
+    #silence_parl_cada,
+    #accord_ta,
+    #rejet_ta,
+    #parl_ta,
+    #accord_parl_ta,
+    #refus_parl_ta,
+    #silence_parl_ta,
+    #accord_caa,
+    #rejet_caa,
+    #parl_caa,
+    #accord_parl_caa,
+    #refus_parl_caa,
+    #silence_parl_caa,
+    #saisie_caa {
       opacity: 0.1 !important;
     }
   </style>
@@ -993,7 +1006,7 @@
      style="fill:#ff2000;fill-opacity:1;stroke:#bd0000;stroke-width:1.33638978;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="m 466.97368,53.530316 c 2.82647,-10.81409 13.71669,-21.803645 12.51016,-28.663806 -1.20652,-6.86017 -7.17453,-11.52239 -12.78506,-11.369834 -5.61053,0.152551 -11.45054,4.787129 -12.39108,11.615654 -0.94054,6.828526 10.16307,17.816918 12.66598,28.417986 z m 0.28697,-20.237954 a 7.1766908,7.1766908 0 0 1 -7.22557,-7.12763 7.1766908,7.1766908 0 0 1 7.12701,-7.225559 7.1766908,7.1766908 0 0 1 7.22556,7.127005 7.1766908,7.1766908 0 0 1 -7.127,7.226184 z"
      id="pin"
-     transform="translate(-70,-12)"
+     transform="translate(433,-12)"
      inkscape:connector-curvature="0" />
   <g
      id="nb_positifs"
@@ -1016,7 +1029,7 @@
   </g>
   <g
      id="nb_negatifs"
-     transform="translate(440,240)">
+     transform="translate(938,240)">
     <path
        inkscape:connector-curvature="0"
        id="path1031-7"
