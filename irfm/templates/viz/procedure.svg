@@ -172,6 +172,18 @@
     #saisie_caa {
       opacity: 0.1 !important;
     }
+
+    /* Etapes à venir */
+    #incompetence_ce,
+    #rejet_ce,
+    #accord_ce,
+    #saisie_eur,
+    #accord_eur,
+    #lobbying,
+    #rejet_eur,
+    #pjl {
+      opacity: 0.5 !important;
+    }
   </style>
 
   <defs
