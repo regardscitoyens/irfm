@@ -27,12 +27,12 @@
 
 **Été 2018**
 
-* 2 députés ont répondu positivement à nos demandes pendant la procédure au Tribunal Administratif
+* 2 députés ont répondu positivement à nos demandes pendant la procédure au Tribunal Administratif.
 
 **6 décembre 2018**
 
-* Le Tribunal Administratif de Paris se déclare incompétente
+* Le Tribunal Administratif de Paris se déclare incompétent.
 
 **6 février 2019**
 
-* Pouvoir au Conseil d'État
+* Pourvoi au Conseil d'État.
