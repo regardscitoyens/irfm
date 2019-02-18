@@ -244,7 +244,7 @@ ETAPES = [
 
             Nous avons donc fait appel de cette décision à Conseil d'État.
         """,
-        'couleur': '#ffffff',
+        'couleur': '#bbbbbb',
         'icone': 'balance-scale',
         'hidden': False,
         'alerte': False
@@ -279,7 +279,7 @@ ETAPES = [
             différent avec deux autres parlementaires pour prendre une 
             décision sur ce dossier.
         """,
-        'couleur': '#ffffff',
+        'couleur': '#bbbbbb',
         'icone': 'balance-scale',
         'hidden': False,
         'alerte': False
