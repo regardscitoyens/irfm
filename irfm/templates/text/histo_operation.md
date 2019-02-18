@@ -24,3 +24,15 @@
 **15 mai 2018**
 
 * Dépôt d'un recours auprès du Tribunal Administratif pour les 567 parlementaires concernés.
+
+**Été 2018**
+
+* 2 députés ont répondu positivement à nos demandes pendant la procédure au Tribunal Administratif
+
+**6 décembre 2018**
+
+* Le Tribunal Administratif de Paris se déclare incompétente
+
+**6 février 2019**
+
+* Pouvoir au Conseil d'État
