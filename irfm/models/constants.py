@@ -36,6 +36,9 @@ ETAPE_REPONSE_NEGATIVE = 50
 ETAPE_DEMANDE_CADA = 60
 ETAPE_INCOMPETENCE_CADA = 65
 ETAPE_REQUETE_TA = 70
+ETAPE_INCOMPETENCE_TA = 75
+ETAPE_ATTENTE_CE = 79
+ETAPE_APPEL_CE = 80
 
 ETAPES = [
     {
@@ -225,6 +228,61 @@ ETAPES = [
         'icone': 'balance-scale',
         'hidden': False,
         'alerte': True
+    },
+    {
+        'ordre': ETAPE_INCOMPETENCE_TA,
+        'label': 'Incompétence TA',
+        'description': """
+            Suite à notre sollicitation, le tribunal administratif s'est déclaré
+            incompétent en matière de transparence des Frais de mandat.
+        """,
+        'description_mail': """
+            Suite au refus ou a l'absence de réponse du parlementaire, nous
+            avons attaqué les parlementaires au Tribunal Administratif de 
+            Paris. Celui-ci s'est déclaré incompétent pour répondre à notre 
+            demande.
+
+            Nous avons donc fait appel de cette décision à Conseil d'État.
+        """,
+        'couleur': '#ffffff',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': False
+    },
+    {
+        'ordre': ETAPE_APPEL_CE,
+        'label': 'Appel CE',
+        'description': """
+            Suite à la déclaration d'incompétence du Tribunal Administratif, 
+            nous avons fait appel auprès du Conseil d'État.
+        """,
+        'description_mail': """
+            Le Tribunal Administratif de Paris s'étant déclaré incompétent,
+            nous avons fait appel de cette décision auprès du Conseil d'État 
+            afin de faire valoir notre droit à l'information auprès de la plus
+            haute juridiction administrative.
+        """,
+        'couleur': '#eebb44',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': False
+    },
+    {
+        'ordre': ETAPE_ATTENTE_CE,
+        'label': 'Attente CE',
+        'description': """
+            Attente de la décision du Conseil d'État
+        """,
+        'description_mail': """
+            Le Tribunal Administratif de Paris a fait le choix d'attendre 
+            la décision du Conseil d'État sur notre appel concernant notre
+            différent avec deux autres parlementaires pour prendre une 
+            décision sur ce dossier.
+        """,
+        'couleur': '#ffffff',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': False
     }
 ]
 
