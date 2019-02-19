@@ -45,6 +45,21 @@ def fix_procedure(app):
 
     db.session.commit()
 
+def send_alerte(app, ordre_etape):
+    etape = ETAPES_BY_ORDRE.get(ordre_etape, None)
+    parls = Parlementaire.query \
+        .filter(Parlementaire.etape == ordre_etape) \
+        .order_by(Parlementaire.nom) \
+        .all()
+
+    for parl in parls:
+        print(parl.nom_complet)
+        if etape['alerte'] and not app.config['MAIL_SUPPRESS_SEND']:
+            cnt = envoyer_alerte(app, etape, parl)
+            if cnt:
+                print('%s e-mails d\'alerte envoyés' % cnt)
+                sleep(1)
+
 
 def avance_procedure(app, ordre_etape):
     etape = ETAPES_BY_ORDRE.get(ordre_etape, None)

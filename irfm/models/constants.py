@@ -265,7 +265,7 @@ ETAPES = [
         'couleur': '#eebb44',
         'icone': 'balance-scale',
         'hidden': False,
-        'alerte': False
+        'alerte': True
     },
     {
         'ordre': ETAPE_ATTENTE_CE,
@@ -282,7 +282,7 @@ ETAPES = [
         'couleur': '#bbbbbb',
         'icone': 'balance-scale',
         'hidden': False,
-        'alerte': False
+        'alerte': True
     }
 ]
 

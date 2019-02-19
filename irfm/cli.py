@@ -24,7 +24,8 @@ from .tools.mails import (envoyer_emails as envoyer_emails_,
                           extraire_mails_cada as extraire_mails_cada_)
 from .tools.procedure import (fix_procedure as fix_procedure_,
                               avance_procedure as avance_procedure_,
-                              export_pour_ta as export_pour_ta_)
+                              export_pour_ta as export_pour_ta_,
+                              send_alerte as send_alerte_)
 from .tools.text import hash_password
 
 
@@ -106,6 +107,16 @@ def avance_procedure(etape):
     """
     app.config.update(SQLALCHEMY_ECHO=False)
     avance_procedure_(app, int(etape))
+
+
+@manager.command
+@manager.option('-e', '--etape', dest='etape', default=None)
+def send_alerte(etape):
+    """
+    Envoi les alertes pour une étape données
+    """
+    app.config.update(SQLALCHEMY_ECHO=False)
+    send_alerte_(app, int(etape))
 
 
 @manager.command
