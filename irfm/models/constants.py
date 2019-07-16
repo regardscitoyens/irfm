@@ -39,6 +39,8 @@ ETAPE_REQUETE_TA = 70
 ETAPE_INCOMPETENCE_TA = 75
 ETAPE_ATTENTE_CE = 79
 ETAPE_APPEL_CE = 80
+ETAPE_REJET_CE = 85
+ETAPE_ATTENTE_TA = 90
 
 ETAPES = [
     {
@@ -274,16 +276,50 @@ ETAPES = [
             Attente de la décision du Conseil d'État
         """,
         'description_mail': """
-            Le Tribunal Administratif de Paris a fait le choix d'attendre 
+            Le Tribunal Administratif de Paris a fait le choix d'attendre
             la décision du Conseil d'État sur notre appel concernant notre
-            différent avec deux autres parlementaires pour prendre une 
+            différent avec deux autres parlementaires pour prendre une
             décision sur ce dossier.
         """,
         'couleur': '#bbbbbb',
         'icone': 'balance-scale',
         'hidden': False,
         'alerte': True
+    },
+    {
+        'ordre': ETAPE_REJET_CE,
+        'label': 'Rejet CE',
+        'description': """
+            Le Conseil d'État annule la décision du Tribunal Administratif
+            mais rejette notre demande de transparence.
+        """,
+        'description_mail': """
+            Le Conseil d'État annule la décision du Tribunal Administratif
+            qui aurait du se déclarer compétent pour juge de notre demande.
+            En revanche, sur le fond, il rejette notre demande pour cause
+            de souveraineté nationale.
+        """,
+        'couleur': '#ee4444',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': True
+    },
+    {
+        'ordre': ETAPE_ATTENTE_TA,
+        'label': 'Attente TA',
+        'description': """
+            Attente du jugement du TA
+        """,
+        'description_mail': """
+            Suite à la décision du Conseil d'État, le Tribunal Administratif
+            doit juger ce dossier. Il devrait rejetter notre demande
+        """,
+        'couleur': '#bbbbbb',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': True
     }
+
 ]
 
 ETAPES_BY_ORDRE = {e['ordre']: e for e in ETAPES}
