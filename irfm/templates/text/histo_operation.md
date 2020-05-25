@@ -40,3 +40,7 @@
 **27 juin 2019**
 
 * Le Conseil d'État annule la décision du Tribunal Administratif mais rejette notre pourvoi.
+
+**25 février 2020**
+
+* La Cour européenne des droits de l'Homme enregistre notre requête contre la France
