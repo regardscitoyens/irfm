@@ -17,9 +17,9 @@ ls requete_*json | while read json ; do
     requete=$(json_pp < $json | grep numeroRequete  | awk -F '"' '{print $4}');
     defenseur=$(cat $json | sed 's/.*defendeur":"//' | sed 's/".*//')
     echo $rid";"$id";"$file";"$requete";"$defenseur";"$notif;
-done > ../ordonnances.list
+done > ../ordonnances.csv
 
-cat ordonnances.list | awk -F ';' '{if ( $6 == "NotifOK" && $3)
+cat ordonnances.csv | awk -F ';' '{if ( $6 == "NotifOK" && $3)
         print "wget -O ordonnance_"$1"_"$4".pdf --load-cookies=../telerecours.cookies " \
                     "--post-data='"'"'{\"origin\": \"TR_PJ_COPY\",\"typeEvent\": null,\"fileName\": \""$3"_doc.pdf\"}'"'"' " \
                     "--header=\"content-type: application/json\" " \
