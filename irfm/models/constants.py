@@ -240,8 +240,8 @@ ETAPES = [
         """,
         'description_mail': """
             Suite au refus ou a l'absence de réponse du parlementaire, nous
-            avons attaqué les parlementaires au Tribunal Administratif de 
-            Paris. Celui-ci s'est déclaré incompétent pour répondre à notre 
+            avons attaqué les parlementaires au Tribunal Administratif de
+            Paris. Celui-ci s'est déclaré incompétent pour répondre à notre
             demande.
 
             Nous avons donc fait appel de cette décision à Conseil d'État.
@@ -255,12 +255,12 @@ ETAPES = [
         'ordre': ETAPE_APPEL_CE,
         'label': 'Appel CE',
         'description': """
-            Suite à la déclaration d'incompétence du Tribunal Administratif, 
+            Suite à la déclaration d'incompétence du Tribunal Administratif,
             nous avons fait appel auprès du Conseil d'État.
         """,
         'description_mail': """
             Le Tribunal Administratif de Paris s'étant déclaré incompétent,
-            nous avons fait appel de cette décision auprès du Conseil d'État 
+            nous avons fait appel de cette décision auprès du Conseil d'État
             afin de faire valoir notre droit à l'information auprès de la plus
             haute juridiction administrative.
         """,
@@ -295,7 +295,7 @@ ETAPES = [
         """,
         'description_mail': """
             Le Conseil d'État annule la décision du Tribunal Administratif
-            qui aurait du se déclarer compétent pour juge de notre demande.
+            qui aurait du se déclarer compétent pour juger de notre demande.
             En revanche, sur le fond, il rejette notre demande pour cause
             de souveraineté nationale.
         """,
@@ -312,7 +312,7 @@ ETAPES = [
         """,
         'description_mail': """
             Suite à la décision du Conseil d'État, le Tribunal Administratif
-            doit juger ce dossier. Il devrait rejetter notre demande
+            doit juger ce dossier. Il devrait rejeter notre demande.
         """,
         'couleur': '#bbbbbb',
         'icone': 'balance-scale',
