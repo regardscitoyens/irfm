@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#echo "select parlementaire_id, attachment from actions where attachment LIKE '%requete%';" | sudo -u irfm psql irfm | grep pdf | sed 's/| requete-ta-//'  | sed 's/.pdf//' | awk '{print $1"-"$2}' > id_slug.list
+
 mkdir -p requetes
 cd requetes
 
@@ -24,3 +26,13 @@ cat ordonnances.csv | awk -F ';' '{if ( $6 == "NotifOK" && $3)
                     "--post-data='"'"'{\"origin\": \"TR_PJ_COPY\",\"typeEvent\": null,\"fileName\": \""$3"_doc.pdf\"}'"'"' " \
                     "--header=\"content-type: application/json\" " \
                     "https://citoyens.telerecours.fr/api/requetes/"$1"/events/"$2"/pieces/"$3"/download"}' | sh
+
+cd -
+sed -i 's/é/e/g' ordonnances.csv
+sed -i 's/É/E/g' ordonnances.csv
+sed -i 's/È/E/g' ordonnances.csv
+sed -i 's/è/e/g' ordonnances.csv
+sed -i 's/ç/c/g' ordonnances.csv
+sed -i 's/ë/e/g' ordonnances.csv
+sed -i 's/ô/o/g' ordonnances.csv
+cat id_slug.list | sed 's/ //g' | awk -F '-' '{printf "echo \""$0";\"$( grep -i "$2" ordonnances.csv | grep -i "$3 ; if ($4) printf " | grep -i "$4 ; if ($5) printf " | grep -i "$5 ; printf " && echo \";"$1"\") ;\n"}'  | sh > ordonnances_attachment.csv
