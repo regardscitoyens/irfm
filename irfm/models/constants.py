@@ -41,6 +41,8 @@ ETAPE_ATTENTE_CE = 79
 ETAPE_APPEL_CE = 80
 ETAPE_REJET_CE = 85
 ETAPE_ATTENTE_TA = 90
+ETAPE_ORDONNANCE_TA = 95
+ETAPE_REQUETE_CEDH = 100
 
 ETAPES = [
     {
@@ -318,7 +320,39 @@ ETAPES = [
         'icone': 'balance-scale',
         'hidden': False,
         'alerte': True
+    },
+    {
+        'ordre': ETAPE_ORDONNANCE_TA,
+        'label': 'Ordonnance TA',
+        'description': """
+            Ordonnance du TA
+        """,
+        'description_mail': """
+            Suite à la décision du Conseil d'État, le Tribunal Administratif
+            s'est conformé à cette décision en statuant par odonnance
+        """,
+        'couleur': '#ee4444',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': True
+    },
+    {
+        'ordre': ETAPE_REQUETE_CEDH,
+        'label': 'Requête CEDH',
+        'description': """
+            Requête auprès de la CEDH
+        """,
+        'description_mail': """
+            Suite à la décision du Conseil d'État, nous avons déposé
+            une requête auprès de la CEDH pour violation du droit à 
+            l'information
+        """,
+        'couleur': '#eebb44',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': True
     }
+
 
 ]
 
