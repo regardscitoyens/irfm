@@ -43,6 +43,7 @@ ETAPE_REJET_CE = 85
 ETAPE_ATTENTE_TA = 90
 ETAPE_ORDONNANCE_TA = 95
 ETAPE_REQUETE_CEDH = 100
+ETAPE_CEDH_COMMUNICATION_FRANCE = 105
 
 ETAPES = [
     {
@@ -348,6 +349,22 @@ ETAPES = [
             l'information
         """,
         'couleur': '#eebb44',
+        'icone': 'balance-scale',
+        'hidden': False,
+        'alerte': True
+    },
+    {
+        'ordre': ETAPE_CEDH_COMMUNICATION_FRANCE,
+        'label': 'Communication 🇫🇷',
+        'description': """
+            Communication de la requête à la France
+        """,
+        'description_mail': """
+            Après une analyse préalable de plus de deux ans, la CEDH
+            a décidé de communiquer notre requête à la France pour
+            qu'elle puisse présenter ses arguments à la Cour.
+        """,
+        'couleur': '#bbbbbb',
         'icone': 'balance-scale',
         'hidden': False,
         'alerte': True
