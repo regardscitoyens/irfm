@@ -41,6 +41,14 @@
 
 * Le Conseil d'État annule la décision du Tribunal Administratif mais rejette notre pourvoi.
 
+**20 décembre 2019**
+
+* Nous attaquons la France auprès de la Cour européenne des droits de l'Homme.
+
 **25 février 2020**
 
-* La Cour européenne des droits de l'Homme enregistre notre requête contre la France
+* La Cour européenne des droits de l'Homme enregistre notre requête contre la France.
+
+**20 juin 2022**
+
+* Après une analyse préalable de recevabilité, la Cour européenne des droits de l'Homme décide de communiquer notre requête à la France.
